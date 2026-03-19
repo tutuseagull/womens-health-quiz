@@ -83,7 +83,7 @@
     margin-bottom: 12px;
   }
   .home-title {
-    font-family: 'IBM Plex Serif', serif;
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 38px;
     line-height: 1.15;
     color: var(--text);
@@ -684,7 +684,7 @@
   <div class="home-header">
     <div class="home-eyebrow" data-zh="女性健康知识问答" data-en="Women's Health Quiz"></div>
     <h1 class="home-title" data-zh="了解你的身体" data-en="Know Your Body"></h1>
-    <p class="home-subtitle" data-zh="选择一个主题开始答题。" data-en="Choose a topic to begin. Each answer is revealed immediately — so you actually remember it."></p>
+
   </div>
 
   <div class="section-list" id="section-list"></div>
@@ -1176,7 +1176,6 @@ function renderHome() {
   `).join('');
   document.querySelector('[data-zh="女性健康知识问答"]').textContent = lang === 'zh' ? '女性健康知识问答' : "Women's Health Quiz";
   document.querySelector('[data-zh="了解你的身体"]').textContent = lang === 'zh' ? '了解你的身体' : 'Know Your Body';
-  document.querySelector('[data-zh]').textContent = lang === 'zh' ? '选择一个主题开始答题。每道题答完即刻揭晓答案，学得更扎实。' : 'Choose a topic to begin. Each answer is revealed immediately — so you actually remember it.';
   document.querySelector('.home-disclaimer').textContent = lang === 'zh'
     ? '📌 题目内容仅供健康科普，不构成医疗建议。如有任何健康疑虑，请咨询专业医生。'
     : '📌 For educational purposes only. Not medical advice. Please consult a healthcare professional for any health concerns.';
@@ -1225,7 +1224,6 @@ function renderQuestion() {
   const tm = typeMap[q.type] || typeMap.single;
 
   let html = `<div>
-    <span class="q-difficulty ${d.cls}">${d[lang]}</span>
     <span class="q-type-badge${q.type === 'multi' ? ' multi' : ''}">${tm[lang]}</span>
   </div>`;
 
