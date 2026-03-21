@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { max-width: 100%; overflow-x: hidden; }
 
 :root {
   --bg: #F8F6F2;
@@ -321,8 +322,8 @@ body {
 
 /* ── MOBILE defaults ── */
 .sidebar { display: none; }
-.main-area { display: flex; flex-direction: column; flex: 1; }
-.desktop-layout { display: flex; }
+.main-area { display: block; width: 100%; }
+.desktop-layout { display: block; width: 100%; }
 
 /* ── DESKTOP ── */
 @media (min-width: 768px) {
@@ -334,6 +335,7 @@ body {
     flex-direction: column;
   }
   .desktop-layout {
+    display: flex;
     flex: 1;
     overflow: hidden;
     max-width: 1200px;
@@ -382,6 +384,7 @@ body {
   .sidebar .topic-pill.active { background: var(--text); color: white; }
   .main-area {
     flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -592,7 +595,7 @@ function buildCard(section, q, num) {
   card.innerHTML = `
     <div class="q-header" onclick="toggleCard(this.parentElement)">
       <div class="q-num">Q${num}</div>
-      <div class="q-text">${highlight(q.q, '')} <span class="type-badge">${q.type}</span></div>
+      <div class="q-text">${highlight(q.q, '')}</div>
       <div class="q-chevron">▼</div>
     </div>
     <div class="q-answer">
@@ -700,7 +703,7 @@ function applyFilters() {
       const explanationText = card.querySelector('.explanation-text');
       const isInline = ['排序','填空','配对','判断'].includes(q.type);
 
-      qText.innerHTML = highlight(q.q, searchQuery) + ` <span class="type-badge">${q.type}</span>`;
+      qText.innerHTML = highlight(q.q, searchQuery);
       if (isInline) {
         answerText.innerHTML = renderAnswerParts(q.answerParts || [{t: q.answer||''}], searchQuery);
       } else {
