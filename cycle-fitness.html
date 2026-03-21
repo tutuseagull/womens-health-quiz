@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生理周期与健身 · Train With Your Cycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --bg: #F8F6F2;
+  --surface: #FFFFFF;
+  --text: #1C1C1A;
+  --muted: #6B6860;
+  --light: #A8A49C;
+  --border: #E4E0D8;
+  --menstrual-bg: #FDF0F4;
+  --menstrual-text: #8B3054;
+  --menstrual-chip: rgba(232,160,180,0.25);
+  --follicular-bg: #F0F7EC;
+  --follicular-text: #2D5E1E;
+  --follicular-chip: rgba(143,191,122,0.25);
+  --ovulation-bg: #FDF6E8;
+  --ovulation-text: #7A4E0A;
+  --ovulation-chip: rgba(232,184,106,0.25);
+  --luteal-bg: #F2F0FA;
+  --luteal-text: #3D3470;
+  --luteal-chip: rgba(168,159,212,0.25);
+  --lateluteal-bg: #EDF7F5;
+  --lateluteal-text: #1D5C52;
+  --lateluteal-chip: rgba(133,196,184,0.25);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Instrument Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
+
+.page-header { padding: 48px 24px 32px; max-width: 680px; margin: 0 auto; }
+.header-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); margin-bottom: 10px; }
+.header-title { font-family: 'IBM Plex Serif', serif; font-size: clamp(28px, 6vw, 40px); line-height: 1.2; color: var(--text); margin-bottom: 6px; }
+.header-sub { font-size: 13px; color: var(--muted); font-style: italic; }
+
+.disclaimer { max-width: 680px; margin: 0 auto 28px; padding: 0 24px; }
+.disclaimer-inner { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; font-size: 12px; color: var(--muted); line-height: 1.7; }
+.disclaimer-inner p + p { margin-top: 4px; }
+
+.chart-section { max-width: 680px; margin: 0 auto 36px; padding: 0 24px; }
+.chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 20px 24px; }
+.chart-title { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--light); margin-bottom: 14px; }
+.chart-legend { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-bottom: 16px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+.legend-dot { width: 20px; height: 2.5px; border-radius: 2px; flex-shrink: 0; }
+.chart-wrap { position: relative; width: 100%; height: 200px; }
+
+.phases { max-width: 680px; margin: 0 auto; padding: 0 24px 60px; display: flex; flex-direction: column; gap: 16px; }
+
+.phase-card { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+
+.phase-top { padding: 18px 20px 16px; }
+.phase-name { font-family: 'IBM Plex Serif', serif; font-size: 22px; font-weight: 600; margin-bottom: 10px; }
+.phase-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-block; font-size: 12px; font-weight: 500; padding: 3px 10px; border-radius: 20px; }
+
+.phase-bottom { background: #FFFFFF; padding: 16px 20px 18px; display: flex; flex-direction: column; gap: 10px; }
+.phase-row { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
+.phase-row-icon { font-size: 15px; padding-top: 1px; }
+.phase-row-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--light); margin-bottom: 2px; }
+.phase-row-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+.phase-row.tip .phase-row-text { font-size: 13px; color: var(--muted); }
+
+.page-footer { max-width: 680px; margin: 0 auto; padding: 0 24px 48px; font-size: 11px; color: var(--light); text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-eyebrow">Facts</div>
+  <h1 class="header-title">生理周期与健身</h1>
+  <p class="header-sub">Train With Your Cycle</p>
+</div>
+
+<div class="disclaimer">
+  <div class="disclaimer-inner">
+    <p>📌 以下天数以28天周期为参考，21–35天均属正常，每个人的节律不同。</p>
+    <p>📌 运动建议旨在说明各阶段相对适合的类型，不代表"必须"运动。能不能动、怎么动，最重要的是你自身的感受。</p>
+  </div>
+</div>
+
+<div class="chart-section">
+  <div class="chart-card">
+    <div class="chart-title">激素水平变化 · 28天周期</div>
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#D4537E"></div>雌激素</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#7F77DD"></div>孕激素</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#BA7517"></div>LH 黄体生成素</div>
+    </div>
+    <div class="chart-wrap"><canvas id="hormoneChart"></canvas></div>
+  </div>
+</div>
+
+<div class="phases">
+
+  <div class="phase-card">
+    <div class="phase-top" style="background:var(--menstrual-bg)">
+      <div class="phase-name" style="color:var(--menstrual-text)">月经期</div>
+      <div class="phase-chips">
+        <span class="chip" style="background:var(--menstrual-chip);color:var(--menstrual-text)">第 1–5 天</span>
+        <span class="chip" style="background:var(--menstrual-chip);color:var(--menstrual-text)">雌激素 ↓</span>
+        <span class="chip" style="background:var(--menstrual-chip);color:var(--menstrual-text)">孕激素 ↓</span>
+      </div>
+    </div>
+    <div class="phase-bottom">
+      <div class="phase-row"><span class="phase-row-icon">🚶</span><div><div class="phase-row-label">运动</div><div class="phase-row-text">散步、轻瑜伽、拉伸放松</div></div></div>
+      <div class="phase-row"><span class="phase-row-icon">🥗</span><div><div class="phase-row-label">饮食</div><div class="phase-row-text">补铁（配维C促进吸收）、补镁</div></div></div>
+      <div class="phase-row tip"><span class="phase-row-icon">💡</span><div><div class="phase-row-label">小提示</div><div class="phase-row-text">身体在自我修复，休息也是训练的一部分</div></div></div>
+    </div>
+  </div>
+
+  <div class="phase-card">
+    <div class="phase-top" style="background:var(--follicular-bg)">
+      <div class="phase-name" style="color:var(--follicular-text)">卵泡期</div>
+      <div class="phase-chips">
+        <span class="chip" style="background:var(--follicular-chip);color:var(--follicular-text)">第 6–13 天</span>
+        <span class="chip" style="background:var(--follicular-chip);color:var(--follicular-text)">雌激素 ↑↑</span>
+        <span class="chip" style="background:var(--follicular-chip);color:var(--follicular-text)">最佳训练窗口</span>
+      </div>
+    </div>
+    <div class="phase-bottom">
+      <div class="phase-row"><span class="phase-row-icon">🏋</span><div><div class="phase-row-label">运动</div><div class="phase-row-text">大重量力量训练、高强度间歇（HIIT）</div></div></div>
+      <div class="phase-row"><span class="phase-row-icon">🥩</span><div><div class="phase-row-label">饮食</div><div class="phase-row-text">高蛋白，训练后30分钟内补充；避免空腹运动</div></div></div>
+      <div class="phase-row tip"><span class="phase-row-icon">💡</span><div><div class="phase-row-label">小提示</div><div class="phase-row-text">恢复快、状态好，适合挑战新重量</div></div></div>
+    </div>
+  </div>
+
+  <div class="phase-card">
+    <div class="phase-top" style="background:var(--ovulation-bg)">
+      <div class="phase-name" style="color:var(--ovulation-text)">排卵期</div>
+      <div class="phase-chips">
+        <span class="chip" style="background:var(--ovulation-chip);color:var(--ovulation-text)">第 14–16 天</span>
+        <span class="chip" style="background:var(--ovulation-chip);color:var(--ovulation-text)">LH ↑↑↑</span>
+        <span class="chip" style="background:var(--ovulation-chip);color:var(--ovulation-text)">能量峰值</span>
+      </div>
+    </div>
+    <div class="phase-bottom">
+      <div class="phase-row"><span class="phase-row-icon">🔥</span><div><div class="phase-row-label">运动</div><div class="phase-row-text">冲个人最佳成绩（PB）的黄金时机、HIIT</div></div></div>
+      <div class="phase-row"><span class="phase-row-icon">🍚</span><div><div class="phase-row-label">饮食</div><div class="phase-row-text">复合碳水提供持续能量</div></div></div>
+      <div class="phase-row tip"><span class="phase-row-icon">💡</span><div><div class="phase-row-label">小提示</div><div class="phase-row-text">力量与耐力表现全月最佳</div></div></div>
+    </div>
+  </div>
+
+  <div class="phase-card">
+    <div class="phase-top" style="background:var(--luteal-bg)">
+      <div class="phase-name" style="color:var(--luteal-text)">黄体期</div>
+      <div class="phase-chips">
+        <span class="chip" style="background:var(--luteal-chip);color:var(--luteal-text)">第 17–24 天</span>
+        <span class="chip" style="background:var(--luteal-chip);color:var(--luteal-text)">孕激素 ↑↑</span>
+        <span class="chip" style="background:var(--luteal-chip);color:var(--luteal-text)">体温升高</span>
+      </div>
+    </div>
+    <div class="phase-bottom">
+      <div class="phase-row"><span class="phase-row-icon">🚴</span><div><div class="phase-row-label">运动</div><div class="phase-row-text">中等强度为主，注重恢复</div></div></div>
+      <div class="phase-row"><span class="phase-row-icon">🥜</span><div><div class="phase-row-label">饮食</div><div class="phase-row-text">镁 + 复合碳水；食欲增加是正常的生理现象</div></div></div>
+      <div class="phase-row tip"><span class="phase-row-icon">⚠️</span><div><div class="phase-row-label">注意</div><div class="phase-row-text">不建议空腹运动，孕激素已让身体压力较高，叠加空腹会加重负担</div></div></div>
+    </div>
+  </div>
+
+  <div class="phase-card">
+    <div class="phase-top" style="background:var(--lateluteal-bg)">
+      <div class="phase-name" style="color:var(--lateluteal-text)">黄体晚期 / 经前期</div>
+      <div class="phase-chips">
+        <span class="chip" style="background:var(--lateluteal-chip);color:var(--lateluteal-text)">第 25–28 天</span>
+        <span class="chip" style="background:var(--lateluteal-chip);color:var(--lateluteal-text)">激素 ↓↓</span>
+        <span class="chip" style="background:var(--lateluteal-chip);color:var(--lateluteal-text)">PMS 窗口</span>
+      </div>
+    </div>
+    <div class="phase-bottom">
+      <div class="phase-row"><span class="phase-row-icon">🧘</span><div><div class="phase-row-label">运动</div><div class="phase-row-text">低强度有氧、瑜伽、拉伸</div></div></div>
+      <div class="phase-row"><span class="phase-row-icon">🐟</span><div><div class="phase-row-label">饮食</div><div class="phase-row-text">减少咖啡因和盐，补 omega-3</div></div></div>
+      <div class="phase-row tip"><span class="phase-row-icon">💡</span><div><div class="phase-row-label">小提示</div><div class="phase-row-text">给自己空间，情绪波动是激素变化，不是你的错</div></div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="page-footer">参考来源：Stacy Sims 研究 / PMC 运动与月经周期文献</div>
+
+<script>
+const days = Array.from({length:29},(_,i)=>i);
+const estrogen=[10,10,12,15,20,28,38,50,62,72,80,85,88,100,85,30,25,30,35,40,45,48,45,40,32,25,18,12,10];
+const progest=[5,5,5,5,5,5,5,5,5,8,10,8,6,5,8,15,30,50,65,75,80,78,70,60,45,30,15,8,5];
+const lh=[5,5,5,5,5,6,7,8,10,12,15,18,20,95,35,10,8,7,6,6,6,6,6,5,5,5,5,5,5];
+const fsh=[8,8,10,12,15,18,22,26,28,30,28,24,20,40,20,10,8,7,7,7,8,8,8,7,7,6,6,6,8];
+const phaseColors=[
+  {from:0,to:5,color:'rgba(232,160,180,0.12)'},
+  {from:5,to:13,color:'rgba(143,191,122,0.12)'},
+  {from:13,to:16,color:'rgba(232,184,106,0.15)'},
+  {from:16,to:25,color:'rgba(168,159,212,0.12)'},
+  {from:25,to:28,color:'rgba(133,196,184,0.12)'},
+];
+const phasePlugin={id:'phases',beforeDraw(chart){const{ctx,chartArea:{left,right,top,bottom}}=chart;const W=right-left;phaseColors.forEach(p=>{const x0=left+(p.from/28)*W,x1=left+(p.to/28)*W;ctx.fillStyle=p.color;ctx.fillRect(x0,top,x1-x0,bottom-top);});}};
+new Chart(document.getElementById('hormoneChart'),{type:'line',plugins:[phasePlugin],data:{labels:days,datasets:[{label:'雌激素',data:estrogen,borderColor:'#D4537E',backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0.4},{label:'孕激素',data:progest,borderColor:'#7F77DD',backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0.4},{label:'LH',data:lh,borderColor:'#BA7517',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,tension:0.3},{label:'FSH',data:fsh,hidden:true,borderColor:'#1D9E75',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{title:c=>`第 ${c[0].label} 天`}}},scales:{x:{ticks:{color:'#A8A49C',font:{size:10},callback:v=>v%7===0?`第${v}天`:null,autoSkip:false,maxRotation:0},grid:{color:'rgba(0,0,0,0.04)'}},y:{min:0,max:110,ticks:{display:false},grid:{color:'rgba(0,0,0,0.04)'}}}}});
+</script>
+</body>
+</html>

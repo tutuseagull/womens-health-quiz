@@ -690,6 +690,18 @@
   <div class="section-list" id="section-list"></div>
 
   <div class="home-disclaimer" data-zh="📌 题目内容仅供健康科普，不构成医疗建议。如有任何健康疑虑，请咨询专业医生。" data-en="📌 For educational purposes only. Not medical advice. Please consult a healthcare professional for any health concerns."></div>
+
+  <div id="facts-footer" style="margin-top:32px;padding-top:20px;border-top:1px solid var(--border)">
+    <p style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:12px" id="facts-label">深入了解</p>
+    <a href="cycle-fitness.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;text-decoration:none;transition:opacity 0.15s" onmouseover="this.style.opacity=0.75" onmouseout="this.style.opacity=1">
+      <span style="font-size:20px">🏋</span>
+      <div>
+        <div style="font-size:14px;font-weight:500;color:var(--text)" id="facts-card-title">生理周期与健身</div>
+        <div style="font-size:12px;color:var(--text-muted)" id="facts-card-sub">激素变化、运动与饮食指南</div>
+      </div>
+      <span style="margin-left:auto;font-size:14px;color:var(--text-light)">→</span>
+    </a>
+  </div>
 </div>
 
 <!-- ══ QUIZ ══ -->
@@ -1179,6 +1191,9 @@ function renderHome() {
   document.querySelector('.home-disclaimer').textContent = lang === 'zh'
     ? '📌 题目内容仅供健康科普，不构成医疗建议。如有任何健康疑虑，请咨询专业医生。'
     : '📌 For educational purposes only. Not medical advice. Please consult a healthcare professional for any health concerns.';
+  document.getElementById('facts-label').textContent = lang === 'zh' ? '深入了解' : 'Learn more';
+  document.getElementById('facts-card-title').textContent = lang === 'zh' ? '生理周期与健身' : 'Cycle & Fitness';
+  document.getElementById('facts-card-sub').textContent = lang === 'zh' ? '激素变化、运动与饮食指南' : 'Hormones, training & nutrition guide';
 }
 
 // ══ START ══
