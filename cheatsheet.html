@@ -119,6 +119,7 @@ body {
   background: var(--bg);
 }
 .topic-nav::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) { .topic-nav::-webkit-scrollbar { display: none; } }
 .topic-pill {
   flex-shrink: 0;
   padding: 6px 14px;
@@ -317,36 +318,153 @@ body {
   border-color: var(--text);
   color: white;
 }
+
+/* ── MOBILE defaults ── */
+.sidebar { display: none; }
+.main-area { display: flex; flex-direction: column; flex: 1; }
+.desktop-layout { display: flex; }
+
+/* ── DESKTOP ── */
+@media (min-width: 768px) {
+  body {
+    padding-bottom: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .desktop-layout {
+    flex: 1;
+    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 40px;
+  }
+  .sidebar {
+    display: flex !important;
+    width: 240px;
+    flex-shrink: 0;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 28px 20px 20px 0;
+    gap: 14px;
+    border-right: 1px solid var(--border);
+  }
+  .sidebar-title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .sidebar-count { font-size: 12px; color: var(--muted); margin-top: -6px; }
+  .sidebar .topic-nav {
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 0;
+    border-bottom: none;
+    background: transparent;
+    gap: 3px;
+    flex: 1;
+  }
+  .sidebar .topic-pill {
+    text-align: left;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+  }
+  .sidebar .topic-pill:hover { background: var(--border); color: var(--text); }
+  .sidebar .topic-pill.active { background: var(--text); color: white; }
+  .main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-left: 32px;
+  }
+  .header {
+    position: static !important;
+    background: transparent !important;
+    border-bottom: 1px solid var(--border);
+    padding: 24px 0 14px;
+  }
+  .header-top { display: none !important; }
+  .topic-nav-mobile-wrap { display: none !important; }
+  .mobile-bottom-bar { display: none !important; }
+  .content {
+    padding: 0;
+    overflow-y: auto;
+    flex: 1;
+    padding-top: 4px;
+  }
+  .bottom-bar {
+    position: static;
+    border-top: 1px solid var(--border);
+    padding: 12px 0;
+    background: transparent;
+  }
+  .results-banner { padding: 10px 0; }
+  .no-results { padding: 60px 0; }
+  .section-head { padding: 28px 0 10px; }
+}
+@media (min-width: 1100px) {
+  .desktop-layout { padding: 0 56px; }
+  .sidebar { width: 260px; }
+}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-top">
-    <div class="header-title">女性健康问答 · 小抄</div>
-    <div class="q-count" id="q-count">52 题</div>
+<div class="desktop-layout">
+  <div class="sidebar" id="sidebar">
+    <div>
+      <div class="sidebar-title">女性健康问答 · 小抄</div>
+      <div class="sidebar-count" id="sidebar-count">52 题</div>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="search-sidebar" type="text" placeholder="搜索关键词…" oninput="onSearch(this.value)">
+      <button class="search-clear" id="search-clear-sidebar" onclick="clearSearch()">✕</button>
+    </div>
+    <div class="topic-nav" id="topic-nav"></div>
+    <div class="bottom-bar" style="padding:0;border:none;background:transparent;margin-top:auto">
+      <button class="bottom-btn" onclick="collapseAll()" style="font-size:12px;padding:8px">全部收起</button>
+      <button class="bottom-btn primary" onclick="expandAll()" style="font-size:12px;padding:8px">全部展开</button>
+    </div>
   </div>
-  <div class="search-wrap">
-    <span class="search-icon">🔍</span>
-    <input class="search-input" id="search" type="text" placeholder="搜索关键词…" oninput="onSearch(this.value)">
-    <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+
+  <div class="main-area">
+    <div class="header">
+      <div class="header-top">
+        <div class="header-title">女性健康问答 · 小抄</div>
+        <div class="q-count" id="q-count">52 题</div>
+      </div>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" id="search" type="text" placeholder="搜索关键词…" oninput="onSearch(this.value)">
+        <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+      </div>
+    </div>
+
+    <div class="topic-nav-mobile-wrap"><div class="topic-nav" id="topic-nav-mobile"></div></div>
+
+    <div class="results-banner" id="results-banner"></div>
+    <div class="content" id="content"></div>
+    <div class="no-results" id="no-results">
+      <div class="no-results-icon">🔍</div>
+      没有找到相关内容
+    </div>
+
+    <div class="bottom-bar mobile-bottom-bar">
+      <button class="bottom-btn" onclick="collapseAll()">全部收起</button>
+      <button class="bottom-btn primary" onclick="expandAll()">全部展开</button>
+    </div>
   </div>
-</div>
-
-<div class="topic-nav" id="topic-nav"></div>
-
-<div class="results-banner" id="results-banner"></div>
-
-<div class="content" id="content"></div>
-
-<div class="no-results" id="no-results">
-  <div class="no-results-icon">🔍</div>
-  没有找到相关内容
-</div>
-
-<div class="bottom-bar">
-  <button class="bottom-btn" onclick="collapseAll()">全部收起</button>
-  <button class="bottom-btn primary" onclick="expandAll()">全部展开</button>
 </div>
 
 <script>
@@ -512,6 +630,7 @@ function renderAll() {
   });
 
   document.getElementById('q-count').textContent = `${globalQNum} 题`;
+  const sc = document.getElementById('sidebar-count'); if(sc) sc.textContent = `${globalQNum} 题`;
 }
 
 function toggleCard(card) {
@@ -520,7 +639,13 @@ function toggleCard(card) {
 
 function onSearch(val) {
   searchQuery = val.trim().toLowerCase();
-  document.getElementById('search-clear').classList.toggle('visible', val.length > 0);
+  ['search', 'search-sidebar'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value !== val) el.value = val;
+  });
+  ['search-clear', 'search-clear-sidebar'].forEach(id => {
+    document.getElementById(id)?.classList.toggle('visible', val.length > 0);
+  });
 
   // Reset topic to all when searching
   if (searchQuery) {
@@ -533,14 +658,14 @@ function onSearch(val) {
 }
 
 function clearSearch() {
-  document.getElementById('search').value = '';
   onSearch('');
 }
 
 function setTopic(id) {
   currentTopic = id;
-  document.querySelectorAll('.topic-pill').forEach(p => p.classList.remove('active'));
-  document.querySelector(`[data-topic="${id}"]`).classList.add('active');
+  document.querySelectorAll('.topic-pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.topic === id);
+  });
 
   // Clear search when switching topic
   if (id !== 'all') {
@@ -618,23 +743,27 @@ function collapseAll() {
   allCards.forEach(({card}) => card.classList.remove('open'));
 }
 
-// Build topic nav
+// Build topic nav — populate desktop sidebar + mobile strip
 function buildNav() {
-  const nav = document.getElementById('topic-nav');
-  const all = document.createElement('button');
-  all.className = 'topic-pill active';
-  all.dataset.topic = 'all';
-  all.textContent = '全部';
-  all.onclick = () => setTopic('all');
-  nav.appendChild(all);
-
-  DATA.forEach(s => {
-    const btn = document.createElement('button');
-    btn.className = 'topic-pill';
-    btn.dataset.topic = s.id;
-    btn.textContent = s.short;
-    btn.onclick = () => setTopic(s.id);
-    nav.appendChild(btn);
+  ['topic-nav', 'topic-nav-mobile'].forEach(navId => {
+    const nav = document.getElementById(navId);
+    if (!nav) return;
+    const all = document.createElement('button');
+    all.className = 'topic-pill active';
+    all.dataset.topic = 'all';
+    all.dataset.nav = navId;
+    all.textContent = navId === 'topic-nav' ? '全部主题' : '全部';
+    all.onclick = () => setTopic('all');
+    nav.appendChild(all);
+    DATA.forEach(s => {
+      const btn = document.createElement('button');
+      btn.className = 'topic-pill';
+      btn.dataset.topic = s.id;
+      btn.dataset.nav = navId;
+      btn.textContent = s.short;
+      btn.onclick = () => setTopic(s.id);
+      nav.appendChild(btn);
+    });
   });
 }
 
