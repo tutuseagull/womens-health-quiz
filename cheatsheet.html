@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>女性健康问答 · 小抄</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg: #F8F6F2;
+  --surface: #FFFFFF;
+  --text: #1C1C1A;
+  --muted: #6B6860;
+  --light: #A8A49C;
+  --border: #E4E0D8;
+  --accent: #0891B2;
+  --accent-light: #E0F4F8;
+  --highlight: #FFF3B0;
+}
+
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  padding-bottom: 80px;
+}
+
+/* ── STICKY HEADER ── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.header-title {
+  font-family: 'IBM Plex Serif', serif;
+  font-size: 17px;
+  font-weight: 600;
+  flex: 1;
+}
+
+.q-count {
+  font-size: 12px;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+/* Search */
+.search-wrap {
+  position: relative;
+}
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: var(--light);
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  padding: 10px 36px 10px 36px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--accent); }
+.search-clear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: var(--light);
+  color: white;
+  font-size: 11px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.search-clear.visible { display: flex; }
+
+/* ── TOPIC NAV ── */
+.topic-nav {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.topic-nav::-webkit-scrollbar { display: none; }
+.topic-pill {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.topic-pill:active { transform: scale(0.96); }
+.topic-pill.active {
+  background: var(--text);
+  border-color: var(--text);
+  color: white;
+}
+
+/* ── SEARCH RESULTS BANNER ── */
+.results-banner {
+  padding: 10px 16px;
+  font-size: 13px;
+  color: var(--muted);
+  display: none;
+}
+.results-banner.visible { display: block; }
+.results-banner span { color: var(--text); font-weight: 500; }
+
+/* ── CONTENT ── */
+.content { padding: 0 16px; }
+
+/* Section heading */
+.section-head {
+  padding: 24px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-title {
+  font-family: 'IBM Plex Serif', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+.section-count {
+  font-size: 11px;
+  color: var(--light);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2px 8px;
+}
+
+/* Question card */
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: opacity 0.2s;
+}
+.q-card.hidden { display: none; }
+
+.q-header {
+  padding: 14px 16px 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+.q-num {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--light);
+  padding-top: 2px;
+  flex-shrink: 0;
+  min-width: 28px;
+}
+.q-text {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+  flex: 1;
+}
+.q-text b { font-weight: 600; }
+.q-text mark {
+  background: var(--highlight);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+.q-chevron {
+  font-size: 12px;
+  color: var(--light);
+  flex-shrink: 0;
+  padding-top: 3px;
+  transition: transform 0.2s;
+}
+.q-card.open .q-chevron { transform: rotate(180deg); }
+
+.q-answer {
+  display: none;
+  padding: 0 16px 14px 38px;
+}
+.q-card.open .q-answer { display: block; }
+
+.answer-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.answer-text {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  background: var(--accent-light);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}
+.answer-text b { font-weight: 600; }
+.answer-text mark { background: var(--highlight); border-radius: 2px; padding: 0 1px; }
+
+.explanation-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 4px;
+}
+.explanation-text {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.explanation-text mark { background: var(--highlight); border-radius: 2px; padding: 0 1px; }
+
+/* Type badge */
+.type-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--light);
+  border: 1px solid var(--border);
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* No results */
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+  font-size: 14px;
+  display: none;
+}
+.no-results.visible { display: block; }
+.no-results-icon { font-size: 36px; margin-bottom: 12px; }
+
+/* ── BOTTOM EXPAND ALL ── */
+.bottom-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  padding: 12px 16px;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+}
+.bottom-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.bottom-btn:active { transform: scale(0.97); }
+.bottom-btn.primary {
+  background: var(--text);
+  border-color: var(--text);
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-title">女性健康问答 · 小抄</div>
+    <div class="q-count" id="q-count">52 题</div>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="search" type="text" placeholder="搜索关键词…" oninput="onSearch(this.value)">
+    <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+  </div>
+</div>
+
+<div class="topic-nav" id="topic-nav"></div>
+
+<div class="results-banner" id="results-banner"></div>
+
+<div class="content" id="content"></div>
+
+<div class="no-results" id="no-results">
+  <div class="no-results-icon">🔍</div>
+  没有找到相关内容
+</div>
+
+<div class="bottom-bar">
+  <button class="bottom-btn" onclick="collapseAll()">全部收起</button>
+  <button class="bottom-btn primary" onclick="expandAll()">全部展开</button>
+</div>
+
+<script>
+const DATA = [
+  {
+    id: 'a', title: '生理周期与激素', short: '激素',
+    questions: [
+      { type:'排序', q:'将以下三个阶段按月经周期顺序排列：月经期，___，___，___。', answerParts:[{t:'月经期，'},{t:'卵泡期',b:true},{t:'，'},{t:'排卵期',b:true},{t:'，'},{t:'黄体期',b:true}], explanation:'月经期后雌激素开始上升进入卵泡期，排卵后黄体素主导进入黄体期，最终黄体萎缩、激素下降，触发下一次月经。' },
+      { type:'选择', q:'以下哪项关于经血量的说法是正确的？', answer:'正常经血量每次约为5–80ml。', explanation:'正常经血量为5–80ml，超过80ml即为月经过多；血块小于2.5cm通常属正常范围；正常经期为2–7天。' },
+      { type:'选择', q:'雌激素（Estrogen）在月经周期中主要在哪个阶段达到峰值？', answer:'排卵前（卵泡期末）。', explanation:'雌激素在排卵前达到第一个峰值，触发黄体生成素（LH）激增引发排卵；黄体期有第二个较小的峰值，之后随黄体萎缩迅速下降。' },
+      { type:'选择', q:'经前综合征（PMS）最常见于哪个阶段？', answer:'黄体期晚期，孕激素和雌激素同时下降。', explanation:'黄体期末激素骤降，影响血清素等神经递质，引发情绪波动、腹胀、疲劳等PMS症状。' },
+      { type:'选择', q:'黄体期（前到中期）特别想吃东西，背后的原因是？', answer:'孕激素升高，基础代谢提升，能量需求增加。', explanation:'黄体期基础代谢可升高约100–300大卡/天，食欲增加是正常生理信号。适当增加蛋白质和复合碳水摄入，比强行压制更有帮助。' },
+      { type:'选择', q:'月经不调一定是激素紊乱吗？', answer:'不对，压力、体重骤变、过度运动等非激素因素也可导致。', explanation:'月经周期受下丘脑-垂体-卵巢轴调控，极度节食、高强度训练、慢性压力、体重骤变等都可能干扰这一轴，导致月经推迟或停经。' },
+      { type:'填空', q:'当身体承受慢性压力时，___升高会干扰下丘脑分泌GnRH，导致排卵延迟；同样的机制也解释了为什么过度节食或___的人容易月经不规律。', answerParts:[{t:'当身体承受慢性压力时，'},{t:'皮质醇',b:true},{t:'升高会干扰下丘脑分泌GnRH，导致排卵延迟；同样的机制也解释了为什么过度节食或'},{t:'过度运动',b:true},{t:'的人容易月经不规律。'}], explanation:'下丘脑对能量状态和压力信号都非常敏感。无论是心理压力还是身体压力（热量不足、过度训练），都会通过皮质醇抑制GnRH脉冲，打乱整条生殖轴。' },
+    ]
+  },
+  {
+    id: 'b', title: '生理周期与健身', short: '健身',
+    questions: [
+      { type:'选择', q:'经期可以运动吗？', answer:'可以，激素低位时适合适度力量训练。', explanation:'经期适度运动甚至能缓解痛经。运动时可能感觉流量变大，那是血液排出速度加快，总出血量不会增加。经期禁止运动是误解。' },
+      { type:'选择', q:'为什么历史上运动科学研究长期缺乏女性数据？', answer:'激素周期被视为干扰变量，女性受试者常被排除。', explanation:'大量运动和营养研究以男性为主要受试者，女性长期依赖男性数据制定训练方案。直到近年来，针对女性的运动科学研究才逐渐增多。' },
+      { type:'选择', q:'月经周期哪个阶段最适合高强度训练？', answer:'卵泡期后段（排卵前）。', explanation:'卵泡期雌激素持续升高，肌肉合成能力强、恢复快、情绪稳定，是力量训练效果最好的窗口。' },
+      { type:'选择', q:'进入黄体期后，运动体感变差是因为？', answer:'孕激素升高，体温升高、恢复更慢。', explanation:'黄体期孕激素主导，体温升高约0.3–0.5°C，心率偏快，主观感受更费劲。这是真实的生理变化，适合调低训练强度，增加恢复性训练。' },
+      { type:'填空', q:'经期流失较多的矿物质是___，搭配富含维生素___的食物可促进吸收；补充___有助于缓解肌肉痉挛和经前情绪波动。', answerParts:[{t:'经期流失较多的矿物质是'},{t:'铁',b:true},{t:'，搭配富含维生素'},{t:'C',b:true},{t:'的食物可促进吸收；补充'},{t:'镁',b:true},{t:'有助于缓解肌肉痉挛和经前情绪波动。'}], explanation:'铁流失影响运动耐力，镁参与肌肉放松和神经调节，对经前综合征（PMS）症状也有一定改善作用。' },
+      { type:'选择', q:'训练后补充蛋白质，女性和男性有什么不同？', answer:'女性训练后蛋白质合成窗口更短，推荐在30分钟内补充。', explanation:'研究显示女性训练后蛋白质合成窗口比男性更短，建议在30分钟内摄入。男性的窗口期相对更长，这是两者训练营养策略的关键差异之一。' },
+      { type:'配对', q:'根据月经周期四个阶段，将训练类型与最适合的阶段配对：', answerParts:[{t:'大重量力量训练 → '},{t:'卵泡期后段',b:true},{t:'　低强度有氧/拉伸 → '},{t:'经期或黄体期晚期',b:true},{t:'　冲PB → '},{t:'排卵日前后',b:true},{t:'　中等强度+注重恢复 → '},{t:'黄体期早中段',b:true}], explanation:'这是周期化训练（Cycle Syncing）的基本框架。个体差异大，核心是学会观察自己身体的信号。' },
+    ]
+  },
+  {
+    id: 'c', title: '避孕科学', short: '避孕',
+    questions: [
+      { type:'选择', q:'紧急避孕药最迟应在无保护性行为后多少小时内服用？', answer:'72小时内。', explanation:'常见紧急避孕药（如左炔诺孕酮）需在72小时内服用，越早效果越好。另有含乌利司他的紧急避孕药可延长至120小时，但需医生处方。' },
+      { type:'选择', q:'短效避孕药和紧急避孕药最主要的区别是？', answer:'短效是日常预防，紧急是事后补救，剂量和机制不同。', explanation:'短效避孕药每日服用，通过持续抑制排卵预防怀孕；紧急避孕药是高剂量激素，用于事后补救，不适合作为常规避孕手段。' },
+      { type:'选择', q:'以下哪种避孕方式失败率最低？', answer:'含激素宫内节育器（IUD）。', explanation:'IUD放置后持续有效、不依赖每日操作，完美使用失败率约0.1–0.2%，是目前最可靠的可逆避孕方式之一。' },
+      { type:'选择', q:'关于短效避孕药的副作用，以下哪项是误解？', answer:'（误解项）长期服用会导致不孕。', explanation:'大多数初期副作用3个月内会改善。吸烟者及有偏头痛史者需特别注意血栓风险，用药前告知医生。' },
+      { type:'选择', q:'停服短效避孕药后，排卵功能多久恢复？', answer:'通常1–3个月，部分人停药当月即恢复。', explanation:'避孕药导致不孕是误解。停药后激素很快恢复，备孕一般建议等1–2个正常周期，是为了推算预产期，不是因为生育力未恢复。' },
+      { type:'填空', q:'口服避孕药除避孕外，常见的医疗用途包括：治疗___、缓解___、调节月经周期，以及治疗子宫内膜异位症等妇科疾病。', answerParts:[{t:'口服避孕药除避孕外，常见的医疗用途包括：治疗'},{t:'痤疮（暗疮）',b:true},{t:'、缓解'},{t:'痛经',b:true},{t:'、调节月经周期，以及治疗子宫内膜异位症等妇科疾病。'}], explanation:'避孕药通过调节雌孕激素水平，对多种激素相关症状有治疗效果，是妇科临床中用途最广的药物之一。' },
+      { type:'选择', q:'含铜宫内节育器（Copper IUD，不含激素）的避孕原理是？', answer:'铜离子对精子有毒性，同时干扰受精卵着床。', explanation:'含铜IUD不含激素，通过铜离子的杀精作用及对子宫环境的影响达到避孕效果，适合不宜使用激素的人群。' },
+      { type:'填空', q:'有先兆偏头痛的女性应避免含雌激素的避孕方式。请列举两种适合她们的替代选项：___和___。', answerParts:[{t:'有先兆偏头痛的女性应避免含雌激素的避孕方式。请列举两种适合她们的替代选项：'},{t:'迷你丸 / 含激素IUD / 含铜IUD / 避孕套（任意两种）',b:true}], explanation:'有先兆偏头痛是含雌激素避孕药的禁忌之一，两者叠加会显著升高缺血性卒中风险。' },
+    ]
+  },
+  {
+    id: 'd', title: '妇科健康与检查', short: '妇科',
+    questions: [
+      { type:'找错', q:'下列关于Pap smear（巴氏涂片）的说法，哪一项是错误的？', answer:'错误项：只要Pap smear结果显示正常，就百分之百代表体内没有感染HPV病毒。', explanation:'Pap smear检查的是"细胞有没有变坏"，而HPV检查的是"有没有病毒"。有时候病毒已经存在，但还没引起细胞病变，此时涂片会显示正常，但病毒其实是阳性的。' },
+      { type:'排序', q:'在女性盆腔中，由前（腹侧）向后（背侧）排列：___，___，___。', answerParts:[{t:'由前向后：'},{t:'尿道',b:true},{t:'→'},{t:'阴道',b:true},{t:'→'},{t:'直肠',b:true}], explanation:'直肠内存有大量大肠杆菌等细菌。从前往后擦可以有效防止粪便中的细菌被带入阴道或尿道，减少炎症风险。' },
+      { type:'找错', q:'关于男性与HPV的关系，下列哪项说法是错误的？', answer:'错误项：男性可以通过常规的尿液化验或抽血轻松筛查出是否感染了高危型HPV。', explanation:'目前全球范围内尚无针对男性的大规模标准HPV筛查指南。尿检或抽血无法准确查出皮肤粘膜的HPV感染。' },
+      { type:'选择', q:'关于HPV"高危型"和"低危型"的描述，正确的是？', answer:'高危型（如16、18）是导致宫颈癌的主因。', explanation:'高危型HPV（主要是16、18型）是导致宫颈癌的主要原因；低危型（如6、11型）主要引起尖锐湿疣；HPV编号大小与毒性无关。' },
+      { type:'多选', q:'Pap smear除了筛查宫颈癌，还可能顺带发现什么？（多选）', answer:'✓ 阴道微生物感染　✓ 激素水平（通过细胞形态）　✓ 子宫内膜异常　✗ 胎儿性别（不可检测）', explanation:'Pap smear采集的是母体自身的宫颈细胞，与胎儿无关，完全不能检测怀孕或性别。' },
+      { type:'找错', q:'关于子宫肌瘤的处理，下列哪项说法是错误的？', answer:'错误项：只要体检B超发现了子宫肌瘤，为了防止它恶变，所有患者都应立即手术切除。', explanation:'子宫肌瘤的恶变概率极低（通常在0.5%以下）。如果肌瘤很小且没有任何不舒服，医生通常建议"与瘤共存"，定期复查即可。' },
+      { type:'选择', q:'关于"巧克力囊肿"的临床特征，下列哪项描述最准确？', answer:'除了导致剧烈痛经，它还可能因为与周围组织粘连而影响输卵管功能，是导致女性不孕的常见原因之一。', explanation:'巧克力囊肿引起的痛经通常是进行性加重（一年比一年痛），而不是减轻。名字源于囊肿内陈旧积血的颜色和性状像巧克力，与饮食无关。' },
+      { type:'选择', q:'小美在体检报告中看到了"子宫内膜息肉"的诊断，下列哪种情况最有可能是它引起的？', answer:'异常出血：非经期的点滴出血，或者性生活后的少量出血。', explanation:'息肉是子宫内膜上的过度增生，最常见的表现是月经不规律、经期延长或非经期异常阴道出血。' },
+    ]
+  },
+  {
+    id: 'e', title: '生育、产后与更年期', short: '生育',
+    questions: [
+      { type:'选择', q:'女性生育力下降最主要的原因是？', answer:'卵子数量和质量随年龄下降。', explanation:'女性出生时卵子数量已固定，随年龄增长不断减少且质量下降，30岁后生育力逐渐降低，35岁后下降明显加速。' },
+      { type:'选择', q:'产后盆底肌功能障碍最常见的症状是？', answer:'漏尿（压力性尿失禁）。', explanation:'盆底肌在分娩过程中承受巨大压力，产后松弛可导致在咳嗽、打喷嚏、运动时漏尿，是产后最常见但被忽视的问题之一。' },
+      { type:'选择', q:'以下关于围绝经期和绝经的说法，哪项正确？', answer:'围绝经期是绝经前的过渡阶段，可能从40–45岁开始。', explanation:'围绝经期是激素开始波动的阶段，症状可能包括月经不规律、潮热、睡眠问题等。绝经的定义是连续12个月无月经。' },
+      { type:'选择', q:'冻卵成功率主要受哪些因素影响？', answer:'年龄和冷冻卵子数量。', explanation:'年龄决定卵子质量，冷冻数量决定可用胚胎数，两者是影响冻卵成功率最关键的因素。' },
+      { type:'选择', q:'关于自然怀孕和冻卵的"成功率"，以下哪个数据更接近科学事实？', answer:'自然怀孕后，大约有10–20%的概率会发生早期流产。', explanation:'自然怀孕后流产的概率约为10–20%；35岁以上冻卵后每次移植的活产率约为20–30%。' },
+      { type:'选择', q:'激素替代疗法（HRT）主要用于缓解哪些更年期症状？', answer:'潮热、盗汗、睡眠障碍、阴道干涩。', explanation:'HRT可有效缓解多种绝经相关症状，并有助于保护骨密度。但有乳腺癌、血栓或心血管病史者需谨慎。' },
+      { type:'选择', q:'产后抑郁（PPD）和Baby Blues有什么区别？', answer:'Baby Blues通常在产后2周内自行消退，PPD症状更重、持续更长。', explanation:'Baby Blues影响约70–80%的产妇，通常在产后2周内消退。PPD症状更严重，持续超过2周应及时寻求专业帮助。' },
+      { type:'填空', q:'凯格尔运动的正确做法是收缩盆底肌而非腹肌或臀肌，每次持续___秒后放松。以下情况单独做凯格尔可能无效甚至有害：盆底肌___的人群，此时需要的是放松而非收缩。', answerParts:[{t:'凯格尔运动的正确做法是收缩盆底肌，每次持续'},{t:'3–5秒',b:true},{t:'后放松。盆底肌'},{t:'过度紧张（高张）',b:true},{t:'的人群单独做凯格尔可能无效甚至有害，此时需要的是放松而非收缩。'}], explanation:'凯格尔运动并非对所有人适用。盆底问题分为"肌肉无力"和"肌肉过紧"两类，后者做凯格尔反而会加重症状。建议产后由专业盆底物理治疗师评估后再制定方案。' },
+    ]
+  },
+  {
+    id: 'f', title: '身体构造与常识辟谣', short: '辟谣',
+    questions: [
+      { type:'判断', q:'处女膜是一层"完全封住阴道口"的膜。（对/错）', answer:'错。', explanation:'多数人的处女膜是有开口的薄组织边缘，否则经血无法排出。处女膜的形状因人而异，与性经历无关。' },
+      { type:'判断', q:'性生活后出现尿路感染（UTI）说明这个人不干净或不检点。（对/错）', answer:'错。', explanation:'UTI常见原因是细菌进入尿道，与"人品/羞耻"无关；女性尿道更短更容易发生。性行为后排尿是预防UTI的有效方法之一。' },
+      { type:'排序', q:'请按照从上到下的顺序排列：阴蒂、阴道口、尿道口、肛门。', answerParts:[{t:'从上到下：'},{t:'阴蒂',b:true},{t:'→'},{t:'尿道口',b:true},{t:'→'},{t:'阴道口',b:true},{t:'→'},{t:'肛门',b:true}], explanation:'了解正确的解剖位置有助于自我健康管理。' },
+      { type:'选择', q:'关于"阴道会因为性生活次数变松"的说法，哪项更贴近医学常识？', answer:'阴道是有弹性的肌性管道，会随兴奋、分娩、激素变化出现暂时变化，但不由"次数"决定。', explanation:'阴道的张力与盆底肌、分娩史、年龄/激素、个体差异更相关，不是"用旧了"。' },
+      { type:'判断', q:'阴道有轻微气味就代表不卫生。（对/错）', answer:'错。', explanation:'轻微气味是正常体味的一部分；若出现明显腥臭、豆腐渣样分泌物、瘙痒疼痛才需要就医评估。' },
+      { type:'填空', q:'阴道的尽头连接的是___（部位），不是一个"通往子宫的敞开大洞"。', answerParts:[{t:'阴道的尽头连接的是'},{t:'宫颈',b:true},{t:'（部位），不是一个"通往子宫的敞开大洞"。'}], explanation:'宫颈是子宫的入口，平时处于封闭状态。宫颈口非常小，通常只有在分娩时才会充分扩张。' },
+      { type:'填空', q:'"阴道冲洗更干净"是误区，因为可能破坏阴道的___平衡，反而更易感染。', answerParts:[{t:'"阴道冲洗更干净"是误区，因为可能破坏阴道的'},{t:'菌群 / 酸碱（pH）',b:true},{t:'平衡，反而更易感染。'}], explanation:'阴道有自我清洁能力，健康的阴道菌群（以乳酸杆菌为主）维持酸性环境，过度冲洗会破坏这一平衡。' },
+    ]
+  },
+  {
+    id: 'g', title: '心理健康、性健康与常识', short: '性健康',
+    questions: [
+      { type:'选择', q:'下列关于单纯疱疹病毒（HSV）的说法，哪项是正确的？', answer:'病毒会长期潜伏在神经节中，在免疫力下降时可能再次诱发。', explanation:'疱疹病毒具有潜伏性，虽然可以通过药物控制和缓解症状，但目前尚无法完全从体内清除。' },
+      { type:'选择', q:'衣原体感染常被称为"沉默的感染"，主要原因是什么？', answer:'大多数感染者（尤其是女性）在早期几乎没有任何明显症状。', explanation:'衣原体感染的隐蔽性很强。由于早期症状不明显，很多女性是在体检或出现盆腔炎等并发症时才发现。' },
+      { type:'选择', q:'梅毒在早期（一期）最典型的特征是什么？', answer:'生殖器部位出现不痛不痒的硬性溃疡（医学称"硬下疳"）。', explanation:'梅毒一期的溃疡通常是无痛的，所以很容易被忽视。如果发现身体出现不明原因的无痛溃疡，应及时就医。' },
+      { type:'选择', q:'性爱过程中如果感到明显的疼痛，以下哪种做法是最不推荐的？', answer:'（最不推荐）告诉自己"忍一忍就过去了"，继续完成性爱。', explanation:'疼痛是身体发出的警报信号。强行忍痛不仅会破坏心理上的愉悦感，还可能导致物理损伤或形成心理防御，让疼痛问题进一步加剧。' },
+      { type:'选择', q:'关于女性获得性高潮的途径，以下哪项描述符合医学事实？', answer:'大多数女性需要通过刺激阴蒂（Clitoris）才能获得高潮。', explanation:'研究显示，约70–80%的女性无法仅通过单纯的阴道性交达到高潮，阴蒂的刺激对大多数女性来说至关重要。' },
+      { type:'选择', q:'性爱时出现阴道干涩，以下哪个因素可能是原因？', answer:'以上都有可能（哺乳/绝经期雌激素下降、药物副作用、前戏不足或心理压力）。', explanation:'湿润度受激素（如产后、更年期）、药物、压力以及前戏充分程度的多重影响。' },
+      { type:'选择', q:'关于"潮吹"（女性射精）和性反应，以下说法正确的是：', answer:'这是一种正常的生理反应，但在女性群体中并非普遍发生，且不应作为评价性爱质量的标准。', explanation:'每个人的身体反应都是独特的。性爱的质量取决于双方的愉悦感和亲密感，而非是否出现了某种特定的生理指标。' },
+      { type:'选择', q:'在性爱中，关于"同意（Consent）"的理解，哪项是正确的？', answer:'同意必须是自愿的、清醒的，并且在任何时候都可以撤回。', explanation:'尊重是性爱的基础。无论是初次还是长期伴侣，沟通和双向的自愿是最高原则。同意可以在任何时候撤回，且必须是在清醒状态下自愿给出的。' },
+    ]
+  },
+];
+
+// ── RENDER ──
+let currentTopic = 'all';
+let searchQuery = '';
+let globalQNum = 0;
+const allCards = [];
+
+function highlight(text, query) {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(escaped, 'gi'), m => `<mark>${m}</mark>`);
+}
+
+function renderAnswerParts(parts, query) {
+  return parts.map(p => {
+    const h = highlight(p.t, query);
+    return p.b ? `<b>${h}</b>` : h;
+  }).join('');
+}
+
+function buildCard(section, q, num) {
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.dataset.section = section.id;
+  card.dataset.text = (q.q + ' ' + (q.answer || '') + ' ' + (q.answerParts ? q.answerParts.map(p=>p.t).join('') : '') + ' ' + q.explanation).toLowerCase();
+
+  const isInline = ['排序','填空','配对','判断'].includes(q.type);
+  const answerHTML = isInline
+    ? `<div class="answer-text">${renderAnswerParts(q.answerParts || [{t: q.answer||''}], '')}</div>`
+    : `<div class="answer-text"><b>${highlight(q.answer||'', '')}</b></div>`;
+
+  card.innerHTML = `
+    <div class="q-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-num">Q${num}</div>
+      <div class="q-text">${highlight(q.q, '')} <span class="type-badge">${q.type}</span></div>
+      <div class="q-chevron">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">答案</div>
+      ${answerHTML}
+      <div class="explanation-label">解释</div>
+      <div class="explanation-text">${highlight(q.explanation, '')}</div>
+    </div>`;
+
+  return card;
+}
+
+function renderAll() {
+  const content = document.getElementById('content');
+  content.innerHTML = '';
+  globalQNum = 0;
+
+  DATA.forEach(section => {
+    const secEl = document.createElement('div');
+    secEl.dataset.sectionBlock = section.id;
+
+    const head = document.createElement('div');
+    head.className = 'section-head';
+    head.innerHTML = `<div class="section-title">${section.title}</div><div class="section-count">${section.questions.length} 题</div>`;
+    secEl.appendChild(head);
+
+    section.questions.forEach(q => {
+      globalQNum++;
+      const card = buildCard(section, q, globalQNum);
+      allCards.push({ card, section, q, num: globalQNum });
+      secEl.appendChild(card);
+    });
+
+    content.appendChild(secEl);
+  });
+
+  document.getElementById('q-count').textContent = `${globalQNum} 题`;
+}
+
+function toggleCard(card) {
+  card.classList.toggle('open');
+}
+
+function onSearch(val) {
+  searchQuery = val.trim().toLowerCase();
+  document.getElementById('search-clear').classList.toggle('visible', val.length > 0);
+
+  // Reset topic to all when searching
+  if (searchQuery) {
+    currentTopic = 'all';
+    document.querySelectorAll('.topic-pill').forEach(p => p.classList.remove('active'));
+    document.querySelector('[data-topic="all"]').classList.add('active');
+  }
+
+  applyFilters();
+}
+
+function clearSearch() {
+  document.getElementById('search').value = '';
+  onSearch('');
+}
+
+function setTopic(id) {
+  currentTopic = id;
+  document.querySelectorAll('.topic-pill').forEach(p => p.classList.remove('active'));
+  document.querySelector(`[data-topic="${id}"]`).classList.add('active');
+
+  // Clear search when switching topic
+  if (id !== 'all') {
+    document.getElementById('search').value = '';
+    searchQuery = '';
+    document.getElementById('search-clear').classList.remove('visible');
+  }
+
+  applyFilters();
+
+  // Scroll to section if specific topic selected
+  if (id !== 'all') {
+    const block = document.querySelector(`[data-section-block="${id}"]`);
+    if (block) setTimeout(() => block.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+}
+
+function applyFilters() {
+  let visible = 0;
+
+  allCards.forEach(({ card, section, q }) => {
+    const matchesTopic = currentTopic === 'all' || section.id === currentTopic;
+    const matchesSearch = !searchQuery || card.dataset.text.includes(searchQuery);
+    const show = matchesTopic && matchesSearch;
+
+    card.classList.toggle('hidden', !show);
+    if (show) {
+      visible++;
+      // Update highlights
+      const qText = card.querySelector('.q-text');
+      const answerText = card.querySelector('.answer-text');
+      const explanationText = card.querySelector('.explanation-text');
+      const isInline = ['排序','填空','配对','判断'].includes(q.type);
+
+      qText.innerHTML = highlight(q.q, searchQuery) + ` <span class="type-badge">${q.type}</span>`;
+      if (isInline) {
+        answerText.innerHTML = renderAnswerParts(q.answerParts || [{t: q.answer||''}], searchQuery);
+      } else {
+        answerText.innerHTML = `<b>${highlight(q.answer||'', searchQuery)}</b>`;
+      }
+      explanationText.innerHTML = highlight(q.explanation, searchQuery);
+    }
+  });
+
+  // Show/hide section blocks
+  DATA.forEach(section => {
+    const block = document.querySelector(`[data-section-block="${section.id}"]`);
+    const hasVisible = allCards.some(({card, section: s}) => s.id === section.id && !card.classList.contains('hidden'));
+    if (block) block.style.display = hasVisible ? '' : 'none';
+  });
+
+  // Banner
+  const banner = document.getElementById('results-banner');
+  const noResults = document.getElementById('no-results');
+  if (searchQuery) {
+    banner.innerHTML = `搜索 "<span>${searchQuery}</span>" · 找到 <span>${visible}</span> 题`;
+    banner.classList.add('visible');
+  } else {
+    banner.classList.remove('visible');
+  }
+  noResults.classList.toggle('visible', visible === 0);
+
+  // Auto-expand cards when searching
+  allCards.forEach(({card}) => {
+    if (searchQuery && !card.classList.contains('hidden')) card.classList.add('open');
+    else if (!searchQuery) card.classList.remove('open');
+  });
+}
+
+function expandAll() {
+  allCards.forEach(({card}) => { if (!card.classList.contains('hidden')) card.classList.add('open'); });
+}
+
+function collapseAll() {
+  allCards.forEach(({card}) => card.classList.remove('open'));
+}
+
+// Build topic nav
+function buildNav() {
+  const nav = document.getElementById('topic-nav');
+  const all = document.createElement('button');
+  all.className = 'topic-pill active';
+  all.dataset.topic = 'all';
+  all.textContent = '全部';
+  all.onclick = () => setTopic('all');
+  nav.appendChild(all);
+
+  DATA.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'topic-pill';
+    btn.dataset.topic = s.id;
+    btn.textContent = s.short;
+    btn.onclick = () => setTopic(s.id);
+    nav.appendChild(btn);
+  });
+}
+
+buildNav();
+renderAll();
+</script>
+</body>
+</html>
