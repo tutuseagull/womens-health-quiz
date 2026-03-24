@@ -13,13 +13,13 @@ html, body { max-width: 100%; overflow-x: hidden; }
 :root {
   --bg: #F8F6F2;
   --surface: #FFFFFF;
-  --text: #1C1C1A;
-  --muted: #6B6860;
-  --light: #A8A49C;
-  --border: #E4E0D8;
-  --accent: #0891B2;
-  --accent-light: #E0F4F8;
-  --highlight: #FFF3B0;
+  --text: #1C1820;
+  --muted: #6B6070;
+  --light: #A89EB0;
+  --border: #E4DDD8;
+  --accent: #7A5A8A;
+  --accent-light: #F0E5F5;
+  --highlight: #EDE0F8;
 }
 
 body {
@@ -419,9 +419,227 @@ body {
   .desktop-layout { padding: 0 56px; }
   .sidebar { width: 260px; }
 }
+.cs-lang-btn {
+  background: none; border: 1.5px solid var(--border); border-radius: 6px;
+  padding: 3px 8px; font-size: 11px; cursor: pointer;
+  font-family: 'Instrument Sans', sans-serif; color: var(--muted);
+}
+.cs-lang-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+</style>
+
+<style>
+/* NAV */
+.global-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 12px 20px;
+  pointer-events: none;
+}
+.nav-hamburger {
+  pointer-events: all;
+  background: #FFFFFF;
+  border: 1.5px solid #E4DDD8;
+  border-radius: 10px;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #1C1820;
+  transition: all 0.15s;
+}
+.nav-hamburger:hover { background: #F8F6F2; }
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0,0,0,0.3);
+}
+.nav-overlay.open { display: block; }
+.nav-drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  z-index: 1001;
+  width: min(420px, 92vw);
+  background: #F8F6F2;
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.nav-drawer.open { transform: translateX(0); }
+.nav-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #E4DDD8;
+  flex-shrink: 0;
+}
+.nav-drawer-title {
+  font-family: 'IBM Plex Serif', serif;
+  font-size: 16px;
+  color: #1C1820;
+}
+.nav-close {
+  background: none; border: none;
+  font-size: 20px; cursor: pointer;
+  color: #6B6070;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.nav-close:hover { color: #1C1820; }
+.nav-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+@media (min-width: 600px) {
+  .nav-columns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+}
+@media (max-width: 599px) {
+  .nav-columns { display: flex; flex-direction: column; gap: 28px; }
+}
+.nav-col-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6B6070;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #E4DDD8;
+}
+.nav-col-title-btn {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #7A5A8A;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #E4DDD8;
+  background: none;
+  border-top: none; border-left: none; border-right: none;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  font-family: 'Instrument Sans', sans-serif;
+  transition: opacity 0.15s;
+}
+.nav-col-title-btn:hover { opacity: 0.7; }
+.nav-col-items { display: flex; flex-direction: column; gap: 4px; }
+.nav-item {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1C1820;
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s;
+  font-family: 'Instrument Sans', sans-serif;
+}
+.nav-item:hover { background: #FFFFFF; }
+.nav-item.sub {
+  font-size: 13px;
+  color: #6B6070;
+  padding-left: 18px;
+}
+.nav-item.sub:hover { color: #1C1820; background: #FFFFFF; }
+.nav-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #E4DDD8;
+  flex-shrink: 0;
+}
+.nav-lang-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #6B6070;
+}
+.nav-lang-btn {
+  background: none;
+  border: 1.5px solid #E4DDD8;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-family: 'Instrument Sans', sans-serif;
+  cursor: pointer;
+  color: #6B6070;
+  transition: all 0.15s;
+}
+.nav-lang-btn.active {
+  background: #7A5A8A;
+  border-color: #7A5A8A;
+  color: white;
+}
+.cs-lang-btn {
+  background: none; border: 1.5px solid var(--border); border-radius: 6px;
+  padding: 3px 8px; font-size: 11px; cursor: pointer;
+  font-family: 'Instrument Sans', sans-serif; color: var(--muted);
+}
+.cs-lang-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
 </style>
 </head>
 <body>
+
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+<nav class="global-nav">
+  <button class="nav-hamburger" onclick="openNav()" aria-label="Menu">☰</button>
+</nav>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="nav-drawer-header">
+    <span class="nav-drawer-title">了解你的身体</span>
+    <button class="nav-close" onclick="closeNav()">✕</button>
+  </div>
+  <div class="nav-body">
+    <div class="nav-columns">
+      <div class="nav-col">
+        <div class="nav-col-items">
+          <a class="nav-item" href="index.html" onclick="closeNav()">主页</a>
+          <a class="nav-item" href="cheatsheet.html" onclick="closeNav()">题目小抄</a>
+        </div>
+      </div>
+      <div class="nav-col">
+        <button class="nav-col-title-btn" onclick="window.location.href='index.html'">知识问答</button>
+        <div class="nav-col-items">
+          <a class="nav-item sub" href="index.html">生理周期与激素</a>
+          <a class="nav-item sub" href="index.html">生理周期与健身</a>
+          <a class="nav-item sub" href="index.html">避孕科学</a>
+          <a class="nav-item sub" href="index.html">妇科健康与检查</a>
+          <a class="nav-item sub" href="index.html">生育、产后与更年期</a>
+          <a class="nav-item sub" href="index.html">身体构造与常识辟谣</a>
+          <a class="nav-item sub" href="index.html">心理健康、性健康与常识</a>
+        </div>
+      </div>
+      <div class="nav-col">
+        <button class="nav-col-title-btn" onclick="window.location.href='index.html'">身体说明书</button>
+        <div class="nav-col-items">
+          <a class="nav-item sub" href="cycle-fitness.html" onclick="closeNav()">生理周期与健身</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-lang-row">
+      <span>🌐</span>
+      <span style="font-size:13px">语言切换请返回主页</span>
+    </div>
+  </div>
+</div>
+
 
 <div class="desktop-layout">
   <div class="sidebar" id="sidebar">
@@ -431,7 +649,7 @@ body {
     </div>
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
-      <input class="search-input" id="search-sidebar" type="text" placeholder="搜索关键词…" oninput="onSearch(this.value)">
+      <input class="search-input" id="search-sidebar" type="text" placeholder="搜索关键词…" id="cs-search-input" oninput="onSearch(this.value)">
       <button class="search-clear" id="search-clear-sidebar" onclick="clearSearch()">✕</button>
     </div>
     <div class="topic-nav" id="topic-nav"></div>
@@ -444,12 +662,16 @@ body {
   <div class="main-area">
     <div class="header">
       <div class="header-top">
-        <div class="header-title">女性健康问答 · 小抄</div>
-        <div class="q-count" id="q-count">52 题</div>
+        <div class="header-title" id="cs-title">女性健康问答 · 小抄</div>
+        <div style="display:flex;gap:4px;align-items:center">
+          <div class="q-count" id="q-count">52 题</div>
+          <button class="cs-lang-btn active" data-lang="zh" onclick="csSetLang('zh')">中</button>
+          <button class="cs-lang-btn" data-lang="en" onclick="csSetLang('en')">EN</button>
+        </div>
       </div>
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input class="search-input" id="search" type="text" placeholder="搜索关键词…" oninput="onSearch(this.value)">
+        <input class="search-input" id="search" type="text" placeholder="搜索关键词…" id="cs-search-input" oninput="onSearch(this.value)">
         <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
       </div>
     </div>
@@ -772,6 +994,178 @@ function buildNav() {
 
 buildNav();
 renderAll();
+</script>
+
+<script>
+function openNav() {
+  document.getElementById('nav-drawer').classList.add('open');
+  document.getElementById('nav-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeNav() {
+  document.getElementById('nav-drawer').classList.remove('open');
+  document.getElementById('nav-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+<script>
+let csLang = 'zh';
+
+const csUI = {
+  zh: {
+    title: '女性健康问答 · 小抄',
+    searchPlaceholder: '搜索关键词…',
+    expandAll: '全部展开',
+    collapseAll: '全部收起',
+    answerLabel: '答案',
+    explanationLabel: '解释',
+    noResults: '没有找到相关内容',
+    resultsPrefix: '搜索',
+    resultsFound: '找到',
+    resultsQuestions: '题',
+    sidebarCount: (n) => `${n} 题`,
+    qCount: (n) => `${n} 题`,
+  },
+  en: {
+    title: "Women's Health Quiz · Cheatsheet",
+    searchPlaceholder: 'Search keywords…',
+    expandAll: 'Expand all',
+    collapseAll: 'Collapse all',
+    answerLabel: 'Answer',
+    explanationLabel: 'Explanation',
+    noResults: 'No results found',
+    resultsPrefix: 'Search',
+    resultsFound: 'found',
+    resultsQuestions: 'questions',
+    sidebarCount: (n) => `${n} questions`,
+    qCount: (n) => `${n} questions`,
+  }
+};
+
+const csSections = {
+  zh: [
+    { id: 'a', title: '生理周期与激素', short: '激素' },
+    { id: 'b', title: '生理周期与健身', short: '健身' },
+    { id: 'c', title: '避孕科学', short: '避孕' },
+    { id: 'd', title: '妇科健康与检查', short: '妇科' },
+    { id: 'e', title: '生育、产后与更年期', short: '生育' },
+    { id: 'f', title: '身体构造与常识辟谣', short: '辟谣' },
+    { id: 'g', title: '心理健康、性健康与常识', short: '性健康' },
+  ],
+  en: [
+    { id: 'a', title: 'Cycle & Hormones', short: 'Hormones' },
+    { id: 'b', title: 'Cycle & Fitness', short: 'Fitness' },
+    { id: 'c', title: 'Contraception', short: 'Contraception' },
+    { id: 'd', title: 'Gynaecological Health', short: 'Gynaecology' },
+    { id: 'e', title: 'Fertility, Postpartum & Menopause', short: 'Fertility' },
+    { id: 'f', title: 'Body Anatomy & Myths', short: 'Anatomy' },
+    { id: 'g', title: 'Mental & Sexual Health', short: 'Health' },
+  ]
+};
+
+function csSetLang(l) {
+  csLang = l;
+  document.querySelectorAll('.cs-lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  csUpdateUI();
+  // Rebuild nav and content with new lang
+  const ui = csUI[l];
+  // Update search placeholders
+  ['cs-search-input','search','search-sidebar'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.placeholder = ui.searchPlaceholder;
+  });
+  // Update title
+  const t = document.getElementById('cs-title');
+  if (t) t.textContent = ui.title;
+  // Update sidebar title if exists
+  const st = document.querySelector('.sidebar-title');
+  if (st) st.textContent = ui.title;
+  // Update buttons
+  document.querySelectorAll('.bottom-btn').forEach(btn => {
+    if (btn.textContent.includes('展开') || btn.textContent.includes('Expand')) btn.textContent = ui.expandAll;
+    if (btn.textContent.includes('收起') || btn.textContent.includes('Collapse')) btn.textContent = ui.collapseAll;
+  });
+  // Update answer/explanation labels
+  document.querySelectorAll('.answer-label').forEach(el => el.textContent = ui.answerLabel);
+  document.querySelectorAll('.explanation-label').forEach(el => el.textContent = ui.explanationLabel);
+  // Rebuild nav with new section names
+  rebuildNav();
+  // Rebuild content with new lang data
+  rebuildContent();
+}
+
+function csUpdateUI() {}
+
+function rebuildNav() {
+  const sections = csSections[csLang];
+  ['topic-nav','topic-nav-mobile'].forEach(navId => {
+    const nav = document.getElementById(navId);
+    if (!nav) return;
+    nav.innerHTML = '';
+    const allBtn = document.createElement('button');
+    allBtn.className = 'topic-pill' + (currentTopic === 'all' ? ' active' : '');
+    allBtn.dataset.topic = 'all';
+    allBtn.textContent = navId === 'topic-nav' ? (csLang === 'zh' ? '全部主题' : 'All Topics') : (csLang === 'zh' ? '全部' : 'All');
+    allBtn.onclick = () => setTopic('all');
+    nav.appendChild(allBtn);
+    sections.forEach(s => {
+      const btn = document.createElement('button');
+      btn.className = 'topic-pill' + (currentTopic === s.id ? ' active' : '');
+      btn.dataset.topic = s.id;
+      btn.textContent = s.short;
+      btn.onclick = () => setTopic(s.id);
+      nav.appendChild(btn);
+    });
+  });
+}
+
+function rebuildContent() {
+  // Re-render all cards using DATA with current lang
+  allCards.length = 0;
+  let globalQNum = 0;
+  const content = document.getElementById('content');
+  if (!content) return;
+  content.innerHTML = '';
+  DATA.forEach(section => {
+    const secData = csSections[csLang].find(s => s.id === section.id) || { title: section.title };
+    const secEl = document.createElement('div');
+    secEl.dataset.sectionBlock = section.id;
+    const head = document.createElement('div');
+    head.className = 'section-head';
+    head.innerHTML = `<div class="section-title">${secData.title}</div><div class="section-count">${section.questions.length} ${csLang === 'zh' ? '题' : 'Qs'}</div>`;
+    secEl.appendChild(head);
+    section.questions.forEach(q => {
+      globalQNum++;
+      const card = buildCard(section, q, globalQNum);
+      allCards.push({ card, section, q, num: globalQNum });
+      secEl.appendChild(card);
+    });
+    content.appendChild(secEl);
+  });
+  const qc = document.getElementById('q-count');
+  if (qc) qc.textContent = csLang === 'zh' ? `${globalQNum} 题` : `${globalQNum} Qs`;
+  const sc = document.getElementById('sidebar-count');
+  if (sc) sc.textContent = csLang === 'zh' ? `${globalQNum} 题` : `${globalQNum} Qs`;
+  applyFilters();
+}
+
+// Patch buildCard to use csLang for answer/explanation labels
+const _origBuildCard = buildCard;
+buildCard = function(section, q, num) {
+  const card = _origBuildCard(section, q, num);
+  card.querySelector('.answer-label').textContent = csUI[csLang].answerLabel;
+  card.querySelector('.explanation-label').textContent = csUI[csLang].explanationLabel;
+  return card;
+};
+
+// Also update DATA to include EN translations for q text
+// (questions already have zh/en in DATA if available, otherwise fall back to zh)
+DATA.forEach(section => {
+  section.questions.forEach(q => {
+    if (!q.qEn) q.qEn = q.q; // fallback
+  });
+});
 </script>
 </body>
 </html>

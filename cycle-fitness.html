@@ -11,10 +11,10 @@
 :root {
   --bg: #F8F6F2;
   --surface: #FFFFFF;
-  --text: #1C1C1A;
-  --muted: #6B6860;
-  --light: #A8A49C;
-  --border: #E4E0D8;
+  --text: #1C1820;
+  --muted: #6B6070;
+  --light: #A89EB0;
+  --border: #E4DDD8;
   --menstrual-bg: #FDF0F4;
   --menstrual-text: #8B3054;
   --menstrual-chip: rgba(232,160,180,0.25);
@@ -34,7 +34,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Instrument Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
 
-.page-header { padding: 48px 24px 32px; max-width: 680px; margin: 0 auto; }
+.page-header { padding: 20px 24px 32px; max-width: 680px; margin: 0 auto; }
 .header-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); margin-bottom: 10px; }
 .header-title { font-family: 'IBM Plex Serif', serif; font-size: clamp(28px, 6vw, 40px); line-height: 1.2; color: var(--text); margin-bottom: 6px; }
 .header-sub { font-size: 13px; color: var(--muted); font-style: italic; }
@@ -67,120 +67,273 @@ body { font-family: 'Instrument Sans', sans-serif; background: var(--bg); color:
 .phase-row-text { font-size: 14px; color: var(--text); line-height: 1.5; }
 
 
+.back-nav {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 20px 24px 0;
+}
+.back-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6B6860;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+.back-nav-btn:hover { color: #1C1C1A; }
 .page-footer { max-width: 680px; margin: 0 auto; padding: 0 24px 48px; font-size: 11px; color: var(--light); text-align: center; }
+.cf-lang-btn.active { background: #7A5A8A !important; border-color: #7A5A8A !important; color: white !important; }
+</style>
+
+<style>
+/* NAV */
+.global-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 12px 20px;
+  pointer-events: none;
+}
+.nav-hamburger {
+  pointer-events: all;
+  background: #FFFFFF;
+  border: 1.5px solid #E4DDD8;
+  border-radius: 10px;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #1C1820;
+  transition: all 0.15s;
+}
+.nav-hamburger:hover { background: #F8F6F2; }
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0,0,0,0.3);
+}
+.nav-overlay.open { display: block; }
+.nav-drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  z-index: 1001;
+  width: min(420px, 92vw);
+  background: #F8F6F2;
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.nav-drawer.open { transform: translateX(0); }
+.nav-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #E4DDD8;
+  flex-shrink: 0;
+}
+.nav-drawer-title {
+  font-family: 'IBM Plex Serif', serif;
+  font-size: 16px;
+  color: #1C1820;
+}
+.nav-close {
+  background: none; border: none;
+  font-size: 20px; cursor: pointer;
+  color: #6B6070;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.nav-close:hover { color: #1C1820; }
+.nav-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+@media (min-width: 600px) {
+  .nav-columns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+}
+@media (max-width: 599px) {
+  .nav-columns { display: flex; flex-direction: column; gap: 28px; }
+}
+.nav-col-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6B6070;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #E4DDD8;
+}
+.nav-col-title-btn {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #7A5A8A;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #E4DDD8;
+  background: none;
+  border-top: none; border-left: none; border-right: none;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  font-family: 'Instrument Sans', sans-serif;
+  transition: opacity 0.15s;
+}
+.nav-col-title-btn:hover { opacity: 0.7; }
+.nav-col-items { display: flex; flex-direction: column; gap: 4px; }
+.nav-item {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1C1820;
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s;
+  font-family: 'Instrument Sans', sans-serif;
+}
+.nav-item:hover { background: #FFFFFF; }
+.nav-item.sub {
+  font-size: 13px;
+  color: #6B6070;
+  padding-left: 18px;
+}
+.nav-item.sub:hover { color: #1C1820; background: #FFFFFF; }
+.nav-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #E4DDD8;
+  flex-shrink: 0;
+}
+.nav-lang-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #6B6070;
+}
+.nav-lang-btn {
+  background: none;
+  border: 1.5px solid #E4DDD8;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-family: 'Instrument Sans', sans-serif;
+  cursor: pointer;
+  color: #6B6070;
+  transition: all 0.15s;
+}
+.nav-lang-btn.active {
+  background: #7A5A8A;
+  border-color: #7A5A8A;
+  color: white;
+}
+.cf-lang-btn.active { background: #7A5A8A !important; border-color: #7A5A8A !important; color: white !important; }
 </style>
 </head>
 <body>
 
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+<nav class="global-nav">
+  <button class="nav-hamburger" onclick="openNav()" aria-label="Menu">☰</button>
+</nav>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="nav-drawer-header">
+    <span class="nav-drawer-title">了解你的身体</span>
+    <button class="nav-close" onclick="closeNav()">✕</button>
+  </div>
+  <div class="nav-body">
+    <div class="nav-columns">
+      <div class="nav-col">
+        <div class="nav-col-items">
+          <a class="nav-item" href="index.html" onclick="closeNav()">主页</a>
+          <a class="nav-item" href="cheatsheet.html" onclick="closeNav()">题目小抄</a>
+        </div>
+      </div>
+      <div class="nav-col">
+        <button class="nav-col-title-btn" onclick="window.location.href='index.html'">知识问答</button>
+        <div class="nav-col-items">
+          <a class="nav-item sub" href="index.html">生理周期与激素</a>
+          <a class="nav-item sub" href="index.html">生理周期与健身</a>
+          <a class="nav-item sub" href="index.html">避孕科学</a>
+          <a class="nav-item sub" href="index.html">妇科健康与检查</a>
+          <a class="nav-item sub" href="index.html">生育、产后与更年期</a>
+          <a class="nav-item sub" href="index.html">身体构造与常识辟谣</a>
+          <a class="nav-item sub" href="index.html">心理健康、性健康与常识</a>
+        </div>
+      </div>
+      <div class="nav-col">
+        <button class="nav-col-title-btn" onclick="window.location.href='index.html'">身体说明书</button>
+        <div class="nav-col-items">
+          <a class="nav-item sub" href="cycle-fitness.html" onclick="closeNav()">生理周期与健身</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-lang-row">
+      <span>🌐</span>
+      <span style="font-size:13px">语言切换请返回主页</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="back-nav" style="display:flex;align-items:center;justify-content:space-between">
+  <a class="back-nav-btn" id="cf-back-btn" href="index.html">← 返回</a>
+  <div style="display:flex;gap:6px">
+    <button class="cf-lang-btn active" data-lang="zh" onclick="cfSetLang('zh')" style="background:none;border:1.5px solid #E4DDD8;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:'Instrument Sans',sans-serif;color:#6B6070">中文</button>
+    <button class="cf-lang-btn" data-lang="en" onclick="cfSetLang('en')" style="background:none;border:1.5px solid #E4DDD8;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:'Instrument Sans',sans-serif;color:#6B6070">EN</button>
+  </div>
+</div>
 <div class="page-header">
-  <h1 class="header-title">生理周期与健身</h1>
-  <p class="header-sub">Train With Your Cycle</p>
+  <h1 class="header-title" id="cf-title">生理周期与健身</h1>
+  <p class="header-sub" id="cf-subtitle">Train With Your Cycle</p>
 </div>
 
 <div class="disclaimer">
   <div class="disclaimer-inner">
-    <p>📌 以下天数以28天周期为参考，21–35天均属正常，每个人的节律不同。</p>
-    <p>📌 运动建议旨在说明各阶段相对适合的类型，不代表"必须"运动。能不能动、怎么动，最重要的是你自身的感受。</p>
+    <p id="cf-note1">📌 以下天数以28天周期为参考，21–35天均属正常，每个人的节律不同。</p>
+    <p id="cf-note2">📌 运动建议旨在说明各阶段相对适合的类型，不代表"必须"运动。能不能动、怎么动，最重要的是你自身的感受。</p>
   </div>
 </div>
 
 <div class="chart-section">
   <div class="chart-card">
-    <div class="chart-title">激素水平变化 · 28天周期</div>
+    <div class="chart-title" id="cf-chart-title">激素水平变化 · 28天周期</div>
     <div class="chart-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#D4537E"></div>雌激素</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#7F77DD"></div>孕激素</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#BA7517"></div>LH 黄体生成素</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#D4537E"></div id="cf-legend-e">雌激素</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#7F77DD"></div id="cf-legend-p">孕激素</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#BA7517"></div id="cf-legend-lh">LH 黄体生成素</div>
     </div>
     <div class="chart-wrap"><canvas id="hormoneChart"></canvas></div>
   </div>
 </div>
 
-<div class="phases">
+<div class="phases" id="cf-phases"></div>
 
-  <div class="phase-card">
-    <div class="phase-top" style="background:var(--menstrual-bg)">
-      <div class="phase-name" style="color:var(--menstrual-text)">月经期</div>
-      <div class="phase-chips">
-        <span class="chip" style="background:var(--menstrual-chip);color:var(--menstrual-text)">第 1–5 天</span>
-        <span class="chip" style="background:var(--menstrual-chip);color:var(--menstrual-text)">雌激素 ↓</span>
-        <span class="chip" style="background:var(--menstrual-chip);color:var(--menstrual-text)">孕激素 ↓</span>
-      </div>
-    </div>
-    <div class="phase-bottom">
-      <div class="phase-row"><span class="phase-row-icon">🚶</span><div><div class="phase-row-label">运动</div><div class="phase-row-text">散步、轻瑜伽、拉伸放松</div></div></div>
-      <div class="phase-row"><span class="phase-row-icon">🥗</span><div><div class="phase-row-label">饮食</div><div class="phase-row-text">补铁（配维C促进吸收）、补镁</div></div></div>
-      <div class="phase-row tip"><span class="phase-row-icon">💡</span><div><div class="phase-row-label">小提示</div><div class="phase-row-text">身体在自我修复，休息也是训练的一部分</div></div></div>
-    </div>
-  </div>
-
-  <div class="phase-card">
-    <div class="phase-top" style="background:var(--follicular-bg)">
-      <div class="phase-name" style="color:var(--follicular-text)">卵泡期</div>
-      <div class="phase-chips">
-        <span class="chip" style="background:var(--follicular-chip);color:var(--follicular-text)">第 6–13 天</span>
-        <span class="chip" style="background:var(--follicular-chip);color:var(--follicular-text)">雌激素 ↑↑</span>
-        <span class="chip" style="background:var(--follicular-chip);color:var(--follicular-text)">最佳训练窗口</span>
-      </div>
-    </div>
-    <div class="phase-bottom">
-      <div class="phase-row"><span class="phase-row-icon">🏋</span><div><div class="phase-row-label">运动</div><div class="phase-row-text">大重量力量训练、高强度间歇（HIIT）</div></div></div>
-      <div class="phase-row"><span class="phase-row-icon">🥩</span><div><div class="phase-row-label">饮食</div><div class="phase-row-text">高蛋白，训练后30分钟内补充；避免空腹运动</div></div></div>
-      <div class="phase-row tip"><span class="phase-row-icon">💡</span><div><div class="phase-row-label">小提示</div><div class="phase-row-text">恢复快、状态好，适合挑战新重量</div></div></div>
-    </div>
-  </div>
-
-  <div class="phase-card">
-    <div class="phase-top" style="background:var(--ovulation-bg)">
-      <div class="phase-name" style="color:var(--ovulation-text)">排卵期</div>
-      <div class="phase-chips">
-        <span class="chip" style="background:var(--ovulation-chip);color:var(--ovulation-text)">第 14–16 天</span>
-        <span class="chip" style="background:var(--ovulation-chip);color:var(--ovulation-text)">LH ↑↑↑</span>
-        <span class="chip" style="background:var(--ovulation-chip);color:var(--ovulation-text)">能量峰值</span>
-      </div>
-    </div>
-    <div class="phase-bottom">
-      <div class="phase-row"><span class="phase-row-icon">🔥</span><div><div class="phase-row-label">运动</div><div class="phase-row-text">冲个人最佳成绩（PB）的黄金时机、HIIT</div></div></div>
-      <div class="phase-row"><span class="phase-row-icon">🍚</span><div><div class="phase-row-label">饮食</div><div class="phase-row-text">复合碳水提供持续能量</div></div></div>
-      <div class="phase-row tip"><span class="phase-row-icon">💡</span><div><div class="phase-row-label">小提示</div><div class="phase-row-text">力量与耐力表现全月最佳</div></div></div>
-    </div>
-  </div>
-
-  <div class="phase-card">
-    <div class="phase-top" style="background:var(--luteal-bg)">
-      <div class="phase-name" style="color:var(--luteal-text)">黄体期</div>
-      <div class="phase-chips">
-        <span class="chip" style="background:var(--luteal-chip);color:var(--luteal-text)">第 17–24 天</span>
-        <span class="chip" style="background:var(--luteal-chip);color:var(--luteal-text)">孕激素 ↑↑</span>
-        <span class="chip" style="background:var(--luteal-chip);color:var(--luteal-text)">体温升高</span>
-      </div>
-    </div>
-    <div class="phase-bottom">
-      <div class="phase-row"><span class="phase-row-icon">🚴</span><div><div class="phase-row-label">运动</div><div class="phase-row-text">中等强度为主，注重恢复</div></div></div>
-      <div class="phase-row"><span class="phase-row-icon">🥜</span><div><div class="phase-row-label">饮食</div><div class="phase-row-text">镁 + 复合碳水；食欲增加是正常的生理现象</div></div></div>
-      <div class="phase-row tip"><span class="phase-row-icon">⚠️</span><div><div class="phase-row-label">注意</div><div class="phase-row-text">不建议空腹运动，孕激素已让身体压力较高，叠加空腹会加重负担</div></div></div>
-    </div>
-  </div>
-
-  <div class="phase-card">
-    <div class="phase-top" style="background:var(--lateluteal-bg)">
-      <div class="phase-name" style="color:var(--lateluteal-text)">黄体晚期 / 经前期</div>
-      <div class="phase-chips">
-        <span class="chip" style="background:var(--lateluteal-chip);color:var(--lateluteal-text)">第 25–28 天</span>
-        <span class="chip" style="background:var(--lateluteal-chip);color:var(--lateluteal-text)">激素 ↓↓</span>
-        <span class="chip" style="background:var(--lateluteal-chip);color:var(--lateluteal-text)">PMS 窗口</span>
-      </div>
-    </div>
-    <div class="phase-bottom">
-      <div class="phase-row"><span class="phase-row-icon">🧘</span><div><div class="phase-row-label">运动</div><div class="phase-row-text">低强度有氧、瑜伽、拉伸</div></div></div>
-      <div class="phase-row"><span class="phase-row-icon">🐟</span><div><div class="phase-row-label">饮食</div><div class="phase-row-text">减少咖啡因和盐，补 omega-3</div></div></div>
-      <div class="phase-row tip"><span class="phase-row-icon">💡</span><div><div class="phase-row-label">小提示</div><div class="phase-row-text">给自己空间，情绪波动是激素变化，不是你的错</div></div></div>
-    </div>
-  </div>
-
-</div>
-
-<div class="page-footer">参考来源：Stacy Sims 研究 / PMC 运动与月经周期文献</div>
+<div class="page-footer" id="cf-footer">参考来源：Stacy Sims 研究 / PMC 运动与月经周期文献</div>
 
 <script>
 const days = Array.from({length:29},(_,i)=>i);
@@ -197,6 +350,179 @@ const phaseColors=[
 ];
 const phasePlugin={id:'phases',beforeDraw(chart){const{ctx,chartArea:{left,right,top,bottom}}=chart;const W=right-left;phaseColors.forEach(p=>{const x0=left+(p.from/28)*W,x1=left+(p.to/28)*W;ctx.fillStyle=p.color;ctx.fillRect(x0,top,x1-x0,bottom-top);});}};
 new Chart(document.getElementById('hormoneChart'),{type:'line',plugins:[phasePlugin],data:{labels:days,datasets:[{label:'雌激素',data:estrogen,borderColor:'#D4537E',backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0.4},{label:'孕激素',data:progest,borderColor:'#7F77DD',backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0.4},{label:'LH',data:lh,borderColor:'#BA7517',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,tension:0.3},{label:'FSH',data:fsh,hidden:true,borderColor:'#1D9E75',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{title:c=>`第 ${c[0].label} 天`}}},scales:{x:{ticks:{color:'#A8A49C',font:{size:10},callback:v=>v%7===0?`第${v}天`:null,autoSkip:false,maxRotation:0},grid:{color:'rgba(0,0,0,0.04)'}},y:{min:0,max:110,ticks:{display:false},grid:{color:'rgba(0,0,0,0.04)'}}}}});
+</script>
+
+<script>
+function openNav() {
+  document.getElementById('nav-drawer').classList.add('open');
+  document.getElementById('nav-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeNav() {
+  document.getElementById('nav-drawer').classList.remove('open');
+  document.getElementById('nav-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+<script>
+const cfLang = { current: 'zh' };
+
+const cfText = {
+  zh: {
+    backBtn: '← 返回',
+    title: '生理周期与健身',
+    subtitle: 'Train With Your Cycle',
+    note1: '📌 以下天数以28天周期为参考，21–35天均属正常，每个人的节律不同。',
+    note2: '📌 运动建议旨在说明各阶段相对适合的类型，不代表"必须"运动。能不能动、怎么动，最重要的是你自身的感受。',
+    chartTitle: '激素水平变化 · 28天周期',
+    legend: { e: '雌激素', p: '孕激素', lh: 'LH 黄体生成素' },
+    phases: [
+      { name: '月经期', days: '第 1–5 天', chips: ['雌激素 ↓', '孕激素 ↓'],
+        rows: [
+          { icon: '🚶', label: '运动', text: '散步、轻瑜伽、拉伸放松' },
+          { icon: '🥗', label: '饮食', text: '补铁（配维C促进吸收）、补镁' },
+          { icon: '💡', label: '小提示', text: '身体在自我修复，休息也是训练的一部分', tip: true }
+        ]
+      },
+      { name: '卵泡期', days: '第 6–13 天', chips: ['雌激素 ↑↑', '最佳训练窗口'],
+        rows: [
+          { icon: '🏋', label: '运动', text: '大重量力量训练、高强度间歇（HIIT）' },
+          { icon: '🥩', label: '饮食', text: '高蛋白，训练后30分钟内补充；避免空腹运动' },
+          { icon: '💡', label: '小提示', text: '恢复快、状态好，适合挑战新重量', tip: true }
+        ]
+      },
+      { name: '排卵期', days: '第 14–16 天', chips: ['LH ↑↑↑', '能量峰值'],
+        rows: [
+          { icon: '🔥', label: '运动', text: '冲个人最佳成绩（PB）的黄金时机、HIIT' },
+          { icon: '🍚', label: '饮食', text: '复合碳水提供持续能量' },
+          { icon: '💡', label: '小提示', text: '力量与耐力表现全月最佳', tip: true }
+        ]
+      },
+      { name: '黄体期', days: '第 17–24 天', chips: ['孕激素 ↑↑', '体温升高'],
+        rows: [
+          { icon: '🚴', label: '运动', text: '中等强度为主，注重恢复' },
+          { icon: '🥜', label: '饮食', text: '镁 + 复合碳水；食欲增加是正常的生理现象' },
+          { icon: '⚠️', label: '注意', text: '不建议空腹运动，孕激素已让身体压力较高，叠加空腹会加重负担', tip: true }
+        ]
+      },
+      { name: '黄体晚期 / 经前期', days: '第 25–28 天', chips: ['激素 ↓↓', 'PMS 窗口'],
+        rows: [
+          { icon: '🧘', label: '运动', text: '低强度有氧、瑜伽、拉伸' },
+          { icon: '🐟', label: '饮食', text: '减少咖啡因和盐，补 omega-3' },
+          { icon: '💡', label: '小提示', text: '给自己空间，情绪波动是激素变化，不是你的错', tip: true }
+        ]
+      }
+    ],
+    footer: '参考来源：Stacy Sims 研究 / PMC 运动与月经周期文献'
+  },
+  en: {
+    backBtn: '← Back',
+    title: 'Train With Your Cycle',
+    subtitle: 'Cycle & Fitness Guide',
+    note1: '📌 Day ranges are based on a 28-day cycle. Cycles of 21–35 days are normal — everyone's rhythm is different.',
+    note2: '📌 Exercise suggestions indicate relatively suitable types for each phase, not obligations. Listen to your body above all else.',
+    chartTitle: 'Hormone Levels · 28-Day Cycle',
+    legend: { e: 'Estrogen', p: 'Progesterone', lh: 'LH (Luteinising Hormone)' },
+    phases: [
+      { name: 'Menstrual Phase', days: 'Days 1–5', chips: ['Estrogen ↓', 'Progesterone ↓'],
+        rows: [
+          { icon: '🚶', label: 'Exercise', text: 'Walking, gentle yoga, stretching' },
+          { icon: '🥗', label: 'Nutrition', text: 'Iron (pair with vitamin C to boost absorption), magnesium' },
+          { icon: '💡', label: 'Tip', text: 'Your body is repairing itself — rest is part of training too', tip: true }
+        ]
+      },
+      { name: 'Follicular Phase', days: 'Days 6–13', chips: ['Estrogen ↑↑', 'Best training window'],
+        rows: [
+          { icon: '🏋', label: 'Exercise', text: 'Heavy strength training, HIIT' },
+          { icon: '🥩', label: 'Nutrition', text: 'High protein; refuel within 30 min post-workout; avoid fasted training' },
+          { icon: '💡', label: 'Tip', text: 'Recovery is faster and energy is high — a great time to push new weights', tip: true }
+        ]
+      },
+      { name: 'Ovulation Phase', days: 'Days 14–16', chips: ['LH ↑↑↑', 'Peak energy'],
+        rows: [
+          { icon: '🔥', label: 'Exercise', text: 'Golden window for personal bests (PBs), HIIT' },
+          { icon: '🍚', label: 'Nutrition', text: 'Complex carbs for sustained energy' },
+          { icon: '💡', label: 'Tip', text: 'Strength and endurance are at their monthly peak', tip: true }
+        ]
+      },
+      { name: 'Luteal Phase', days: 'Days 17–24', chips: ['Progesterone ↑↑', 'Body temp rises'],
+        rows: [
+          { icon: '🚴', label: 'Exercise', text: 'Moderate intensity, focus on recovery' },
+          { icon: '🥜', label: 'Nutrition', text: 'Magnesium + complex carbs; increased appetite is a normal physiological response' },
+          { icon: '⚠️', label: 'Note', text: 'Avoid fasted training — progesterone already raises physiological stress, fasting compounds it', tip: true }
+        ]
+      },
+      { name: 'Late Luteal / PMS Phase', days: 'Days 25–28', chips: ['Hormones ↓↓', 'PMS window'],
+        rows: [
+          { icon: '🧘', label: 'Exercise', text: 'Low-intensity cardio, yoga, stretching' },
+          { icon: '🐟', label: 'Nutrition', text: 'Reduce caffeine and salt; supplement omega-3' },
+          { icon: '💡', label: 'Tip', text: 'Give yourself space — mood shifts are hormonal, not personal', tip: true }
+        ]
+      }
+    ],
+    footer: 'Sources: Stacy Sims research / PMC literature on exercise & menstrual cycle'
+  }
+};
+
+const phaseColors = [
+  { bg: '#FDF0F4', text: '#8B3054', chipBg: 'rgba(232,160,180,0.3)' },
+  { bg: '#F0F7EC', text: '#2D5E1E', chipBg: 'rgba(143,191,122,0.3)' },
+  { bg: '#FDF6E8', text: '#7A4E0A', chipBg: 'rgba(232,184,106,0.3)' },
+  { bg: '#F2F0FA', text: '#3D3470', chipBg: 'rgba(168,159,212,0.3)' },
+  { bg: '#EDF7F5', text: '#1D5C52', chipBg: 'rgba(133,196,184,0.3)' },
+];
+
+function cfSetLang(l) {
+  cfLang.current = l;
+  document.querySelectorAll('.cf-lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  cfRender();
+}
+
+function cfRender() {
+  const t = cfText[cfLang.current];
+  const zh = cfLang.current === 'zh';
+
+  document.getElementById('cf-back-btn').textContent = t.backBtn;
+  document.getElementById('cf-title').textContent = t.title;
+  document.getElementById('cf-subtitle').textContent = t.subtitle;
+  document.getElementById('cf-note1').textContent = t.note1;
+  document.getElementById('cf-note2').textContent = t.note2;
+  document.getElementById('cf-chart-title').textContent = t.chartTitle;
+  document.getElementById('cf-legend-e').textContent = t.legend.e;
+  document.getElementById('cf-legend-p').textContent = t.legend.p;
+  document.getElementById('cf-legend-lh').textContent = t.legend.lh;
+  document.getElementById('cf-footer').textContent = t.footer;
+
+  // Re-render phases
+  const container = document.getElementById('cf-phases');
+  container.innerHTML = t.phases.map((phase, pi) => {
+    const c = phaseColors[pi];
+    const chips = [{ label: phase.days, first: true }, ...phase.chips.map(ch => ({ label: ch }))];
+    const chipsHtml = chips.map(ch =>
+      `<span class="chip" style="background:${c.chipBg};color:${c.text}">${ch.label}</span>`
+    ).join('');
+    const rowsHtml = phase.rows.map(row => `
+      <div class="phase-row">
+        <span class="phase-row-icon">${row.icon}</span>
+        <div>
+          <div class="phase-row-label">${row.label}</div>
+          <div class="phase-row-text">${row.text}</div>
+        </div>
+      </div>`).join('');
+    return `
+      <div class="phase-card">
+        <div class="phase-top" style="background:${c.bg}">
+          <div class="phase-name" style="color:${c.text}">${phase.name}</div>
+          <div class="phase-chips">${chipsHtml}</div>
+        </div>
+        <div class="phase-bottom">${rowsHtml}</div>
+      </div>`;
+  }).join('');
+}
+
+// Init
+cfRender();
 </script>
 </body>
 </html>
