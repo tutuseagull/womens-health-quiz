@@ -41,7 +41,7 @@
   .screen.active { display: flex; flex-direction: column; }
 
   /* ── HOME ── */
-  #home {
+  #home, #quiz-home, #handbook {
     padding: 48px 24px 32px;
     max-width: 480px;
     margin: 0 auto;
@@ -145,6 +145,45 @@
     transform: translateY(-50%);
     font-size: 18px;
     color: var(--border);
+  }
+
+  /* ── NEW HOME ── */
+  .home-section-block { margin-bottom: 28px; }
+  .home-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .home-section-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .home-section-card:active { transform: scale(0.98); }
+  .home-section-card-inner { flex: 1; }
+  .home-section-card-title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 20px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .home-section-card-sub { font-size: 13px; color: var(--text-muted); }
+  .quiz-home-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
   }
 
   .home-disclaimer {
@@ -682,19 +721,66 @@
   </div>
 
   <div class="home-header">
-    <div class="home-eyebrow" data-zh="女性健康知识问答" data-en="Women's Health Quiz"></div>
-    <h1 class="home-title" data-zh="了解你的身体" data-en="Know Your Body"></h1>
-
+    <div class="home-eyebrow" id="home-eyebrow">女性健康 · 知识与资源</div>
+    <h1 class="home-title" id="home-title">了解你的身体</h1>
   </div>
 
+  <!-- Section: 知识问答 -->
+  <div class="home-section-block">
+    <button class="home-section-card" onclick="showScreen('quiz-home')">
+      <div class="home-section-card-inner">
+        <div class="home-section-card-title" id="card-quiz-title">女性健康问答</div>
+        <div class="home-section-card-sub" id="card-quiz-sub">7个主题</div>
+      </div>
+      <span class="section-arrow">→</span>
+    </button>
+  </div>
+
+  <!-- Section: 身体说明书 -->
+  <div class="home-section-block">
+    <button class="home-section-card" onclick="showScreen('handbook')">
+      <div class="home-section-card-inner">
+        <div class="home-section-card-title" id="card-handbook-title">身体说明书</div>
+        <div class="home-section-card-sub" id="card-handbook-sub">1个健康指南</div>
+      </div>
+      <span class="section-arrow">→</span>
+    </button>
+  </div>
+
+  <div class="home-disclaimer" id="home-disclaimer">📌 内容仅供健康科普，不构成医疗建议。如有任何疑虑，请咨询专业医生。</div>
+</div>
+
+<!-- ══ QUIZ HOME ══ -->
+<div class="screen" id="quiz-home">
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('zh')">中文</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+  </div>
+  <div class="quiz-home-nav">
+    <button class="back-btn" onclick="showScreen('home')">←</button>
+    <div class="home-eyebrow" style="margin:0;padding-top:2px" id="quiz-home-eyebrow">知识问答</div>
+  </div>
+  <div class="home-header" style="margin-top:16px">
+    <h1 class="home-title" id="quiz-home-title">女性健康问答</h1>
+  </div>
   <div class="section-list" id="section-list"></div>
+  <div class="home-disclaimer" id="quiz-disclaimer">📌 题目内容仅供健康科普，不构成医疗建议。如有任何健康疑虑，请咨询专业医生。</div>
+</div>
 
-  <div class="home-disclaimer" data-zh="📌 题目内容仅供健康科普，不构成医疗建议。如有任何健康疑虑，请咨询专业医生。" data-en="📌 For educational purposes only. Not medical advice. Please consult a healthcare professional for any health concerns."></div>
-
-  <div id="facts-footer" style="margin-top:32px;padding-top:16px;border-top:1px solid var(--border);display:flex;gap:16px;justify-content:center">
-    <a href="cycle-fitness.html" id="link-facts" style="font-size:12px;color:var(--text-light);text-decoration:none;opacity:0.6" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">后门</a>
-    <a href="cheatsheet.html" id="link-cheatsheet" style="font-size:12px;color:var(--text-light);text-decoration:none;opacity:0.6" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">小抄</a>
+<!-- ══ HANDBOOK ══ -->
+<div class="screen" id="handbook">
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('zh')">中文</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
   </div>
+  <div class="quiz-home-nav">
+    <button class="back-btn" onclick="showScreen('home')">←</button>
+    <div class="home-eyebrow" style="margin:0;padding-top:2px" id="handbook-eyebrow">身体说明书</div>
+  </div>
+  <div class="home-header" style="margin-top:16px">
+    <h1 class="home-title" id="handbook-title">健康指南</h1>
+  </div>
+  <div class="section-list" id="handbook-list"></div>
 </div>
 
 <!-- ══ QUIZ ══ -->
@@ -1163,14 +1249,14 @@ let listeningIndex = -1;
 function setLang(l) {
   lang = l;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase().includes(l === 'zh' ? '中' : 'en')));
-  document.querySelectorAll('[data-zh]').forEach(el => { el.textContent = el.dataset[l]; });
   renderHome();
 }
 
 // ══ HOME ══
 function renderHome() {
+  // Quiz topic list
   const list = document.getElementById('section-list');
-  list.innerHTML = SECTIONS.map((s, i) => `
+  if (list) list.innerHTML = SECTIONS.map((s, i) => `
     <button class="section-card" onclick="startSection(${i})">
       <div class="section-card-inner">
         <div class="section-title">${s[lang].title}</div>
@@ -1179,11 +1265,21 @@ function renderHome() {
       <span class="section-arrow">→</span>
     </button>
   `).join('');
-  document.querySelector('[data-zh="女性健康知识问答"]').textContent = lang === 'zh' ? '女性健康知识问答' : "Women's Health Quiz";
-  document.querySelector('[data-zh="了解你的身体"]').textContent = lang === 'zh' ? '了解你的身体' : 'Know Your Body';
-  document.querySelector('.home-disclaimer').textContent = lang === 'zh'
-    ? '📌 题目内容仅供健康科普，不构成医疗建议。如有任何健康疑虑，请咨询专业医生。'
-    : '📌 For educational purposes only. Not medical advice. Please consult a healthcare professional for any health concerns.';
+
+  // Handbook list
+  const handbookItems = [
+    { zh: { title: '生理周期与健身', sub: '激素变化、运动与饮食指南' }, en: { title: 'Cycle & Fitness', sub: 'Hormones, training & nutrition' }, url: 'cycle-fitness.html' },
+  ];
+  const handbook = document.getElementById('handbook-list');
+  if (handbook) handbook.innerHTML = handbookItems.map(item => `
+    <button class="section-card" onclick="window.location.href='${item.url}'">
+      <div class="section-card-inner">
+        <div class="section-title">${item[lang].title}</div>
+        <div class="section-meta">${item[lang].sub}</div>
+      </div>
+      <span class="section-arrow">→</span>
+    </button>
+  `).join('');
 }
 
 // ══ START ══
@@ -1755,8 +1851,7 @@ function retrySection() {
 }
 
 function goHome() {
-  showScreen('home');
-  renderHome();
+  showScreen('quiz-home');
 }
 
 // ── SCREENS ──
@@ -1767,6 +1862,7 @@ function showScreen(id) {
 }
 
 // ── INIT ──
+showScreen('home');
 renderHome();
 </script>
 </body>
