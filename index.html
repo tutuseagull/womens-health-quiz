@@ -95,7 +95,7 @@
     line-height: 1.6;
   }
 
-  .section-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .section-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
 
   .section-card {
     background: var(--surface);
@@ -109,17 +109,10 @@
     position: relative;
     overflow: hidden;
   }
-  .section-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 4px;
-    background: var(--accent);
-    border-radius: 4px 0 0 4px;
-  }
+
   .section-card:active { transform: scale(0.98); }
 
-  .section-card-inner { padding-left: 12px; }
+  .section-card-inner {}
   .section-tag {
     font-size: 11px;
     font-weight: 500;
@@ -148,7 +141,7 @@
   }
 
   /* ── NEW HOME ── */
-  .home-section-block { margin-bottom: 28px; }
+  .home-section-block { margin-bottom: 16px; }
   .home-section-label {
     font-size: 11px;
     font-weight: 600;
@@ -230,13 +223,12 @@
   .back-btn:hover { opacity: 0.7; }
   .back-btn:active { opacity: 0.5; }
 
-  .progress-wrap { flex: 1; }
+  .progress-wrap { margin-top: 10px; }
   .progress-bar {
     height: 4px;
     background: var(--border);
     border-radius: 2px;
     overflow: hidden;
-    margin-bottom: 6px;
   }
   .progress-fill {
     height: 100%;
@@ -244,19 +236,27 @@
     border-radius: 2px;
     transition: width 0.4s ease;
   }
-  .progress-text {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
+  .progress-text { display: none; }
 
+  .section-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
   .section-label {
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 20px;
   }
+  .progress-inline {
+    font-size: 11px;
+    font-family: 'Instrument Sans', sans-serif;
+  }
+  .progress-inline-current { color: var(--accent); font-weight: 600; }
+  .progress-inline-total { color: var(--text-light); }
 
   /* ── QUESTION ── */
   .question-wrap {
@@ -755,8 +755,8 @@
   .nav-drawer {
     position: fixed;
     top: 0; right: 0; bottom: 0;
+    left: clamp(48px, 12vw, 120px);
     z-index: 1001;
-    width: min(420px, 92vw);
     background: var(--bg);
     transform: translateX(100%);
     transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
@@ -812,25 +812,23 @@
 
   .nav-col-title-btn {
     display: block;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--text);
+    margin-bottom: 4px;
+    padding: 8px 10px;
+    border: none;
     background: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
     text-align: left;
     cursor: pointer;
     width: 100%;
     font-family: 'Instrument Sans', sans-serif;
-    transition: opacity 0.15s;
+    border-radius: 8px;
+    transition: background 0.15s;
   }
-  .nav-col-title-btn:hover { opacity: 0.7; }
+  .nav-col-title-btn:hover { background: var(--surface); }
   .nav-col-title {
     font-size: 11px;
     font-weight: 600;
@@ -946,7 +944,6 @@
   </div>
   <div class="nav-footer">
     <div class="nav-lang-row">
-      <span>🌐</span>
       <span id="nav-lang-label" style="font-size:13px;color:#6B6070">语言</span>
       <button class="nav-lang-btn active" id="nav-lang-zh" onclick="setLang('zh');updateNavLang()">中文</button>
       <button class="nav-lang-btn" id="nav-lang-en" onclick="setLang('en');updateNavLang()">EN</button>
@@ -989,7 +986,7 @@
 
 <!-- ══ QUIZ HOME ══ -->
 <div class="screen" id="quiz-home">
-  <button class="back-btn" onclick="showScreen('home')" style="margin-bottom:20px">← 返回</button>
+  <button class="back-btn" onclick="showScreen('home')" style="margin-bottom:20px">←</button>
   <div class="home-header">
     <h1 class="home-title" id="quiz-home-title">知识问答</h1>
   </div>
@@ -999,7 +996,7 @@
 
 <!-- ══ HANDBOOK ══ -->
 <div class="screen" id="handbook">
-  <button class="back-btn" onclick="showScreen('home')" style="margin-bottom:20px">← 返回</button>
+  <button class="back-btn" onclick="showScreen('home')" style="margin-bottom:20px">←</button>
   <div class="home-header">
     <h1 class="home-title" id="handbook-title">身体说明书</h1>
   </div>
@@ -1011,13 +1008,16 @@
 <div class="screen" id="quiz">
   <div class="quiz-header">
     <div class="quiz-nav">
-      <button class="back-btn" onclick="goHome()">← 返回</button>
-      <div class="progress-wrap">
-        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-        <div class="progress-text" id="progress-text"></div>
-      </div>
+      <button class="back-btn" onclick="goHome()">←</button>
     </div>
-    <div class="section-label" id="section-label"></div>
+    <div class="section-label-row">
+      <div class="section-label" id="section-label"></div>
+      <div class="progress-inline" id="progress-inline"></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-text" id="progress-text"></div>
+    </div>
   </div>
 
   <div class="question-wrap" id="question-wrap"></div>
@@ -1503,7 +1503,7 @@ function renderHome() {
 
   // ── Back buttons ──
   document.querySelectorAll('.back-btn').forEach(btn => {
-    btn.textContent = zh ? '← 返回' : '← Back';
+    btn.textContent = zh ? '←' : '←';
   });
 
   // ── Nav drawer ──
@@ -1570,9 +1570,15 @@ function renderQuestion() {
   const total = currentSection.questions.length;
 
   document.getElementById('progress-fill').style.width = ((currentQ / total) * 100) + '%';
-  document.getElementById('progress-text').textContent = lang === 'zh'
-    ? `第 ${currentQ + 1} 题，共 ${total} 题`
-    : `Question ${currentQ + 1} of ${total}`;
+  document.getElementById('progress-text').textContent = '';
+  const inlineEl = document.getElementById('progress-inline');
+  if (inlineEl) {
+    if (lang === 'zh') {
+      inlineEl.innerHTML = `<span class="progress-inline-current">第 ${currentQ + 1} 题</span><span class="progress-inline-total">，共 ${total} 题</span>`;
+    } else {
+      inlineEl.innerHTML = `<span class="progress-inline-current">${currentQ + 1}</span><span class="progress-inline-total"> / ${total}</span>`;
+    }
+  }
 
   hideFeedback();
   hideConfirm();
@@ -1589,9 +1595,7 @@ function renderQuestion() {
   const typeMap = { single: { zh: '选择题', en: 'Single choice' }, multi: { zh: '多选题', en: 'Multiple choice' }, tf: { zh: '判断题', en: 'True / False' }, order: { zh: '排序题', en: 'Ordering' }, match: { zh: '配对题', en: 'Matching' }, fill: { zh: '填空题', en: 'Fill in' }, finderror: { zh: '找错误项', en: 'Find the error' } };
   const tm = typeMap[q.type] || typeMap.single;
 
-  let html = `<div>
-    <span class="q-type-badge${q.type === 'multi' ? ' multi' : ''}">${tm[lang]}</span>
-  </div>`;
+  let html = ``;
 
   // Question text (skip for 'order' — it renders its own q-text with inline blanks)
   if (q.type !== 'order') {
