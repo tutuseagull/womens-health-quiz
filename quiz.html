@@ -899,18 +899,12 @@
   .screen { padding-top: 60px; }
   #home, #quiz-home, #handbook { padding-top: 72px; }
 
-
-
-/* quiz-home min-height */
-#quiz-home { padding-top: 72px; display: flex; flex-direction: column; min-height: 100vh; }
-#quiz-home .home-disclaimer { margin-bottom: 48px; }
-
 /* ── GLOBAL FOOTER ── */
 .site-footer {
   border-top: 1px solid #E4DDD8;
   padding: 40px 24px 32px;
   max-width: 680px;
-  margin: 64px auto 0;
+  margin: 0 auto;
   width: 100%;
 }
 .site-footer-grid {
@@ -930,68 +924,60 @@
   color: #A89EB0;
   margin-bottom: 12px;
 }
-.footer-nav-links { display: flex; flex-direction: column; gap: 8px; }
+.footer-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 .footer-nav-link {
-  font-size: 13px; color: #6B6070; text-decoration: none;
-  background: none; border: none; cursor: pointer;
-  text-align: left; padding: 0;
+  font-size: 13px;
+  color: #6B6070;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
   font-family: 'Instrument Sans', sans-serif;
   transition: color 0.15s;
 }
 .footer-nav-link:hover { color: #1C1820; }
-.footer-credits { font-size: 13px; color: #6B6070; line-height: 1.7; }
-.footer-bottom { border-top: 1px solid #E4DDD8; padding-top: 20px; display: flex; align-items: center; gap: 10px; }
-.footer-ig-link { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #6B6070; font-size: 13px; transition: color 0.15s; }
+.footer-credits {
+  font-size: 13px;
+  color: #6B6070;
+  line-height: 1.7;
+}
+.footer-bottom {
+  border-top: 1px solid #E4DDD8;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.footer-ig-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #6B6070;
+  font-size: 13px;
+  transition: color 0.15s;
+}
 .footer-ig-link:hover { color: #7A5A8A; }
-.footer-ig-icon { width: 18px; height: 18px; flex-shrink: 0; }
+.footer-ig-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+#quiz-home { padding-top: 72px; display: flex; flex-direction: column; min-height: 100vh; }
+#quiz-home .home-disclaimer { margin-bottom: 48px; }
 </style>
 </head>
 <body>
 <!-- ── GLOBAL NAV ── -->
 <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
-<nav class="global-nav">
-  <button class="nav-hamburger" onclick="openNav()" aria-label="Menu">☰</button>
-</nav>
-<div class="nav-drawer" id="nav-drawer">
-  <div class="nav-drawer-header">
-    <span class="nav-drawer-title" id="nav-title">了解你的身体</span>
-    <button class="nav-close" onclick="closeNav()">✕</button>
-  </div>
-  <div class="nav-body">
-    <div class="nav-columns">
-      <div class="nav-col">
-        <div class="nav-col-items">
-          <button class="nav-item" id="nav-home" onclick="window.location.href='index.html'">主页</button>
-        </div>
-      </div>
-      <div class="nav-col">
-        <button class="nav-col-title-btn" id="nav-quiz" onclick="window.location.href='quiz.html'">知识问答</button>
-        <div class="nav-col-items">
-          <button class="nav-item sub" id="nav-sub-1" onclick="window.location.href='quiz.html'">生理周期与激素</button>
-          <button class="nav-item sub" id="nav-sub-2" onclick="window.location.href='quiz.html'">生理周期与健身</button>
-          <button class="nav-item sub" id="nav-sub-3" onclick="window.location.href='quiz.html'">避孕科学</button>
-          <button class="nav-item sub" id="nav-sub-4" onclick="window.location.href='quiz.html'">妇科健康与检查</button>
-          <button class="nav-item sub" id="nav-sub-5" onclick="window.location.href='quiz.html'">生育、产后与更年期</button>
-          <button class="nav-item sub" id="nav-sub-6" onclick="window.location.href='quiz.html'">身体构造与常识辟谣</button>
-          <button class="nav-item sub" id="nav-sub-7" onclick="window.location.href='quiz.html'">心理健康、性健康与常识</button>
-        </div>
-      </div>
-      <div class="nav-col">
-        <button class="nav-col-title-btn" id="nav-handbook" onclick="window.location.href='handbook.html'">身体说明书</button>
-        <div class="nav-col-items">
-          <a class="nav-item sub" id="nav-cycle" href="cycle-fitness.html">生理周期与健身</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="nav-footer">
-    <div class="nav-lang-row">
-      <span id="nav-lang-label" style="font-size:13px;color:var(--text-muted,#6B6070)">语言</span>
-      <button class="nav-lang-btn active" id="nav-lang-zh" onclick="setLang('zh')">中文</button>
-      <button class="nav-lang-btn" id="nav-lang-en" onclick="setLang('en')">EN</button>
-    </div>
-  </div>
-</div>
+
 <nav class="global-nav">
   <button class="nav-hamburger" onclick="openNav()" aria-label="Menu">☰</button>
 </nav>
@@ -1042,7 +1028,7 @@
 
 
 <div class="screen" id="quiz-home">
-  <button class="back-btn" onclick="window.location.href='index.html'" style="margin-bottom:20px">←</button>
+  <button class="back-btn" onclick="showScreen('home')" style="margin-bottom:20px">←</button>
   <div class="home-header">
     <h1 class="home-title" id="quiz-home-title">知识问答</h1>
   </div>
@@ -1051,7 +1037,6 @@
 
 
 
-</div>
 </div>
 <footer class="site-footer" style="margin-top:auto">
   <div class="site-footer-grid">
@@ -1080,7 +1065,7 @@
 <div class="screen" id="quiz">
   <div class="quiz-header">
     <div class="quiz-nav">
-      <button class="back-btn" onclick="window.location.href='quiz.html'">←</button>
+      <button class="back-btn" onclick="goHome()">←</button>
     </div>
     <div class="section-label-row">
       <div class="section-label" id="section-label"></div>
@@ -1121,7 +1106,7 @@
   <div class="score-label" id="score-label"></div>
   <div class="results-actions">
     <button class="results-btn primary" onclick="retrySection()" id="retry-btn"></button>
-    <button class="results-btn" onclick="window.location.href='quiz.html'" id="home-btn"></button>
+    <button class="results-btn" onclick="goHome()" id="home-btn"></button>
   </div>
 </div>
 
@@ -1312,8 +1297,8 @@ const SECTIONS = [
   {
     id: 'gynecology',
     color: '#6A1B9A',
-    zh: { tag: '主题四', title: '妇科健康与检查', subtitle: '8题 · 选择、多选、排序' },
-    en: { tag: 'Topic 4', title: 'Gynaecological Health & Screening', subtitle: '8 questions' },
+    zh: { tag: '主题四', title: '妇科检查与疫苗', subtitle: '8题 · 选择、多选、填空' },
+    en: { tag: 'Topic 4', title: 'Gynaecological Screening & Vaccines', subtitle: '8 questions' },
     questions: [
       {
         type: 'finderror', difficulty: 'medium',
@@ -1366,10 +1351,54 @@ const SECTIONS = [
     ]
   },
   {
+    id: 'breast',
+    color: '#E91E8C',
+    zh: { tag: '主题五', title: '乳腺健康', subtitle: '6题 · 选择、填空' },
+    en: { tag: 'Topic 5', title: 'Breast Health', subtitle: '6 questions' },
+    questions: [
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '正确的乳房触诊方式更推荐哪一种？', options: ['用指尖点按', '用四指指腹平贴，分不同压力层次按压', '用掌心快速揉搓', '越痛越用力'], explanation: '指腹更敏感、更均匀，分层按压更容易摸到深浅不同的组织。' },
+        en: { q: 'Which breast self-exam technique is most recommended?', options: ['Poking with fingertips', 'Using the flat of four fingers with varying pressure levels', 'Rubbing quickly with the palm', 'Pressing harder when it hurts'], explanation: 'The pads of the fingers are more sensitive and even. Layered pressure helps detect tissue at different depths.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '乳房自查不应只摸乳头周围，还应包括哪些范围？', options: ['只摸乳房中间区域', '从锁骨下到乳房下缘、从胸骨旁到腋下（含腋窝）', '只摸腋下', '只看不摸'], explanation: '乳腺组织可延伸到腋下（乳腺尾），腋窝淋巴结也需要留意。' },
+        en: { q: 'Besides the area around the nipple, where else should breast self-exam cover?', options: ['Only the central breast area', 'From below the collarbone to the lower breast, and from the sternum to the armpit (including the axilla)', 'Only the armpit', 'Visual inspection only, no touching'], explanation: 'Breast tissue extends into the armpit (axillary tail). Axillary lymph nodes should also be checked.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '对于有月经的女性，乳房自查最适合在什么时间进行？', options: ['月经开始的第一天', '排卵期当天', '月经结束后的第3–5天', '月经快开始的前两天'], explanation: '这时乳房通常更不胀不痛，触感更稳定，更容易发现异常。' },
+        en: { q: 'For people who menstruate, when is the best time to do a breast self-exam?', options: ['The first day of your period', 'On ovulation day', '3–5 days after your period ends', 'The two days before your period starts'], explanation: 'The breasts are typically less swollen and tender at this time, making it easier to detect any changes.' },
+        answer: 2
+      },
+      {
+        type: 'fill', difficulty: 'medium',
+        zh: { q: '建议进行乳房自查（BSE）的频率更接近每 ___ 一次', blanks: ['时间频率'], explanation: '固定频率更容易形成习惯，一般以每月一次为常见建议，便于及时发现变化。' },
+        en: { q: 'The recommended frequency for breast self-exam (BSE) is approximately once every ___', blanks: ['time interval'], explanation: 'A consistent schedule makes it easier to form a habit. Monthly is the most commonly recommended frequency, helping detect changes early.' },
+        answer: ['月', 'month']
+      },
+      {
+        type: 'single', difficulty: 'hard',
+        zh: { q: '以下关于乳腺筛查工具的说法，哪项更准确？', options: ['超声能完全替代钼靶', '钼靶对发现微小钙化更有优势', '钼靶没有辐射', '只有摸到肿块才需要影像检查'], explanation: '钼靶（乳腺X线）常用于筛查，对微小钙化等早期表现更敏感；是否检查需结合年龄、风险因素和医生建议，不必等到摸到肿块。' },
+        en: { q: 'Which statement about breast screening tools is most accurate?', options: ['Ultrasound can fully replace mammography', 'Mammography has an advantage in detecting microcalcifications', 'Mammography does not involve radiation', 'Imaging is only needed when a lump is felt'], explanation: 'Mammography (breast X-ray) is widely used for screening and is more sensitive for detecting early signs like microcalcifications. Whether to screen depends on age, risk factors, and medical advice — you should not wait until a lump is felt.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '以下哪项特征更符合普通乳腺增生（纤维囊性改变），而非肿瘤？', options: ['肿块像石头一样硬，而且推不动', '感觉和月经周期有关，经前胀痛明显，经后会自动减轻', '只有单侧乳头溢出像血一样的液体', '皮肤出现像"橘子皮"一样的凹陷'], explanation: '增生类变化常随周期波动，经前加重、经后缓解是典型特征。其他选项（硬而不动的肿块、血性溢液、橘皮样皮肤）更需要进一步排查。' },
+        en: { q: 'Which feature is more consistent with benign fibrocystic changes rather than a tumour?', options: ['A rock-hard lump that does not move', 'Tenderness related to the menstrual cycle — worse before periods, better after', 'Bloody discharge from one nipple only', 'Skin that looks like an orange peel'], explanation: 'Fibrocystic changes typically fluctuate with the cycle — worse before periods, resolving after. The other options (immovable hard lump, bloody discharge, peau d\'orange skin) all warrant further investigation.' },
+        answer: 1
+      }
+    ]
+  },
+  {
     id: 'lifestages',
     color: '#E65100',
-    zh: { tag: '主题五', title: '生育、产后与更年期', subtitle: '8题 · 选择、填空' },
-    en: { tag: 'Topic 5', title: 'Fertility, Postpartum & Menopause', subtitle: '8 questions' },
+    zh: { tag: '主题六', title: '生育、产后与更年期', subtitle: '8题 · 选择、填空' },
+    en: { tag: 'Topic 6', title: 'Fertility, Postpartum & Menopause', subtitle: '8 questions' },
     questions: [
       {
         type: 'single', difficulty: 'easy',
@@ -1424,8 +1453,8 @@ const SECTIONS = [
   {
     id: 'anatomy',
     color: '#00695C',
-    zh: { tag: '主题六', title: '身体构造与常识辟谣', subtitle: '7题 · 判断、排序、选择' },
-    en: { tag: 'Topic 6', title: 'Body Anatomy & Myths', subtitle: '7 questions' },
+    zh: { tag: '主题七', title: '身体构造与常识辟谣', subtitle: '7题 · 判断、排序、选择' },
+    en: { tag: 'Topic 7', title: 'Body Anatomy & Myths', subtitle: '7 questions' },
     questions: [
       {
         type: 'tf', difficulty: 'easy',
@@ -1558,7 +1587,7 @@ function renderHome() {
   if (el('home-eyebrow')) el('home-eyebrow').textContent = zh ? '女性健康 · 知识与资源' : 'Women\'s Health · Knowledge & Resources';
   if (el('home-title'))   el('home-title').textContent   = zh ? '了解你的身体' : 'Know Your Body';
   if (el('card-quiz-title')) el('card-quiz-title').textContent = zh ? '知识问答' : 'Quiz';
-  if (el('card-quiz-sub'))   el('card-quiz-sub').textContent   = zh ? '7个主题' : '7 topics';
+  if (el('card-quiz-sub'))   el('card-quiz-sub').textContent   = zh ? '8个主题' : '8 topics';
   if (el('card-handbook-title')) el('card-handbook-title').textContent = zh ? '身体说明书' : 'Body Guide';
   if (el('card-handbook-sub'))   el('card-handbook-sub').textContent   = zh ? '1个健康指南' : '1 guide';
 
@@ -1585,9 +1614,9 @@ function renderHome() {
   if (el('nav-col-quiz-title')) el('nav-col-quiz-title').textContent = zh ? '知识问答' : 'Quiz';
   if (el('nav-col-handbook-title')) el('nav-col-handbook-title').textContent = zh ? '身体说明书' : 'Body Guide';
   if (el('nav-col-cycle-fitness')) el('nav-col-cycle-fitness').textContent = zh ? '生理周期与健身' : 'Cycle & Fitness';
-  const quizSubIds = ['nav-sub-1','nav-sub-2','nav-sub-3','nav-sub-4','nav-sub-5','nav-sub-6','nav-sub-7'];
-  const quizSubsZh = ['生理周期与激素','生理周期与健身','避孕科学','妇科健康与检查','生育、产后与更年期','身体构造与常识辟谣','心理健康、性健康与常识'];
-  const quizSubsEn = ['Cycle & Hormones','Cycle & Fitness','Contraception','Gynaecological Health','Fertility, Postpartum & Menopause','Body Anatomy & Myths','Mental & Sexual Health'];
+  const quizSubIds = ['nav-sub-1','nav-sub-2','nav-sub-3','nav-sub-4','nav-sub-5','nav-sub-6','nav-sub-7','nav-sub-8'];
+  const quizSubsZh = ['生理周期与激素','生理周期与健身','避孕科学','妇科健康与检查','乳腺健康','生育、产后与更年期','身体构造与常识辟谣','心理健康、性健康与常识'];
+  const quizSubsEn = ['Cycle & Hormones','Cycle & Fitness','Contraception','Gynaecological Health','Breast Health','Fertility, Postpartum & Menopause','Body Anatomy & Myths','Mental & Sexual Health'];
   quizSubIds.forEach((id, i) => { if (el(id)) el(id).textContent = zh ? quizSubsZh[i] : quizSubsEn[i]; });
   if (el('nav-lang-label')) el('nav-lang-label').textContent = zh ? '语言' : 'Language';
 

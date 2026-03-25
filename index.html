@@ -968,7 +968,7 @@
           <button class="nav-item sub" id="nav-sub-1" onclick="window.location.href='quiz.html'">生理周期与激素</button>
           <button class="nav-item sub" id="nav-sub-2" onclick="window.location.href='quiz.html'">生理周期与健身</button>
           <button class="nav-item sub" id="nav-sub-3" onclick="window.location.href='quiz.html'">避孕科学</button>
-          <button class="nav-item sub" id="nav-sub-4" onclick="window.location.href='quiz.html'">妇科健康与检查</button>
+          <button class="nav-item sub" id="nav-sub-4" onclick="window.location.href='quiz.html'">妇科检查与疫苗</button>
           <button class="nav-item sub" id="nav-sub-5" onclick="window.location.href='quiz.html'">生育、产后与更年期</button>
           <button class="nav-item sub" id="nav-sub-6" onclick="window.location.href='quiz.html'">身体构造与常识辟谣</button>
           <button class="nav-item sub" id="nav-sub-7" onclick="window.location.href='quiz.html'">心理健康、性健康与常识</button>
@@ -1014,7 +1014,7 @@
           <button class="nav-item sub" id="nav-sub-1" onclick="navTo('quiz-home')">生理周期与激素</button>
           <button class="nav-item sub" id="nav-sub-2" onclick="navTo('quiz-home')">生理周期与健身</button>
           <button class="nav-item sub" id="nav-sub-3" onclick="navTo('quiz-home')">避孕科学</button>
-          <button class="nav-item sub" id="nav-sub-4" onclick="navTo('quiz-home')">妇科健康与检查</button>
+          <button class="nav-item sub" id="nav-sub-4" onclick="navTo('quiz-home')">妇科检查与疫苗</button>
           <button class="nav-item sub" id="nav-sub-5" onclick="navTo('quiz-home')">生育、产后与更年期</button>
           <button class="nav-item sub" id="nav-sub-6" onclick="navTo('quiz-home')">身体构造与常识辟谣</button>
           <button class="nav-item sub" id="nav-sub-7" onclick="navTo('quiz-home')">心理健康、性健康与常识</button>
@@ -1064,7 +1064,7 @@
           <button class="nav-item sub" id="nav-sub-1" onclick="window.location.href='quiz.html'">生理周期与激素</button>
           <button class="nav-item sub" id="nav-sub-2" onclick="window.location.href='quiz.html'">生理周期与健身</button>
           <button class="nav-item sub" id="nav-sub-3" onclick="window.location.href='quiz.html'">避孕科学</button>
-          <button class="nav-item sub" id="nav-sub-4" onclick="window.location.href='quiz.html'">妇科健康与检查</button>
+          <button class="nav-item sub" id="nav-sub-4" onclick="window.location.href='quiz.html'">妇科检查与疫苗</button>
           <button class="nav-item sub" id="nav-sub-5" onclick="window.location.href='quiz.html'">生育、产后与更年期</button>
           <button class="nav-item sub" id="nav-sub-6" onclick="window.location.href='quiz.html'">身体构造与常识辟谣</button>
           <button class="nav-item sub" id="nav-sub-7" onclick="window.location.href='quiz.html'">心理健康、性健康与常识</button>
@@ -1098,7 +1098,7 @@
     <button class="home-section-card" onclick="window.location.href='quiz.html'">
       <div class="home-section-card-inner">
         <div class="home-section-card-title" id="card-quiz-title">知识问答</div>
-        <div class="home-section-card-sub" id="card-quiz-sub">7个主题</div>
+        <div class="home-section-card-sub" id="card-quiz-sub">8个主题</div>
       </div>
       <span class="section-arrow">→</span>
     </button>
@@ -1159,7 +1159,7 @@ function renderHome() {
   set('home-eyebrow', zh ? '女性健康 · 知识与资源' : "Women's Health · Knowledge & Resources");
   set('home-title', zh ? '了解你的身体' : 'Know Your Body');
   set('card-quiz-title', zh ? '知识问答' : 'Quiz');
-  set('card-quiz-sub', zh ? '7个主题' : '7 topics');
+  set('card-quiz-sub', zh ? '8个主题' : '8 topics');
   set('card-handbook-title', zh ? '身体说明书' : 'Body Guide');
   set('card-handbook-sub', zh ? '1个健康指南' : '1 guide');
   set('nav-title', zh ? '了解你的身体' : 'Know Your Body');
@@ -1181,8 +1181,8 @@ function renderHome() {
   ['nav-sub-1','nav-sub-2','nav-sub-3','nav-sub-4','nav-sub-5','nav-sub-6','nav-sub-7'].forEach((id, i) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const zh_labels = ['生理周期与激素','生理周期与健身','避孕科学','妇科健康与检查','生育、产后与更年期','身体构造与常识辟谣','心理健康、性健康与常识'];
-    const en_labels = ['Cycle & Hormones','Cycle & Fitness','Contraception','Gynaecological Health','Fertility & Menopause','Body Anatomy & Myths','Mental & Sexual Health'];
+    const zh_labels = ['生理周期与激素','生理周期与健身','避孕科学','妇科检查与疫苗','生育、产后与更年期','身体构造与常识辟谣','心理健康、性健康与常识'];
+    const en_labels = ['Cycle & Hormones','Cycle & Fitness','Contraception','Gynaecological Screening & Vaccines','Fertility & Menopause','Body Anatomy & Myths','Mental & Sexual Health'];
     el.textContent = zh ? zh_labels[i] : en_labels[i];
   });
 }
