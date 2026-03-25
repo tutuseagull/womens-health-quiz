@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 <title>了解你的身体 · Know Your Body</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -760,12 +760,15 @@
     top: 0; right: 0; bottom: 0;
     left: clamp(48px, 12vw, 120px);
     z-index: 1001;
-    background: var(--bg);
+    background: var(--bg, #F8F6F2);
     transform: translateX(100%);
     transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    /* extend bg into safe areas */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
   }
   .nav-drawer.open { transform: translateX(0); }
 
