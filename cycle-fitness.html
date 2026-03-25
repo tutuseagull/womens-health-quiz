@@ -75,12 +75,14 @@ body { font-family: 'Instrument Sans', sans-serif; background: #F8F6F2; color: #
 
 .page-footer { max-width: 680px; margin: 0 auto; padding: 16px 24px 48px; font-size: 11px; color: #A89EB0; text-align: left; }
 
+
+
 /* ── GLOBAL FOOTER ── */
 .site-footer {
   border-top: 1px solid #E4DDD8;
   padding: 40px 24px 32px;
   max-width: 680px;
-  margin: 48px auto 0;
+  margin: 64px auto 0;
   width: 100%;
 }
 .site-footer-grid {
@@ -88,7 +90,6 @@ body { font-family: 'Instrument Sans', sans-serif; background: #F8F6F2; color: #
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   margin-bottom: 32px;
-  text-align: left;
 }
 @media (max-width: 480px) {
   .site-footer-grid { grid-template-columns: 1fr; gap: 24px; }
@@ -101,51 +102,20 @@ body { font-family: 'Instrument Sans', sans-serif; background: #F8F6F2; color: #
   color: #A89EB0;
   margin-bottom: 12px;
 }
-.footer-nav-links {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+.footer-nav-links { display: flex; flex-direction: column; gap: 8px; }
 .footer-nav-link {
-  font-size: 13px;
-  color: #6B6070;
-  text-decoration: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  padding: 0;
+  font-size: 13px; color: #6B6070; text-decoration: none;
+  background: none; border: none; cursor: pointer;
+  text-align: left; padding: 0;
   font-family: 'Instrument Sans', sans-serif;
   transition: color 0.15s;
 }
 .footer-nav-link:hover { color: #1C1820; }
-.footer-credits {
-  font-size: 13px;
-  color: #6B6070;
-  line-height: 1.7;
-}
-.footer-bottom {
-  border-top: 1px solid #E4DDD8;
-  padding-top: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.footer-ig-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  color: #6B6070;
-  font-size: 13px;
-  transition: color 0.15s;
-}
+.footer-credits { font-size: 13px; color: #6B6070; line-height: 1.7; }
+.footer-bottom { border-top: 1px solid #E4DDD8; padding-top: 20px; display: flex; align-items: center; gap: 10px; }
+.footer-ig-link { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #6B6070; font-size: 13px; transition: color 0.15s; }
 .footer-ig-link:hover { color: #7A5A8A; }
-.footer-ig-icon {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-}
+.footer-ig-icon { width: 18px; height: 18px; flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -229,28 +199,7 @@ body { font-family: 'Instrument Sans', sans-serif; background: #F8F6F2; color: #
 
 <div class="page-footer" id="page-footer">参考来源：Stacy Sims 研究 / PMC 运动与月经周期文献</div>
 
-<footer class="site-footer" style="margin-top:auto">
-  <div class="site-footer-grid">
-    <div>
-      <div class="footer-col-label" id="footer-nav-label">导航</div>
-      <div class="footer-nav-links" id="footer-nav-links"></div>
-    </div>
-    <div>
-      <div class="footer-col-label" id="footer-credit-label">Copyright</div>
-      <div class="footer-credits">草图 Tutu，闷闷，Mia He</div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <a class="footer-ig-link" href="https://www.instagram.com/wannvstandup?igsh=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener">
-      <svg class="footer-ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-        <circle cx="12" cy="12" r="4"/>
-        <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
-      </svg>
-      <span id="footer-ig-text">关注湾区女权脱口秀</span>
-    </a>
-  </div>
-</footer>
+
 
 
 <script>
@@ -467,5 +416,28 @@ function closeNav(){document.getElementById('nav-drawer').classList.remove('open
 // ── INIT ──
 render();
 </script>
+<footer class="site-footer" style="margin-top:auto">
+  <div class="site-footer-grid">
+    <div>
+      <div class="footer-col-label">导航</div>
+      <div class="footer-nav-links">
+        <a class="footer-nav-link" href="index.html">主页</a>
+        <a class="footer-nav-link" href="quiz.html">知识问答</a>
+        <a class="footer-nav-link" href="handbook.html">身体说明书</a>
+        <a class="footer-nav-link" href="cheatsheet.html">题目小抄</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-label">Copyright</div>
+      <div class="footer-credits">草图 Tutu，闷闷，Mia He</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <a class="footer-ig-link" href="https://www.instagram.com/wannvstandup?igsh=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener">
+      <svg class="footer-ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
+      <span>关注湾区女权脱口秀</span>
+    </a>
+  </div>
+</footer>
 </body>
 </html>
