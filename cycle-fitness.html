@@ -165,7 +165,6 @@ body { font-family: 'Instrument Sans', sans-serif; background: #F8F6F2; color: #
       <div>
         <div class="nav-col-items">
           <a class="nav-item" href="index.html" id="nav-home">主页</a>
-          <a class="nav-item" href="cheatsheet.html" id="nav-cheatsheet">题目小抄</a>
         </div>
       </div>
       <div>
@@ -264,7 +263,7 @@ const T = {
     chartTitle: '激素水平变化 · 28天周期',
     legendE: '雌激素', legendP: '孕激素', legendLH: 'LH 黄体生成素',
     footer: '参考来源：Stacy Sims 研究 / PMC 运动与月经周期文献\n整理与制作：草图 Tutu',
-    navTitle: '了解你的身体', navHome: '主页', navCheatsheet: '题目小抄',
+    navTitle: '了解你的身体', navHome: '主页',
     navQuiz: '知识问答', navHandbook: '身体说明书', navCycle: '生理周期与健身',
     navLang: '语言',
     phases: [
@@ -312,7 +311,7 @@ const T = {
     chartTitle: 'Hormone Levels · 28-Day Cycle',
     legendE: 'Estrogen', legendP: 'Progesterone', legendLH: 'LH (Luteinising Hormone)',
     footer: 'Sources: Stacy Sims research / PMC literature on exercise & menstrual cycle\nCompiled by: 草图 Tutu',
-    navTitle: 'Know Your Body', navHome: 'Home', navCheatsheet: 'Cheatsheet',
+    navTitle: 'Know Your Body', navHome: 'Home',
     navQuiz: 'Quiz', navHandbook: 'Body Guide', navCycle: 'Cycle & Fitness',
     navLang: 'Language',
     phases: [
@@ -389,7 +388,6 @@ function render() {
   if (footer) footer.innerHTML = t.footer.replace('\n', '<br>');
   set('nav-title', t.navTitle);
   set('nav-home', t.navHome);
-  set('nav-cheatsheet', t.navCheatsheet);
   set('nav-quiz', t.navQuiz);
   set('nav-handbook', t.navHandbook);
   set('nav-cycle', t.navCycle);
@@ -402,7 +400,6 @@ function render() {
     { label: zh ? '主页' : 'Home', href: 'index.html' },
     { label: zh ? '知识问答' : 'Quiz', href: 'quiz.html' },
     { label: zh ? '身体说明书' : 'Body Guide', href: 'handbook.html' },
-    { label: zh ? '题目小抄' : 'Cheatsheet', href: 'cheatsheet.html' },
   ].map(i => `<a class="footer-nav-link" href="${i.href}">${i.label}</a>`).join('');
   const fnLabel = document.getElementById('footer-nav-label');
   if (fnLabel) fnLabel.textContent = zh ? '导航' : 'Navigation';
