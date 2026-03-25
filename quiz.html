@@ -1331,11 +1331,6 @@ function renderHome() {
     ? '📌 内容仅供健康科普，不构成医疗建议，如有任何疑虑请咨询专业医生。'
     : '📌 For educational purposes only. Not medical advice. Consult a professional if you have any concerns.';
 
-  // ── Back buttons ──
-  document.querySelectorAll('.back-btn').forEach(btn => {
-    btn.textContent = zh ? '←' : '←';
-  });
-
   // ── Nav drawer ──
   if (el('nav-drawer-title')) el('nav-drawer-title').textContent = zh ? '了解你的身体' : 'Know Your Body';
   if (el('nav-col-home'))     el('nav-col-home').textContent     = zh ? '主页' : 'Home';
