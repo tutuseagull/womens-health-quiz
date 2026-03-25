@@ -49,7 +49,7 @@ body { font-family: 'Instrument Sans', sans-serif; background: #F8F6F2; color: #
 .header-sub { font-size: 13px; color: #A89EB0; font-style: normal; letter-spacing: 0.02em; }
 
 .disclaimer { max-width: 680px; margin: 0 auto 28px; padding: 0 24px; }
-.disclaimer-inner { background: #fff; border: 1px solid #E4DDD8; border-radius: 10px; padding: 14px 16px; font-size: 12px; color: #6B6070; line-height: 1.7; }
+.disclaimer-inner { background: #F0EBF5; border-radius: 10px; padding: 14px 16px; font-size: 12px; color: #A89EB0; line-height: 1.7; }
 .disclaimer-inner p + p { margin-top: 4px; }
 
 .chart-section { max-width: 680px; margin: 0 auto 36px; padding: 0 24px; }
@@ -60,7 +60,7 @@ body { font-family: 'Instrument Sans', sans-serif; background: #F8F6F2; color: #
 .legend-dot { width: 20px; height: 2.5px; border-radius: 2px; flex-shrink: 0; }
 .chart-wrap { position: relative; width: 100%; height: 200px; }
 
-.phases { max-width: 680px; margin: 0 auto; padding: 0 24px 60px; display: flex; flex-direction: column; gap: 16px; }
+.phases { max-width: 680px; margin: 0 auto; padding: 0 24px 24px; display: flex; flex-direction: column; gap: 16px; }
 .phase-card { border-radius: 16px; border: 1px solid #E4DDD8; overflow: hidden; }
 .phase-top { padding: 18px 20px 16px; }
 .phase-name { font-family: 'IBM Plex Serif', serif; font-size: 22px; font-weight: 600; margin-bottom: 10px; }
@@ -72,20 +72,23 @@ body { font-family: 'Instrument Sans', sans-serif; background: #F8F6F2; color: #
 .row-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #A89EB0; margin-bottom: 2px; }
 .row-text { font-size: 14px; color: #1C1820; line-height: 1.5; }
 
-.page-footer { max-width: 680px; margin: 0 auto; padding: 0 24px 48px; font-size: 11px; color: #A89EB0; text-align: center; white-space: pre-line; }
+
+.page-footer { max-width: 680px; margin: 0 auto; padding: 16px 24px 48px; font-size: 11px; color: #A89EB0; text-align: left; }
 
 /* ── GLOBAL FOOTER ── */
 .site-footer {
   border-top: 1px solid #E4DDD8;
   padding: 40px 24px 32px;
   max-width: 680px;
-  margin: 64px auto 0;
+  margin: 48px auto 0;
+  width: 100%;
 }
 .site-footer-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   margin-bottom: 32px;
+  text-align: left;
 }
 @media (max-width: 480px) {
   .site-footer-grid { grid-template-columns: 1fr; gap: 24px; }
@@ -227,7 +230,7 @@ body { font-family: 'Instrument Sans', sans-serif; background: #F8F6F2; color: #
 
 <div class="page-footer" id="page-footer">参考来源：Stacy Sims 研究 / PMC 运动与月经周期文献</div>
 
-<footer class="site-footer" id="site-footer">
+<footer class="site-footer" style="margin-top:auto">
   <div class="site-footer-grid">
     <div>
       <div class="footer-col-label" id="footer-nav-label">导航</div>
@@ -391,6 +394,20 @@ function render() {
   set('nav-handbook', t.navHandbook);
   set('nav-cycle', t.navCycle);
   set('nav-lang-label', t.navLang);
+
+  // Footer nav
+  const zh = lang === 'zh';
+  const fnl = document.getElementById('footer-nav-links');
+  if (fnl) fnl.innerHTML = [
+    { label: zh ? '主页' : 'Home', href: 'index.html' },
+    { label: zh ? '知识问答' : 'Quiz', href: 'index.html' },
+    { label: zh ? '身体说明书' : 'Body Guide', href: 'index.html' },
+    { label: zh ? '题目小抄' : 'Cheatsheet', href: 'cheatsheet.html' },
+  ].map(i => `<a class="footer-nav-link" href="${i.href}">${i.label}</a>`).join('');
+  const fnLabel = document.getElementById('footer-nav-label');
+  if (fnLabel) fnLabel.textContent = zh ? '导航' : 'Navigation';
+  const figText = document.getElementById('footer-ig-text');
+  if (figText) figText.textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
 
   // Render phase cards
   const container = document.getElementById('phases');

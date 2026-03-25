@@ -187,6 +187,7 @@
     padding: 16px;
     background: var(--neutral-fill);
     border-radius: var(--radius-sm);
+    margin-bottom: 48px;
   }
 
   /* ── QUIZ SCREEN ── */
@@ -1079,7 +1080,7 @@
     <h1 class="home-title" id="quiz-home-title">知识问答</h1>
   </div>
   <div class="section-list" id="section-list"></div>
-  <div class="home-disclaimer" id="quiz-disclaimer">📌 内容仅供健康科普，不构成医疗建议。如有任何疑虑，请咨询专业医生。</div>
+  <div class="home-disclaimer" id="quiz-disclaimer">📌 内容仅供健康科普，不构成医疗建议，如有任何疑虑请咨询专业医生。</div>
 
 
 <footer class="site-footer" style="margin-top:auto">
@@ -1109,9 +1110,9 @@
     <h1 class="home-title" id="handbook-title">身体说明书</h1>
   </div>
   <div class="section-list" id="handbook-list"></div>
-  <div class="home-disclaimer" id="handbook-disclaimer">📌 内容仅供健康科普，不构成医疗建议。如有任何疑虑，请咨询专业医生。</div>
+  <div class="home-disclaimer" id="handbook-disclaimer">📌 内容仅供健康科普，不构成医疗建议，如有任何疑虑请咨询专业医生。</div>
 
-<footer class="site-footer" id="site-footer">
+<footer class="site-footer" id="site-footer" style="margin-top:auto">
   <div class="site-footer-grid">
     <div>
       <div class="footer-col-label" id="footer-nav-label">导航</div>
@@ -1624,14 +1625,14 @@ function renderHome() {
   // ── Quiz home ──
   if (el('quiz-home-title')) el('quiz-home-title').textContent = zh ? '知识问答' : 'Quiz';
   if (el('quiz-disclaimer')) el('quiz-disclaimer').textContent = zh
-    ? '📌 内容仅供健康科普，不构成医疗建议。如有任何疑虑，请咨询专业医生。'
-    : '📌 For educational purposes only. Not medical advice. Consult a professional for any concerns.';
+    ? '📌 内容仅供健康科普，不构成医疗建议，如有任何疑虑请咨询专业医生。'
+    : '📌 For educational purposes only. Not medical advice. Consult a professional if you have any concerns.';
 
   // ── Handbook ──
   if (el('handbook-title')) el('handbook-title').textContent = zh ? '身体说明书' : 'Body Guide';
   if (el('handbook-disclaimer')) el('handbook-disclaimer').textContent = zh
-    ? '📌 内容仅供健康科普，不构成医疗建议。如有任何疑虑，请咨询专业医生。'
-    : '📌 For educational purposes only. Not medical advice. Consult a professional for any concerns.';
+    ? '📌 内容仅供健康科普，不构成医疗建议，如有任何疑虑请咨询专业医生。'
+    : '📌 For educational purposes only. Not medical advice. Consult a professional if you have any concerns.';
 
   // ── Back buttons ──
   document.querySelectorAll('.back-btn').forEach(btn => {
