@@ -4,22 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>女性健康问答 · 小抄</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { max-width: 100%; overflow-x: hidden; }
 
 :root {
-  --bg: #F8F6F2;
+  --bg: #E2EFC2;
   --surface: #FFFFFF;
-  --text: #1C1820;
-  --muted: #6B6070;
-  --light: #A89EB0;
-  --border: #E4DDD8;
-  --accent: #7A5A8A;
-  --accent-light: #F0E5F5;
-  --highlight: #EDE0F8;
+  --text: #262C37;
+  --muted: #5a6040;
+  --light: #8a9870;
+  --border: rgba(42,56,40,0.15);
+  --accent: #F36589;
+  --accent-light: rgba(243,101,137,0.12);
+  --highlight: rgba(243,101,137,0.2);
 }
 
 body {
@@ -382,7 +380,7 @@ body {
     color: var(--muted);
   }
   .sidebar .topic-pill:hover { background: var(--border); color: var(--text); }
-  .sidebar .topic-pill.active { background: var(--text); color: white; }
+  .sidebar .topic-pill.active { background: #262C37; color: #E2EFC2; }
   .main-area {
     flex: 1;
     min-width: 0;
@@ -448,7 +446,7 @@ body {
   color: #1C1820;
   transition: all 0.15s;
 }
-.nav-hamburger:hover { background: #F8F6F2; }
+.nav-hamburger:hover { background: rgba(255,255,255,0.7); }
 .nav-overlay {
   display: none;
   position: fixed;
@@ -631,6 +629,7 @@ body {
 .footer-ig-link:hover { color: #7A5A8A; }
 .footer-ig-icon { width: 18px; height: 18px; flex-shrink: 0; }
 </style>
+<link rel="stylesheet" href="shared.css">
 </head>
 <body>
 
