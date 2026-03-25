@@ -187,6 +187,43 @@ body {
   font-size: 18px; color: var(--accent); transition: transform 0.18s;
 }
 
+
+/* ── SECTION LIST ── */
+.section-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+/* home-section-card = section-card with flex layout */
+.home-section-card {
+  background: var(--card-bg);
+  border: none;
+  border-radius: var(--radius);
+  padding: 20px;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  transition: background 0.18s;
+  position: relative;
+}
+.home-section-card:hover { background: var(--card-hover); }
+.home-section-card:hover .home-section-card-sub { color: var(--accent); }
+.home-section-card:hover .section-arrow { transform: translateX(3px); }
+.home-section-card:active { background: var(--card-active); transform: scale(0.985); }
+.home-section-card-inner { flex: 1; }
+.home-section-card-title {
+  font-family: 'Manrope', 'Noto Sans SC', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.home-section-card-sub { font-size: 13px; color: var(--text-muted); transition: color 0.18s; }
+
 /* ── BUTTONS ── */
 .btn-primary {
   width: 100%; padding: 14px;
