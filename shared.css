@@ -269,6 +269,19 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
+/* Screen containers (used in quiz SPA) */
+.screen { display: none; }
+.screen.active { display: flex; flex-direction: column; min-height: 100vh; }
+.screen-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 72px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 .page-eyebrow {
   font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
   color: var(--accent); margin-bottom: 6px;

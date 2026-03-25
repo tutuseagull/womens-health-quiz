@@ -13,17 +13,8 @@
   
 
   /* ── SCREENS ── */
-  .screen { display: none; min-height: 100vh; }
-  .screen.active { display: flex; flex-direction: column; }
 
   /* ── HOME ── */
-  #home, #quiz-home, #handbook {
-    padding: 48px 24px 32px;
-    max-width: 680px;
-    margin: 0 auto;
-    width: 100%;
-  }
-
   .lang-toggle {
     display: flex;
     gap: 8px;
@@ -564,7 +555,7 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-  .confirm-btn:disabled { background: var(--border); color: var(--text-muted); cursor: default; }
+  .confirm-btn:disabled { background: rgba(42,56,40,0.15); color: var(--text-muted); cursor: default; opacity: 0.7; }
   .confirm-btn:not(:disabled):active { transform: scale(0.98); }
 
   /* ── SUBMIT BTN (fill in / ordering / matching) ── */
@@ -582,7 +573,7 @@
     margin-top: 8px;
     transition: all 0.2s;
   }
-  .submit-btn:disabled { background: var(--border); color: var(--text-muted); cursor: default; }
+  .submit-btn:disabled { background: rgba(42,56,40,0.15); color: var(--text-muted); cursor: default; opacity: 0.7; }
   .submit-btn:not(:disabled):active { transform: scale(0.98); }
 
   /* ── RESULTS ── */
@@ -673,8 +664,6 @@
   }
 
   /* push screen content below fixed nav */
-  .screen { padding-top: 60px; }
-  #home, #quiz-home, #handbook { padding-top: 72px; }
 
 /* ── GLOBAL FOOTER ── */
 .site-footer {
@@ -747,7 +736,7 @@
   flex-shrink: 0;
 }
 
-#quiz-home.active { display: flex !important; flex-direction: column; min-height: 100vh; padding-top: 72px; }
+#quiz-home.active { display: flex; flex-direction: column; min-height: 100vh; }
 #quiz-home .home-disclaimer { margin-bottom: 48px; background: var(--card-bg); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 12px; color: var(--text-muted); line-height: 1.7; }
 .site-footer { margin-top: auto; }
 button { outline: none; }
@@ -809,16 +798,15 @@ button { outline: none; }
 
 
 <div class="screen" id="quiz-home">
+  <div class="screen-wrap">
   <button class="back-btn" onclick="window.location.href='index.html'" style="margin-bottom:20px"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 4L6 9L11 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   <div class="home-header">
     <h1 class="home-title" id="quiz-home-title">知识问答</h1>
   </div>
   <div class="section-list" id="section-list"></div>
   <div class="home-disclaimer" id="quiz-disclaimer">📌 内容仅供健康科普，不构成医疗建议，如有任何疑虑请咨询专业医生。</div>
+  </div>
 
-
-
-</div>
 <footer class="site-footer" style="margin-top:auto">
   <div class="site-footer-grid">
     <div>
@@ -841,6 +829,7 @@ button { outline: none; }
     </a>
   </div>
 </footer>
+</div>
 
 <div class="screen" id="quiz">
   <div class="quiz-header">
