@@ -296,6 +296,23 @@ body {
 .footer-ig-link:hover { color: var(--accent); }
 .footer-ig-icon { width: 18px; height: 18px; flex-shrink: 0; }
 
+
+/* ── TYPOGRAPHY ── */
+.home-header { margin-bottom: 32px; }
+.home-title {
+  font-family: 'Manrope', 'Noto Sans SC', sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.home-subtitle {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
 /* ── PAGE LAYOUT ── */
 .page-wrap {
   max-width: 680px;
