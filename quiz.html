@@ -970,19 +970,22 @@
   flex-shrink: 0;
 }
 
-#quiz-home { padding-top: 72px; min-height: 100vh; }
-#quiz-home.active { display: flex; flex-direction: column; }
+/* quiz-home layout */
+#quiz-home.active {
+  display: flex !important;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 72px;
+}
 #quiz-home .home-disclaimer { margin-bottom: 48px; }
+.site-footer { margin-top: auto; }
 </style>
 </head>
 <body>
-<!-- ── GLOBAL NAV ── -->
 <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
-
 <nav class="global-nav">
-  <button class="nav-hamburger" onclick="openNav()" aria-label="Menu">☰</button>
+  <button class="nav-hamburger" onclick="openNav()">☰</button>
 </nav>
-
 <div class="nav-drawer" id="nav-drawer">
   <div class="nav-drawer-header">
     <span class="nav-drawer-title" id="nav-drawer-title">了解你的身体</span>
@@ -990,53 +993,52 @@
   </div>
   <div class="nav-body">
     <div class="nav-columns">
-      <!-- Col 1: 其他 -->
       <div class="nav-col">
         <div class="nav-col-items">
-          <button class="nav-item" id="nav-col-home" onclick="window.location.href='index.html'">主页</button>
+          <button class="nav-item" id="nav-home" onclick="window.location.href='index.html'">主页</button>
         </div>
       </div>
-      <!-- Col 2: 知识问答 -->
       <div class="nav-col">
-        <button class="nav-col-title-btn" id="nav-col-quiz-title" onclick="window.location.href='quiz.html'">知识问答</button>
+        <button class="nav-col-title-btn" id="nav-quiz" onclick="closeNav()">知识问答</button>
         <div class="nav-col-items">
-          <button class="nav-item sub" id="nav-sub-1" onclick="window.location.href='quiz.html'">生理周期与激素</button>
-          <button class="nav-item sub" id="nav-sub-2" onclick="window.location.href='quiz.html'">生理周期与健身</button>
-          <button class="nav-item sub" id="nav-sub-3" onclick="window.location.href='quiz.html'">避孕科学</button>
-          <button class="nav-item sub" id="nav-sub-4" onclick="window.location.href='quiz.html'">妇科健康与检查</button>
-          <button class="nav-item sub" id="nav-sub-5" onclick="window.location.href='quiz.html'">生育、产后与更年期</button>
-          <button class="nav-item sub" id="nav-sub-6" onclick="window.location.href='quiz.html'">身体构造与常识辟谣</button>
-          <button class="nav-item sub" id="nav-sub-7" onclick="window.location.href='quiz.html'">心理健康、性健康与常识</button>
+          <button class="nav-item sub" id="nav-sub-1" onclick="closeNav()">生理周期与激素</button>
+          <button class="nav-item sub" id="nav-sub-2" onclick="closeNav()">生理周期与健身</button>
+          <button class="nav-item sub" id="nav-sub-3" onclick="closeNav()">避孕科学</button>
+          <button class="nav-item sub" id="nav-sub-4" onclick="closeNav()">妇科检查与疫苗</button>
+          <button class="nav-item sub" id="nav-sub-5" onclick="closeNav()">乳腺健康</button>
+          <button class="nav-item sub" id="nav-sub-6" onclick="closeNav()">生育、产后与更年期</button>
+          <button class="nav-item sub" id="nav-sub-7" onclick="closeNav()">身体构造与常识辟谣</button>
+          <button class="nav-item sub" id="nav-sub-8" onclick="closeNav()">心理健康、性健康与常识</button>
         </div>
       </div>
-      <!-- Col 3: 身体说明书 -->
       <div class="nav-col">
-        <button class="nav-col-title-btn" id="nav-col-handbook-title" onclick="window.location.href='handbook.html'">身体说明书</button>
+        <button class="nav-col-title-btn" id="nav-handbook" onclick="window.location.href='handbook.html'">身体说明书</button>
         <div class="nav-col-items">
-          <a class="nav-item sub" id="nav-col-cycle-fitness" href="cycle-fitness.html" onclick="closeNav()">生理周期与健身</a>
+          <a class="nav-item sub" id="nav-cycle" href="cycle-fitness.html">生理周期与健身</a>
         </div>
       </div>
     </div>
   </div>
   <div class="nav-footer">
     <div class="nav-lang-row">
-      <span id="nav-lang-label" style="font-size:13px;color:#6B6070">语言</span>
-      <button class="nav-lang-btn active" id="nav-lang-zh" onclick="setLang('zh');updateNavLang()">中文</button>
-      <button class="nav-lang-btn" id="nav-lang-en" onclick="setLang('en');updateNavLang()">EN</button>
+      <span id="nav-lang-label" style="font-size:13px;color:var(--text-muted)">语言</span>
+      <button class="nav-lang-btn active" id="nav-lang-zh" onclick="setLang('zh')">中文</button>
+      <button class="nav-lang-btn" id="nav-lang-en" onclick="setLang('en')">EN</button>
     </div>
   </div>
 </div>
 
-
+<!-- QUIZ HOME -->
 <div class="screen" id="quiz-home">
-  <button class="back-btn" onclick="window.location.href='index.html'" style="margin-bottom:20px">←</button>
-  <div class="home-header">
-    <h1 class="home-title" id="quiz-home-title">知识问答</h1>
+  <div style="padding: 0 24px; max-width: 680px; margin: 0 auto; width: 100%;">
+    <button class="back-btn" onclick="window.location.href='index.html'" style="margin-bottom:20px">←</button>
+    <div class="home-header">
+      <h1 class="home-title" id="quiz-home-title">知识问答</h1>
+    </div>
+    <div class="section-list" id="section-list"></div>
+    <div class="home-disclaimer" id="quiz-disclaimer">📌 内容仅供健康科普，不构成医疗建议，如有任何疑虑请咨询专业医生。</div>
   </div>
-  <div class="section-list" id="section-list"></div>
-  <div class="home-disclaimer" id="quiz-disclaimer">📌 内容仅供健康科普，不构成医疗建议，如有任何疑虑请咨询专业医生。</div>
-
-<footer class="site-footer" style="margin-top:auto">
+  <footer class="site-footer">
   <div class="site-footer-grid">
     <div>
       <div class="footer-col-label">导航</div>
@@ -1061,6 +1063,7 @@
 </footer>
 </div>
 
+<!-- QUIZ -->
 <div class="screen" id="quiz">
   <div class="quiz-header">
     <div class="quiz-nav">
@@ -1095,8 +1098,9 @@
     <button class="next-btn" id="next-btn" onclick="nextQuestion()"></button>
   </div>
 </div>
-</div>
 
+
+<!-- RESULTS -->
 <div class="screen" id="results">
   <div class="results-icon" id="results-icon"></div>
   <h2 class="results-title" id="results-title"></h2>
@@ -1631,6 +1635,37 @@ function renderHome() {
     </button>
   `).join('');
 
+
+  // Footer: home
+  const _fnhome = el('footer-nav-links-home');
+  if (_fnhome) _fnhome.innerHTML = [
+    {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
+    {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
+    {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
+    {label: zh ? '题目小抄' : 'Cheatsheet', action: "window.location.href='cheatsheet.html'"},
+  ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
+  if (el('footer-nav-label-home')) el('footer-nav-label-home').textContent = zh ? '导航' : 'Navigation';
+  if (el('footer-ig-home')) el('footer-ig-home').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
+  // Footer: qh
+  const _fnqh = el('footer-nav-links-qh');
+  if (_fnqh) _fnqh.innerHTML = [
+    {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
+    {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
+    {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
+    {label: zh ? '题目小抄' : 'Cheatsheet', action: "window.location.href='cheatsheet.html'"},
+  ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
+  if (el('footer-nav-label-qh')) el('footer-nav-label-qh').textContent = zh ? '导航' : 'Navigation';
+  if (el('footer-ig-qh')) el('footer-ig-qh').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
+  // Footer: hb
+  const _fnhb = el('footer-nav-links-hb');
+  if (_fnhb) _fnhb.innerHTML = [
+    {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
+    {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
+    {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
+    {label: zh ? '题目小抄' : 'Cheatsheet', action: "window.location.href='cheatsheet.html'"},
+  ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
+  if (el('footer-nav-label-hb')) el('footer-nav-label-hb').textContent = zh ? '导航' : 'Navigation';
+  if (el('footer-ig-hb')) el('footer-ig-hb').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
 
   // ── Handbook list ──
   const handbookItems = [
