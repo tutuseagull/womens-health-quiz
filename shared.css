@@ -212,7 +212,7 @@ body {
 }
 .home-section-card:hover { background: var(--card-hover); }
 .home-section-card:hover .home-section-card-sub { color: var(--accent); }
-.home-section-card:hover .section-arrow { transform: translateX(3px); }
+.home-section-card:hover .section-arrow { transform: translateY(-50%); }
 .home-section-card:active { background: var(--card-active); transform: scale(0.985); }
 .home-section-card-inner { flex: 1; }
 .home-section-card-title {
