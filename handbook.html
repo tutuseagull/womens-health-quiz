@@ -1087,7 +1087,12 @@
   <div class="site-footer-grid">
     <div>
       <div class="footer-col-label" id="footer-nav-label-hb">导航</div>
-      <div class="footer-nav-links" id="footer-nav-links-hb"></div>
+      <div class="footer-nav-links" id="footer-nav-links-hb">
+        <a class="footer-nav-link" href="index.html" id="fn-home">主页</a>
+        <a class="footer-nav-link" href="quiz.html" id="fn-quiz">知识问答</a>
+        <a class="footer-nav-link" href="handbook.html" id="fn-handbook">身体说明书</a>
+        <a class="footer-nav-link" href="cheatsheet.html" id="fn-cheatsheet">题目小抄</a>
+      </div>
     </div>
     <div>
       <div class="footer-col-label">Copyright</div>
@@ -1146,12 +1151,15 @@ function render() {
   ).join('');
 
   const fnl = document.getElementById('footer-nav-links-hb');
-  if (fnl) fnl.innerHTML = [
-    { label: zh ? '主页' : 'Home', href: 'index.html' },
-    { label: zh ? '知识问答' : 'Quiz', href: 'quiz.html' },
-    { label: zh ? '身体说明书' : 'Body Guide', href: 'handbook.html' },
-    { label: zh ? '题目小抄' : 'Cheatsheet', href: 'cheatsheet.html' },
-  ].map(i => `<a class="footer-nav-link" href="${i.href}">${i.label}</a>`).join('');
+  if (fnl) {
+    const links = [
+      { id: 'fn-home',      label: zh ? '主页' : 'Home' },
+      { id: 'fn-quiz',      label: zh ? '知识问答' : 'Quiz' },
+      { id: 'fn-handbook',  label: zh ? '身体说明书' : 'Body Guide' },
+      { id: 'fn-cheatsheet',label: zh ? '题目小抄' : 'Cheatsheet' },
+    ];
+    links.forEach(l => { const el = document.getElementById(l.id); if (el) el.textContent = l.label; });
+  }
 
   ['nav-sub-1','nav-sub-2','nav-sub-3','nav-sub-4','nav-sub-5','nav-sub-6','nav-sub-7'].forEach((id, i) => {
     const el = document.getElementById(id);
