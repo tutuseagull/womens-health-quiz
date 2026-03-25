@@ -211,10 +211,11 @@ body {
 .btn-secondary:active { transform: scale(0.98); }
 
 /* ── DISCLAIMER ── */
-.disclaimer-box {
+.disclaimer-box,
+.home-disclaimer {
   font-size: 12px;
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: 1.7;
   padding: 14px 16px;
   background: var(--card-bg);
   border-radius: var(--radius-sm);
