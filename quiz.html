@@ -809,7 +809,7 @@ button { outline: none; }
 
 
 <div class="screen" id="quiz-home">
-  <button class="back-btn" onclick="showScreen('home')" style="margin-bottom:20px">←</button>
+  <button class="back-btn" onclick="window.location.href='index.html'" style="margin-bottom:20px"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 4L6 9L11 14" stroke="#F36589" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   <div class="home-header">
     <h1 class="home-title" id="quiz-home-title">知识问答</h1>
   </div>
@@ -819,26 +819,25 @@ button { outline: none; }
 
 
 </div>
-<footer class="site-footer">
+<footer class="site-footer" style="margin-top:auto">
   <div class="site-footer-grid">
     <div>
-      <div class="footer-col-label">导航</div>
+      <div class="footer-col-label" id="footer-nav-label">导航</div>
       <div class="footer-nav-links">
-        <a class="footer-nav-link" href="index.html">主页</a>
-        <a class="footer-nav-link" href="quiz.html">知识问答</a>
-        <a class="footer-nav-link" href="handbook.html">身体说明书</a>
-        <a class="footer-nav-link" href="cheatsheet.html">题目小抄</a>
+        <a class="footer-nav-link" href="index.html" id="footer-link-home">主页</a>
+        <a class="footer-nav-link" href="quiz.html" id="footer-link-quiz">知识问答</a>
+        <a class="footer-nav-link" href="handbook.html" id="footer-link-handbook">身体说明书</a>
       </div>
     </div>
     <div>
       <div class="footer-col-label">Copyright</div>
-      <div class="footer-credits">草图 Tutu，闷闷，Mia He</div>
+      <div class="footer-credits">草图 Tutu，闷闷，Mia He，咖啡</div>
     </div>
   </div>
   <div class="footer-bottom">
     <a class="footer-ig-link" href="https://www.instagram.com/wannvstandup?igsh=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener">
       <svg class="footer-ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
-      <span>关注湾区女权脱口秀</span>
+      <span id="footer-ig-text">关注湾区女权脱口秀</span>
     </a>
   </div>
 </footer>
@@ -846,7 +845,7 @@ button { outline: none; }
 <div class="screen" id="quiz">
   <div class="quiz-header">
     <div class="quiz-nav">
-      <button class="back-btn" onclick="goHome()">←</button>
+      <button class="back-btn" onclick="goHome()"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 4L6 9L11 14" stroke="#F36589" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
     <div class="section-label-row">
       <div class="section-label" id="section-label"></div>
@@ -1420,7 +1419,6 @@ function renderHome() {
     {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
     {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
     {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
-    {label: zh ? '题目小抄' : 'Cheatsheet', action: "window.location.href='cheatsheet.html'"},
   ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
   if (el('footer-nav-label-home')) el('footer-nav-label-home').textContent = zh ? '导航' : 'Navigation';
   if (el('footer-ig-home')) el('footer-ig-home').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
@@ -1430,7 +1428,6 @@ function renderHome() {
     {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
     {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
     {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
-    {label: zh ? '题目小抄' : 'Cheatsheet', action: "window.location.href='cheatsheet.html'"},
   ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
   if (el('footer-nav-label-qh')) el('footer-nav-label-qh').textContent = zh ? '导航' : 'Navigation';
   if (el('footer-ig-qh')) el('footer-ig-qh').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
@@ -1440,7 +1437,6 @@ function renderHome() {
     {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
     {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
     {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
-    {label: zh ? '题目小抄' : 'Cheatsheet', action: "window.location.href='cheatsheet.html'"},
   ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
   if (el('footer-nav-label-hb')) el('footer-nav-label-hb').textContent = zh ? '导航' : 'Navigation';
   if (el('footer-ig-hb')) el('footer-ig-hb').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
