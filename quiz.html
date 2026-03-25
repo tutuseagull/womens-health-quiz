@@ -1631,37 +1631,6 @@ function renderHome() {
   `).join('');
 
 
-  // Footer: home
-  const _fnhome = el('footer-nav-links-home');
-  if (_fnhome) _fnhome.innerHTML = [
-    {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
-    {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
-    {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
-    {label: zh ? '题目小抄' : 'Cheatsheet', action: "window.location.href='cheatsheet.html'"},
-  ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
-  if (el('footer-nav-label-home')) el('footer-nav-label-home').textContent = zh ? '导航' : 'Navigation';
-  if (el('footer-ig-home')) el('footer-ig-home').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
-  // Footer: qh
-  const _fnqh = el('footer-nav-links-qh');
-  if (_fnqh) _fnqh.innerHTML = [
-    {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
-    {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
-    {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
-    {label: zh ? '题目小抄' : 'Cheatsheet', action: "window.location.href='cheatsheet.html'"},
-  ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
-  if (el('footer-nav-label-qh')) el('footer-nav-label-qh').textContent = zh ? '导航' : 'Navigation';
-  if (el('footer-ig-qh')) el('footer-ig-qh').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
-  // Footer: hb
-  const _fnhb = el('footer-nav-links-hb');
-  if (_fnhb) _fnhb.innerHTML = [
-    {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
-    {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
-    {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
-    {label: zh ? '题目小抄' : 'Cheatsheet', action: "window.location.href='cheatsheet.html'"},
-  ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
-  if (el('footer-nav-label-hb')) el('footer-nav-label-hb').textContent = zh ? '导航' : 'Navigation';
-  if (el('footer-ig-hb')) el('footer-ig-hb').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
-
   // ── Handbook list ──
   const handbookItems = [
     { zh: { title: '生理周期与健身', sub: '激素变化、运动与饮食指南' }, en: { title: 'Cycle & Fitness', sub: 'Hormones, training & nutrition' }, url: 'cycle-fitness.html' },
