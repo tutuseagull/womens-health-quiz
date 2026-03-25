@@ -425,6 +425,76 @@ body {
   font-family: 'Instrument Sans', sans-serif; color: var(--muted);
 }
 .cs-lang-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+/* ── GLOBAL FOOTER ── */
+.site-footer {
+  border-top: 1px solid #E4DDD8;
+  padding: 40px 24px 32px;
+  max-width: 680px;
+  margin: 64px auto 0;
+}
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+@media (max-width: 480px) {
+  .site-footer-grid { grid-template-columns: 1fr; gap: 24px; }
+}
+.footer-col-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #A89EB0;
+  margin-bottom: 12px;
+}
+.footer-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.footer-nav-link {
+  font-size: 13px;
+  color: #6B6070;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  font-family: 'Instrument Sans', sans-serif;
+  transition: color 0.15s;
+}
+.footer-nav-link:hover { color: #1C1820; }
+.footer-credits {
+  font-size: 13px;
+  color: #6B6070;
+  line-height: 1.7;
+}
+.footer-bottom {
+  border-top: 1px solid #E4DDD8;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.footer-ig-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #6B6070;
+  font-size: 13px;
+  transition: color 0.15s;
+}
+.footer-ig-link:hover { color: #7A5A8A; }
+.footer-ig-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
 </style>
 
 <style>
@@ -591,6 +661,76 @@ body {
   font-family: 'Instrument Sans', sans-serif; color: var(--muted);
 }
 .cs-lang-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+/* ── GLOBAL FOOTER ── */
+.site-footer {
+  border-top: 1px solid #E4DDD8;
+  padding: 40px 24px 32px;
+  max-width: 680px;
+  margin: 64px auto 0;
+}
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+@media (max-width: 480px) {
+  .site-footer-grid { grid-template-columns: 1fr; gap: 24px; }
+}
+.footer-col-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #A89EB0;
+  margin-bottom: 12px;
+}
+.footer-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.footer-nav-link {
+  font-size: 13px;
+  color: #6B6070;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  font-family: 'Instrument Sans', sans-serif;
+  transition: color 0.15s;
+}
+.footer-nav-link:hover { color: #1C1820; }
+.footer-credits {
+  font-size: 13px;
+  color: #6B6070;
+  line-height: 1.7;
+}
+.footer-bottom {
+  border-top: 1px solid #E4DDD8;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.footer-ig-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #6B6070;
+  font-size: 13px;
+  transition: color 0.15s;
+}
+.footer-ig-link:hover { color: #7A5A8A; }
+.footer-ig-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
 </style>
 </head>
 <body>
@@ -1167,5 +1307,29 @@ DATA.forEach(section => {
   });
 });
 </script>
+
+<footer class="site-footer" id="site-footer">
+  <div class="site-footer-grid">
+    <div>
+      <div class="footer-col-label" id="footer-nav-label">导航</div>
+      <div class="footer-nav-links" id="footer-nav-links"></div>
+    </div>
+    <div>
+      <div class="footer-col-label" id="footer-credit-label">Copyright</div>
+      <div class="footer-credits">草图 Tutu，闷闷，Mia He</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <a class="footer-ig-link" href="https://www.instagram.com/wannvstandup?igsh=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener">
+      <svg class="footer-ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+      </svg>
+      <span id="footer-ig-text">关注湾区女权脱口秀</span>
+    </a>
+  </div>
+</footer>
+
 </body>
 </html>
