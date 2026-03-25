@@ -169,7 +169,7 @@ body { font-family: 'Instrument Sans', sans-serif; background: #F8F6F2; color: #
         </div>
       </div>
       <div>
-        <button class="nav-col-title-btn" onclick="window.location.href='index.html'" id="nav-quiz">知识问答</button>
+        <button class="nav-col-title-btn" onclick="window.location.href='quiz.html'" id="nav-quiz">知识问答</button>
         <div class="nav-col-items">
           <a class="nav-item sub" href="index.html">生理周期与激素</a>
           <a class="nav-item sub" href="index.html">生理周期与健身</a>
@@ -181,7 +181,7 @@ body { font-family: 'Instrument Sans', sans-serif; background: #F8F6F2; color: #
         </div>
       </div>
       <div>
-        <button class="nav-col-title-btn" onclick="window.location.href='index.html'" id="nav-handbook">身体说明书</button>
+        <button class="nav-col-title-btn" onclick="window.location.href='handbook.html'" id="nav-handbook">身体说明书</button>
         <div class="nav-col-items">
           <a class="nav-item sub" href="cycle-fitness.html" id="nav-cycle">生理周期与健身</a>
         </div>
@@ -400,8 +400,8 @@ function render() {
   const fnl = document.getElementById('footer-nav-links');
   if (fnl) fnl.innerHTML = [
     { label: zh ? '主页' : 'Home', href: 'index.html' },
-    { label: zh ? '知识问答' : 'Quiz', href: 'index.html' },
-    { label: zh ? '身体说明书' : 'Body Guide', href: 'index.html' },
+    { label: zh ? '知识问答' : 'Quiz', href: 'quiz.html' },
+    { label: zh ? '身体说明书' : 'Body Guide', href: 'handbook.html' },
     { label: zh ? '题目小抄' : 'Cheatsheet', href: 'cheatsheet.html' },
   ].map(i => `<a class="footer-nav-link" href="${i.href}">${i.label}</a>`).join('');
   const fnLabel = document.getElementById('footer-nav-label');

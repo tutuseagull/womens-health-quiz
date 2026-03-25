@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>了解你的身体 · Know Your Body</title>
+<title>身体说明书 · Body Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-
 <style>
 
   :root {
@@ -971,6 +970,9 @@
   flex-shrink: 0;
 }
 
+#handbook { padding-top: 72px; display: flex; flex-direction: column; min-height: 100vh; }
+#handbook .home-disclaimer { margin-bottom: 48px; }
+.screen { display: block; }
 </style>
 </head>
 <body>
@@ -1033,56 +1035,6 @@
       <!-- Col 1: 其他 -->
       <div class="nav-col">
         <div class="nav-col-items">
-          <button class="nav-item" id="nav-col-home" onclick="navTo('home')">主页</button>
-        </div>
-      </div>
-      <!-- Col 2: 知识问答 -->
-      <div class="nav-col">
-        <button class="nav-col-title-btn" id="nav-col-quiz-title" onclick="navTo('quiz-home')">知识问答</button>
-        <div class="nav-col-items">
-          <button class="nav-item sub" id="nav-sub-1" onclick="navTo('quiz-home')">生理周期与激素</button>
-          <button class="nav-item sub" id="nav-sub-2" onclick="navTo('quiz-home')">生理周期与健身</button>
-          <button class="nav-item sub" id="nav-sub-3" onclick="navTo('quiz-home')">避孕科学</button>
-          <button class="nav-item sub" id="nav-sub-4" onclick="navTo('quiz-home')">妇科健康与检查</button>
-          <button class="nav-item sub" id="nav-sub-5" onclick="navTo('quiz-home')">生育、产后与更年期</button>
-          <button class="nav-item sub" id="nav-sub-6" onclick="navTo('quiz-home')">身体构造与常识辟谣</button>
-          <button class="nav-item sub" id="nav-sub-7" onclick="navTo('quiz-home')">心理健康、性健康与常识</button>
-        </div>
-      </div>
-      <!-- Col 3: 身体说明书 -->
-      <div class="nav-col">
-        <button class="nav-col-title-btn" id="nav-col-handbook-title" onclick="navTo('handbook')">身体说明书</button>
-        <div class="nav-col-items">
-          <a class="nav-item sub" id="nav-col-cycle-fitness" href="cycle-fitness.html" onclick="closeNav()">生理周期与健身</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="nav-footer">
-    <div class="nav-lang-row">
-      <span id="nav-lang-label" style="font-size:13px;color:#6B6070">语言</span>
-      <button class="nav-lang-btn active" id="nav-lang-zh" onclick="setLang('zh');updateNavLang()">中文</button>
-      <button class="nav-lang-btn" id="nav-lang-en" onclick="setLang('en');updateNavLang()">EN</button>
-    </div>
-  </div>
-</div>
-
-<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
-
-<nav class="global-nav">
-  <button class="nav-hamburger" onclick="openNav()" aria-label="Menu">☰</button>
-</nav>
-
-<div class="nav-drawer" id="nav-drawer">
-  <div class="nav-drawer-header">
-    <span class="nav-drawer-title" id="nav-drawer-title">了解你的身体</span>
-    <button class="nav-close" onclick="closeNav()">✕</button>
-  </div>
-  <div class="nav-body">
-    <div class="nav-columns">
-      <!-- Col 1: 其他 -->
-      <div class="nav-col">
-        <div class="nav-col-items">
           <button class="nav-item" id="nav-col-home" onclick="window.location.href='index.html'">主页</button>
         </div>
       </div>
@@ -1117,54 +1069,46 @@
   </div>
 </div>
 
-<div id="home-wrap" style="padding-top:72px;max-width:480px;margin:0 auto;width:100%;padding-left:24px;padding-right:24px;display:flex;flex-direction:column;min-height:100vh">
+
+<div class="screen" id="handbook">
+  <button class="back-btn" onclick="window.location.href='index.html'" style="margin-bottom:20px">←</button>
   <div class="home-header">
-    <div class="home-eyebrow" id="home-eyebrow">女性健康 · 知识与资源</div>
-    <h1 class="home-title" id="home-title">了解你的身体</h1>
+    <h1 class="home-title" id="handbook-title">身体说明书</h1>
   </div>
+  <div class="section-list" id="handbook-list"></div>
+  <div class="home-disclaimer" id="handbook-disclaimer">📌 内容仅供健康科普，不构成医疗建议，如有任何疑虑请咨询专业医生。</div>
 
-  <div class="home-section-block">
-    <button class="home-section-card" onclick="window.location.href='quiz.html'">
-      <div class="home-section-card-inner">
-        <div class="home-section-card-title" id="card-quiz-title">知识问答</div>
-        <div class="home-section-card-sub" id="card-quiz-sub">7个主题</div>
-      </div>
-      <span class="section-arrow">→</span>
-    </button>
-  </div>
 
-  <div class="home-section-block">
-    <button class="home-section-card" onclick="window.location.href='handbook.html'">
-      <div class="home-section-card-inner">
-        <div class="home-section-card-title" id="card-handbook-title">身体说明书</div>
-        <div class="home-section-card-sub" id="card-handbook-sub">1个健康指南</div>
-      </div>
-      <span class="section-arrow">→</span>
-    </button>
-  </div>
 
-  <footer class="site-footer" style="margin-top:auto">
-    <div class="site-footer-grid">
-      <div>
-        <div class="footer-col-label" id="footer-nav-label">导航</div>
-        <div class="footer-nav-links" id="footer-nav-links"></div>
-      </div>
-      <div>
-        <div class="footer-col-label">Copyright</div>
-        <div class="footer-credits">草图 Tutu，闷闷，Mia He</div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <a class="footer-ig-link" href="https://www.instagram.com/wannvstandup?igsh=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener">
-        <svg class="footer-ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
-        <span id="footer-ig-text">关注湾区女权脱口秀</span>
-      </a>
-    </div>
-  </footer>
 </div>
+</div>
+
+<footer class="site-footer" style="margin-top:auto">
+  <div class="site-footer-grid">
+    <div>
+      <div class="footer-col-label" id="footer-nav-label-hb">导航</div>
+      <div class="footer-nav-links" id="footer-nav-links-hb"></div>
+    </div>
+    <div>
+      <div class="footer-col-label">Copyright</div>
+      <div class="footer-credits">草图 Tutu，闷闷，Mia He</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <a class="footer-ig-link" href="https://www.instagram.com/wannvstandup?igsh=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener">
+      <svg class="footer-ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
+      <span id="footer-ig-text-hb">关注湾区女权脱口秀</span>
+    </a>
+  </div>
+</footer>
+
 
 <script>
 let lang = localStorage.getItem('lang') || 'zh';
+
+const handbookItems = [
+  { zh: { title: '生理周期与健身', sub: '激素变化、运动与饮食指南' }, en: { title: 'Cycle & Fitness', sub: 'Hormones, training & nutrition' }, url: 'cycle-fitness.html' },
+];
 
 function setLang(l) {
   lang = l;
@@ -1173,47 +1117,55 @@ function setLang(l) {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('active', id.endsWith(l));
   });
-  renderHome();
+  render();
 }
 
-function renderHome() {
+function render() {
   const zh = lang === 'zh';
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-  set('home-eyebrow', zh ? '女性健康 · 知识与资源' : "Women's Health · Knowledge & Resources");
-  set('home-title', zh ? '了解你的身体' : 'Know Your Body');
-  set('card-quiz-title', zh ? '知识问答' : 'Quiz');
-  set('card-quiz-sub', zh ? '7个主题' : '7 topics');
-  set('card-handbook-title', zh ? '身体说明书' : 'Body Guide');
-  set('card-handbook-sub', zh ? '1个健康指南' : '1 guide');
+  set('handbook-title', zh ? '身体说明书' : 'Body Guide');
+  set('handbook-disclaimer', zh ? '📌 内容仅供健康科普，不构成医疗建议，如有任何疑虑请咨询专业医生。' : '📌 For educational purposes only. Not medical advice. Consult a professional if you have any concerns.');
   set('nav-title', zh ? '了解你的身体' : 'Know Your Body');
   set('nav-home', zh ? '主页' : 'Home');
   set('nav-quiz', zh ? '知识问答' : 'Quiz');
   set('nav-handbook', zh ? '身体说明书' : 'Body Guide');
   set('nav-cycle', zh ? '生理周期与健身' : 'Cycle & Fitness');
   set('nav-lang-label', zh ? '语言' : 'Language');
-  set('footer-nav-label', zh ? '导航' : 'Navigation');
-  set('footer-ig-text', zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup');
-  const fnl = document.getElementById('footer-nav-links');
+  set('footer-nav-label-hb', zh ? '导航' : 'Navigation');
+  set('footer-ig-text-hb', zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup');
+
+  const list = document.getElementById('handbook-list');
+  if (list) list.innerHTML = handbookItems.map(item =>
+    `<button class="section-card" onclick="window.location.href='${item.url}'">
+      <div class="section-card-inner">
+        <div class="section-title">${item[lang].title}</div>
+        <div class="section-meta">${item[lang].sub}</div>
+      </div>
+      <span class="section-arrow">→</span>
+    </button>`
+  ).join('');
+
+  const fnl = document.getElementById('footer-nav-links-hb');
   if (fnl) fnl.innerHTML = [
     { label: zh ? '主页' : 'Home', href: 'index.html' },
     { label: zh ? '知识问答' : 'Quiz', href: 'quiz.html' },
     { label: zh ? '身体说明书' : 'Body Guide', href: 'handbook.html' },
     { label: zh ? '题目小抄' : 'Cheatsheet', href: 'cheatsheet.html' },
   ].map(i => `<a class="footer-nav-link" href="${i.href}">${i.label}</a>`).join('');
-  // Nav sub items
+
   ['nav-sub-1','nav-sub-2','nav-sub-3','nav-sub-4','nav-sub-5','nav-sub-6','nav-sub-7'].forEach((id, i) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const zh_labels = ['生理周期与激素','生理周期与健身','避孕科学','妇科健康与检查','生育、产后与更年期','身体构造与常识辟谣','心理健康、性健康与常识'];
-    const en_labels = ['Cycle & Hormones','Cycle & Fitness','Contraception','Gynaecological Health','Fertility & Menopause','Body Anatomy & Myths','Mental & Sexual Health'];
-    el.textContent = zh ? zh_labels[i] : en_labels[i];
+    const zh_l = ['生理周期与激素','生理周期与健身','避孕科学','妇科健康与检查','生育、产后与更年期','身体构造与常识辟谣','心理健康、性健康与常识'];
+    const en_l = ['Cycle & Hormones','Cycle & Fitness','Contraception','Gynaecological Health','Fertility & Menopause','Body Anatomy & Myths','Mental & Sexual Health'];
+    el.textContent = zh ? zh_l[i] : en_l[i];
   });
 }
 
 function openNav() { document.getElementById('nav-drawer').classList.add('open'); document.getElementById('nav-overlay').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeNav() { document.getElementById('nav-drawer').classList.remove('open'); document.getElementById('nav-overlay').classList.remove('open'); document.body.style.overflow=''; }
 
-renderHome();
+render();
 </script>
 </body>
 </html>

@@ -1,0 +1,2286 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>知识问答 · Women's Health Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --bg: #F8F6F2;
+    --surface: #FFFFFF;
+    --text: #1C1820;
+    --text-muted: #6B6070;
+    --text-light: #A89EB0;
+    --border: #E4DDD8;
+    --accent: #7A5A8A;
+    --accent-light: #F0E5F5;
+    --correct: #4A7040;
+    --correct-light: #E0F0DA;
+    --wrong: #B85A5A;
+    --wrong-light: #F5E0E0;
+    --neutral-fill: #F0EBF5;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Instrument Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; min-height: 100vh; }
+  .screen.active { display: flex; flex-direction: column; }
+
+  /* ── HOME ── */
+  #home, #quiz-home, #handbook {
+    padding: 48px 24px 32px;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .lang-toggle {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-bottom: 40px;
+  }
+  .lang-btn {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lang-btn.active {
+    border-color: var(--text);
+    color: var(--text);
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .home-header { margin-bottom: 40px; }
+  .home-eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .home-title {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 38px;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .home-subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .section-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+
+  .section-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-card:active { transform: scale(0.98); }
+
+  .section-card-inner {}
+  .section-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .section-meta {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .section-arrow {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: var(--border);
+  }
+
+  /* ── NEW HOME ── */
+  .home-section-block { margin-bottom: 16px; }
+  .home-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .home-section-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .home-section-card:hover { border-color: var(--accent); }
+  .home-section-card:active { transform: scale(0.98); }
+  .home-section-card-inner { flex: 1; }
+  .home-section-card-title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 20px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .home-section-card-sub { font-size: 13px; color: var(--text-muted); }
+  .quiz-home-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+
+  .home-disclaimer {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.6;
+    padding: 16px;
+    background: var(--neutral-fill);
+    border-radius: var(--radius-sm);
+    margin-bottom: 48px;
+  }
+
+  /* ── QUIZ SCREEN ── */
+  #quiz { background: var(--bg); }
+
+  .quiz-header {
+    padding: 16px 20px 0;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .quiz-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Instrument Sans', sans-serif;
+    color: var(--accent);
+    padding: 0;
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+  .back-btn:hover { opacity: 0.7; }
+  .back-btn:active { opacity: 0.5; }
+
+  .progress-wrap { margin-top: 10px; }
+  .progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .progress-text { display: none; }
+
+  .section-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .progress-inline {
+    font-size: 11px;
+    font-family: 'Instrument Sans', sans-serif;
+  }
+  .progress-inline-current { color: var(--accent); font-weight: 600; }
+  .progress-inline-total { color: var(--text-light); }
+
+  /* ── QUESTION ── */
+  .question-wrap {
+    padding: 0 20px;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+    flex: 1;
+    padding-bottom: 120px;
+  }
+
+  .q-difficulty {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .diff-easy { background: #E8F5E9; color: #2E7D32; }
+  .diff-medium { background: #FFF3E0; color: #E65100; }
+  .diff-hard { background: #FFEBEE; color: #C62828; }
+
+  .q-type-badge {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--neutral-fill);
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-left: 6px;
+    font-weight: 400;
+  }
+  .q-type-badge.multi { background: #E3F2FD; color: #1565C0; }
+
+  .q-text {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--text);
+    margin-bottom: 28px;
+  }
+  .q-text .highlight-error {
+    color: var(--wrong);
+    font-style: italic;
+  }
+
+  /* ── OPTIONS ── */
+  .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+
+  .option {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: all 0.15s;
+    text-align: left;
+    width: 100%;
+    position: relative;
+  }
+  .option:active { transform: scale(0.985); }
+  .option.selected {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+  .option.correct {
+    border-color: var(--correct);
+    background: var(--correct-light);
+  }
+  .option.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-light);
+  }
+  .option.dimmed { opacity: 0.45; }
+  .option.disabled { pointer-events: none; }
+
+  .option-letter {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .option.selected .option-letter { border-color: var(--accent); color: var(--accent); background: white; }
+  .option.correct .option-letter { border-color: var(--correct); color: var(--correct); background: white; }
+  .option.wrong .option-letter { border-color: var(--wrong); color: var(--wrong); background: white; }
+
+  .option-text { font-size: 15px; color: var(--text); line-height: 1.5; padding-top: 2px; }
+
+  /* ── TRUE/FALSE ── */
+  .tf-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tf-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 12px;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 22px;
+    color: var(--text);
+    transition: all 0.15s;
+  }
+  .tf-btn:active { transform: scale(0.96); }
+  .tf-btn.correct { border-color: var(--correct); background: var(--correct-light); color: var(--correct); }
+  .tf-btn.wrong { border-color: var(--wrong); background: var(--wrong-light); color: var(--wrong); }
+  .tf-btn.dimmed { opacity: 0.4; }
+  .tf-btn.disabled { pointer-events: none; }
+
+  /* ── ORDERING ── */
+  .order-items { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .order-item {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.15s;
+  }
+  .order-item:active { transform: scale(0.985); }
+  .order-item.used { opacity: 0.35; pointer-events: none; }
+  .order-item.correct-item { border-color: var(--correct); background: var(--correct-light); }
+  .order-item.wrong-item { border-color: var(--wrong); background: var(--wrong-light); }
+
+  .order-badge {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 500;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .order-item.used .order-badge,
+  .order-item.correct-item .order-badge { border-color: var(--correct); color: var(--correct); }
+  .order-item.wrong-item .order-badge { border-color: var(--wrong); color: var(--wrong); }
+
+  .inline-blank {
+    display: inline-block;
+    min-width: 72px;
+    height: 32px;
+    line-height: 32px;
+    border-bottom: 2.5px solid var(--accent);
+    padding: 0 6px;
+    text-align: center;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--accent);
+    cursor: pointer;
+    vertical-align: middle;
+    transition: all 0.2s;
+    border-radius: 4px 4px 0 0;
+    margin: 0 2px;
+  }
+  .inline-blank.empty { color: var(--text-light); font-weight: 400; font-size: 13px; letter-spacing: 0.04em; }
+  .inline-blank.filled { background: var(--accent-light); }
+  .inline-blank.correct-blank { border-bottom-color: var(--correct); background: var(--correct-light); color: var(--correct); }
+  .inline-blank.wrong-blank { border-bottom-color: var(--wrong); background: var(--wrong-light); color: var(--wrong); }
+
+  /* fill inline blank — mirrors input value in question text */
+  .fill-inline-blank {
+    display: inline-block;
+    min-width: 60px;
+    border-bottom: 2px solid var(--accent);
+    padding: 0 4px 1px;
+    color: var(--accent);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    vertical-align: baseline;
+    transition: min-width 0.15s;
+    margin: 0 2px;
+  }
+  .fill-inline-blank.has-value { background: var(--accent-light); border-radius: 3px 3px 0 0; }
+  .fill-inline-blank.correct-fill-inline { border-bottom-color: var(--correct); background: var(--correct-light); color: var(--correct); }
+  .fill-inline-blank.wrong-fill-inline { border-bottom-color: var(--wrong); background: var(--wrong-light); color: var(--wrong); }
+
+  /* ── MATCHING ── */
+  .match-rows { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .match-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    align-items: stretch;
+  }
+  .match-left-label {
+    background: var(--neutral-fill);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--text);
+  }
+  .match-right-slot {
+    border: 1.5px dashed var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.15s;
+    min-height: 48px;
+    display: flex; align-items: center;
+    background: transparent;
+  }
+  .match-right-slot.filled {
+    border-style: solid;
+    border-color: var(--accent);
+    background: var(--accent-light);
+    color: var(--text);
+    font-weight: 500;
+  }
+  .match-right-slot.correct-slot { border-color: var(--correct); background: var(--correct-light); color: var(--correct); }
+  .match-right-slot.wrong-slot { border-color: var(--wrong); background: var(--wrong-light); color: var(--wrong); }
+
+  .match-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .match-chip {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text);
+    -webkit-user-select: none; user-select: none;
+  }
+  .match-chip:active { transform: scale(0.95); }
+  .match-chip.used { opacity: 0.3; pointer-events: none; }
+  .match-chip.dragging { opacity: 0.5; transform: scale(1.05); }
+  .match-row.drag-over .match-right-slot { border-color: var(--accent); background: var(--accent-light); }
+
+  /* ── FILL IN ── */
+  .fill-container { margin-bottom: 16px; }
+  .fill-text {
+    font-size: 16px;
+    line-height: 2;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+  .fill-slot {
+    display: inline-block;
+    min-width: 80px;
+    border-bottom: 2px solid var(--accent);
+    padding: 0 4px;
+    text-align: center;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .fill-inputs { display: flex; flex-direction: column; gap: 12px; }
+  .fill-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    transition: border-color 0.2s;
+  }
+  .fill-input-wrap:focus-within { border-color: var(--accent); }
+  .fill-input-wrap.correct-fill { border-color: var(--correct); background: var(--correct-light); }
+  .fill-input-wrap.wrong-fill { border-color: var(--wrong); background: var(--wrong-light); }
+  .fill-input-label { font-size: 12px; color: var(--text-muted); font-weight: 500; flex-shrink: 0; }
+  .fill-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    outline: none;
+  }
+  .fill-input:disabled { color: var(--text-muted); }
+  .mic-btn {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .mic-btn.listening { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+
+  /* ── FEEDBACK ── */
+  .feedback-bar {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: var(--surface);
+    border-top: 1.5px solid var(--border);
+    padding: 16px 20px 24px;
+    max-width: 480px;
+    margin: 0 auto;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 100;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    width: 100%;
+  }
+  .feedback-bar.visible {
+    transform: translateX(-50%) translateY(0);
+  }
+  .feedback-bar.correct-bar { border-top-color: var(--correct); }
+  .feedback-bar.wrong-bar { border-top-color: var(--wrong); }
+
+  .feedback-result {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .feedback-icon { font-size: 20px; }
+  .feedback-label { font-weight: 500; font-size: 15px; }
+  .feedback-label.correct-label { color: var(--correct); }
+  .feedback-label.wrong-label { color: var(--wrong); }
+
+  .feedback-explanation {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    background: var(--neutral-fill);
+    border-radius: var(--radius-sm);
+  }
+
+  .next-btn {
+    width: 100%;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .next-btn:active { transform: scale(0.98); opacity: 0.9; }
+
+  /* ── CONFIRM BTN (multi-select) ── */
+  .confirm-bar {
+    position: fixed;
+    left: 50%; bottom: 0;
+    transform: translateX(-50%) translateY(100%);
+    width: 100%;
+    max-width: 480px;
+    padding: 16px 20px 24px;
+    background: var(--surface);
+    border-top: 1.5px solid var(--border);
+    z-index: 99;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .confirm-bar.visible { transform: translateX(-50%) translateY(0); }
+  .confirm-btn {
+    width: 100%;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .confirm-btn:disabled { background: var(--border); color: var(--text-muted); cursor: default; }
+  .confirm-btn:not(:disabled):active { transform: scale(0.98); }
+
+  /* ── SUBMIT BTN (fill in / ordering / matching) ── */
+  .submit-btn {
+    width: 100%;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+  }
+  .submit-btn:disabled { background: var(--border); color: var(--text-muted); cursor: default; }
+  .submit-btn:not(:disabled):active { transform: scale(0.98); }
+
+  /* ── RESULTS ── */
+  #results {
+    padding: 48px 24px 40px;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+  .results-icon { font-size: 56px; margin-bottom: 20px; }
+  .results-title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+  .results-subtitle { font-size: 15px; color: var(--text-muted); margin-bottom: 32px; }
+  .score-display {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 72px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .score-label { font-size: 14px; color: var(--text-muted); margin-bottom: 40px; }
+  .results-actions { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+  .results-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+  }
+  .results-btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .results-btn:active { transform: scale(0.98); }
+
+  /* ── ANIMATION ── */
+  .fade-in {
+    animation: fadeUp 0.35s ease forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── GLOBAL NAV ── */
+  .global-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 12px 20px;
+    pointer-events: none;
+  }
+  .nav-hamburger {
+    pointer-events: all;
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text);
+    background: var(--bg);
+    transition: all 0.15s;
+  }
+  .nav-hamburger:hover { background: var(--surface); }
+
+  /* overlay */
+  .nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0,0,0,0.3);
+  }
+  .nav-overlay.open { display: block; }
+
+  /* drawer */
+  .nav-drawer {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    left: clamp(48px, 12vw, 120px);
+    z-index: 1001;
+    background: var(--bg);
+    transform: translateX(100%);
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .nav-drawer.open { transform: translateX(0); }
+
+  .nav-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .nav-drawer-title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 16px;
+    color: var(--text);
+  }
+  .nav-close {
+    background: none; border: none;
+    font-size: 20px; cursor: pointer;
+    color: var(--text-muted);
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  .nav-close:hover { color: var(--text); }
+
+  .nav-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  /* Desktop: 3 columns */
+  @media (min-width: 600px) {
+    .nav-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+  }
+  @media (max-width: 599px) {
+    .nav-columns {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+  }
+
+  .nav-col-title-btn {
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--text);
+    margin-bottom: 4px;
+    padding: 8px 10px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
+    font-family: 'Instrument Sans', sans-serif;
+    border-radius: 8px;
+    transition: background 0.15s;
+  }
+  .nav-col-title-btn:hover { background: var(--surface); }
+  .nav-col-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-col-items { display: flex; flex-direction: column; gap: 4px; }
+
+  .nav-item {
+    display: block;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text);
+    text-decoration: none;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.15s;
+    font-family: 'Instrument Sans', sans-serif;
+  }
+  .nav-item:hover { background: var(--surface); }
+  .nav-item.sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding-left: 18px;
+  }
+  .nav-item.sub:hover { color: var(--text); background: var(--surface); }
+
+  .nav-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .nav-lang-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .nav-lang-btn {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-family: 'Instrument Sans', sans-serif;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.15s;
+  }
+  .nav-lang-btn.active {
+    background: var(--text);
+    border-color: var(--text);
+    color: white;
+  }
+
+  /* push screen content below fixed nav */
+  .screen { padding-top: 60px; }
+  #home, #quiz-home, #handbook { padding-top: 72px; }
+
+/* ── GLOBAL FOOTER ── */
+.site-footer {
+  border-top: 1px solid #E4DDD8;
+  padding: 40px 24px 32px;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+}
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+@media (max-width: 480px) {
+  .site-footer-grid { grid-template-columns: 1fr; gap: 24px; }
+}
+.footer-col-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #A89EB0;
+  margin-bottom: 12px;
+}
+.footer-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.footer-nav-link {
+  font-size: 13px;
+  color: #6B6070;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  font-family: 'Instrument Sans', sans-serif;
+  transition: color 0.15s;
+}
+.footer-nav-link:hover { color: #1C1820; }
+.footer-credits {
+  font-size: 13px;
+  color: #6B6070;
+  line-height: 1.7;
+}
+.footer-bottom {
+  border-top: 1px solid #E4DDD8;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.footer-ig-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #6B6070;
+  font-size: 13px;
+  transition: color 0.15s;
+}
+.footer-ig-link:hover { color: #7A5A8A; }
+.footer-ig-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* quiz-home min-height */
+#quiz-home { padding-top: 72px; display: flex; flex-direction: column; min-height: 100vh; }
+#quiz-home .home-disclaimer { margin-bottom: 48px; }
+</style>
+</head>
+<body>
+<!-- ── GLOBAL NAV ── -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+<nav class="global-nav">
+  <button class="nav-hamburger" onclick="openNav()" aria-label="Menu">☰</button>
+</nav>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="nav-drawer-header">
+    <span class="nav-drawer-title" id="nav-title">了解你的身体</span>
+    <button class="nav-close" onclick="closeNav()">✕</button>
+  </div>
+  <div class="nav-body">
+    <div class="nav-columns">
+      <div class="nav-col">
+        <div class="nav-col-items">
+          <button class="nav-item" id="nav-home" onclick="window.location.href='index.html'">主页</button>
+        </div>
+      </div>
+      <div class="nav-col">
+        <button class="nav-col-title-btn" id="nav-quiz" onclick="window.location.href='quiz.html'">知识问答</button>
+        <div class="nav-col-items">
+          <button class="nav-item sub" id="nav-sub-1" onclick="window.location.href='quiz.html'">生理周期与激素</button>
+          <button class="nav-item sub" id="nav-sub-2" onclick="window.location.href='quiz.html'">生理周期与健身</button>
+          <button class="nav-item sub" id="nav-sub-3" onclick="window.location.href='quiz.html'">避孕科学</button>
+          <button class="nav-item sub" id="nav-sub-4" onclick="window.location.href='quiz.html'">妇科健康与检查</button>
+          <button class="nav-item sub" id="nav-sub-5" onclick="window.location.href='quiz.html'">生育、产后与更年期</button>
+          <button class="nav-item sub" id="nav-sub-6" onclick="window.location.href='quiz.html'">身体构造与常识辟谣</button>
+          <button class="nav-item sub" id="nav-sub-7" onclick="window.location.href='quiz.html'">心理健康、性健康与常识</button>
+        </div>
+      </div>
+      <div class="nav-col">
+        <button class="nav-col-title-btn" id="nav-handbook" onclick="window.location.href='handbook.html'">身体说明书</button>
+        <div class="nav-col-items">
+          <a class="nav-item sub" id="nav-cycle" href="cycle-fitness.html">生理周期与健身</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-lang-row">
+      <span id="nav-lang-label" style="font-size:13px;color:var(--text-muted,#6B6070)">语言</span>
+      <button class="nav-lang-btn active" id="nav-lang-zh" onclick="setLang('zh')">中文</button>
+      <button class="nav-lang-btn" id="nav-lang-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</div>
+<nav class="global-nav">
+  <button class="nav-hamburger" onclick="openNav()" aria-label="Menu">☰</button>
+</nav>
+
+<div class="nav-drawer" id="nav-drawer">
+  <div class="nav-drawer-header">
+    <span class="nav-drawer-title" id="nav-drawer-title">了解你的身体</span>
+    <button class="nav-close" onclick="closeNav()">✕</button>
+  </div>
+  <div class="nav-body">
+    <div class="nav-columns">
+      <!-- Col 1: 其他 -->
+      <div class="nav-col">
+        <div class="nav-col-items">
+          <button class="nav-item" id="nav-col-home" onclick="window.location.href='index.html'">主页</button>
+        </div>
+      </div>
+      <!-- Col 2: 知识问答 -->
+      <div class="nav-col">
+        <button class="nav-col-title-btn" id="nav-col-quiz-title" onclick="window.location.href='quiz.html'">知识问答</button>
+        <div class="nav-col-items">
+          <button class="nav-item sub" id="nav-sub-1" onclick="window.location.href='quiz.html'">生理周期与激素</button>
+          <button class="nav-item sub" id="nav-sub-2" onclick="window.location.href='quiz.html'">生理周期与健身</button>
+          <button class="nav-item sub" id="nav-sub-3" onclick="window.location.href='quiz.html'">避孕科学</button>
+          <button class="nav-item sub" id="nav-sub-4" onclick="window.location.href='quiz.html'">妇科健康与检查</button>
+          <button class="nav-item sub" id="nav-sub-5" onclick="window.location.href='quiz.html'">生育、产后与更年期</button>
+          <button class="nav-item sub" id="nav-sub-6" onclick="window.location.href='quiz.html'">身体构造与常识辟谣</button>
+          <button class="nav-item sub" id="nav-sub-7" onclick="window.location.href='quiz.html'">心理健康、性健康与常识</button>
+        </div>
+      </div>
+      <!-- Col 3: 身体说明书 -->
+      <div class="nav-col">
+        <button class="nav-col-title-btn" id="nav-col-handbook-title" onclick="window.location.href='handbook.html'">身体说明书</button>
+        <div class="nav-col-items">
+          <a class="nav-item sub" id="nav-col-cycle-fitness" href="cycle-fitness.html" onclick="closeNav()">生理周期与健身</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-lang-row">
+      <span id="nav-lang-label" style="font-size:13px;color:#6B6070">语言</span>
+      <button class="nav-lang-btn active" id="nav-lang-zh" onclick="setLang('zh');updateNavLang()">中文</button>
+      <button class="nav-lang-btn" id="nav-lang-en" onclick="setLang('en');updateNavLang()">EN</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="screen" id="quiz-home">
+  <button class="back-btn" onclick="showScreen('home')" style="margin-bottom:20px">←</button>
+  <div class="home-header">
+    <h1 class="home-title" id="quiz-home-title">知识问答</h1>
+  </div>
+  <div class="section-list" id="section-list"></div>
+  <div class="home-disclaimer" id="quiz-disclaimer">📌 内容仅供健康科普，不构成医疗建议，如有任何疑虑请咨询专业医生。</div>
+
+
+
+</div>
+</div>
+
+<footer class="site-footer" style="margin-top:auto">
+  <div class="site-footer-grid">
+    <div>
+      <div class="footer-col-label" id="footer-nav-label-qh">导航</div>
+      <div class="footer-nav-links" id="footer-nav-links-qh"></div>
+    </div>
+    <div>
+      <div class="footer-col-label">Copyright</div>
+      <div class="footer-credits">草图 Tutu，闷闷，Mia He</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <a class="footer-ig-link" href="https://www.instagram.com/wannvstandup?igsh=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener">
+      <svg class="footer-ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
+      <span id="footer-ig-text-qh">关注湾区女权脱口秀</span>
+    </a>
+  </div>
+</footer>
+
+<div class="screen" id="quiz">
+  <div class="quiz-header">
+    <div class="quiz-nav">
+      <button class="back-btn" onclick="window.location.href='quiz.html'">←</button>
+    </div>
+    <div class="section-label-row">
+      <div class="section-label" id="section-label"></div>
+      <div class="progress-inline" id="progress-inline"></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-text" id="progress-text"></div>
+    </div>
+  </div>
+
+  <div class="question-wrap" id="question-wrap"></div>
+
+  <!-- Confirm bar (multi-select) -->
+  <div class="confirm-bar" id="confirm-bar">
+    <button class="confirm-btn" id="confirm-btn" disabled onclick="submitMulti()" data-zh="确认答案" data-en="Confirm"></button>
+  </div>
+
+  <!-- Feedback bar -->
+  <div class="feedback-bar" id="feedback-bar">
+    <div class="feedback-result">
+      <span class="feedback-icon" id="feedback-icon"></span>
+      <span class="feedback-label" id="feedback-label"></span>
+    </div>
+    <div class="feedback-correct" id="feedback-correct" style="display:none;font-size:13px;font-weight:500;margin-bottom:8px;padding:10px 12px;border-radius:8px;background:var(--correct-light);color:var(--correct)"></div>
+    <div class="feedback-explanation" id="feedback-explanation"></div>
+    <button class="self-mark-btn" id="self-mark-btn" style="display:none;width:100%;padding:12px;margin-bottom:8px;border-radius:10px;border:1.5px solid var(--correct);background:transparent;color:var(--correct);font-family:DM Sans,sans-serif;font-size:14px;font-weight:500;cursor:pointer;" onclick="selfMark()"></button>
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()"></button>
+  </div>
+</div>
+</div>
+
+<div class="screen" id="results">
+  <div class="results-icon" id="results-icon"></div>
+  <h2 class="results-title" id="results-title"></h2>
+  <p class="results-subtitle" id="results-subtitle"></p>
+  <div class="score-display" id="score-display"></div>
+  <div class="score-label" id="score-label"></div>
+  <div class="results-actions">
+    <button class="results-btn primary" onclick="retrySection()" id="retry-btn"></button>
+    <button class="results-btn" onclick="window.location.href='quiz.html'" id="home-btn"></button>
+  </div>
+</div>
+
+<script>
+// ══ DATA ══
+const SECTIONS = [
+  {
+    id: 'menstrual',
+    color: '#C2185B',
+    zh: { tag: '主题一A', title: '生理周期与激素', subtitle: '7题 · 排序、选择、填空' },
+    en: { tag: 'Topic 1A', title: 'Menstrual Cycle & Hormones', subtitle: '7 questions' },
+    questions: [
+      {
+        type: 'order',
+        difficulty: 'easy',
+        zh: { q: '将以下三个阶段按月经周期顺序排列：月经期，___，___，___。', items: ['A. 黄体期', 'B. 排卵期', 'C. 卵泡期'], explanation: '月经期后雌激素开始上升进入卵泡期，排卵后黄体素主导进入黄体期，最终黄体萎缩、激素下降，触发下一次月经。' },
+        en: { q: 'Arrange the following phases in the correct order after menstruation: ___, ___, ___', items: ['A. Luteal phase', 'B. Ovulation', 'C. Follicular phase'], explanation: 'After menstruation, estrogen rises entering the follicular phase. After ovulation, progesterone dominates the luteal phase until hormone levels drop and trigger the next period.' },
+        answer: ['C', 'B', 'A']
+      },
+      {
+        type: 'single',
+        difficulty: 'easy',
+        zh: { q: '以下哪项关于经血量的说法是正确的？', options: ['正常经血量每次约为5–80ml', '经血量超过200ml才需就医', '血块直径小于2cm均属异常', '月经流血天数超过5天就不正常'], explanation: '正常经血量为5–80ml，超过80ml即为月经过多；血块小于2.5cm通常属正常范围；正常经期为2–7天。' },
+        en: { q: 'Which statement about menstrual blood volume is correct?', options: ['Normal volume per cycle is approximately 5–80ml', 'You only need medical attention if blood loss exceeds 200ml', 'Blood clots smaller than 2cm are abnormal', 'A period lasting more than 5 days is abnormal'], explanation: 'Normal menstrual volume is 5–80ml. Over 80ml is considered heavy bleeding. Clots smaller than 2.5cm are generally normal. A healthy period lasts 2–7 days.' },
+        answer: 0
+      },
+      {
+        type: 'single',
+        difficulty: 'medium',
+        zh: { q: '雌激素（Estrogen）在月经周期中主要在哪个阶段达到峰值？', options: ['月经期', '排卵前（卵泡期末）', '黄体期中段', '月经前两天'], explanation: '雌激素在排卵前达到第一个峰值，触发黄体生成素（LH）激增引发排卵；黄体期有第二个较小的峰值，之后随黄体萎缩迅速下降。' },
+        en: { q: 'During which phase does estrogen reach its peak in the menstrual cycle?', options: ['Menstrual phase', 'Just before ovulation (late follicular)', 'Mid-luteal phase', 'Two days before menstruation'], explanation: 'Estrogen peaks just before ovulation, triggering an LH surge that causes ovulation. There is a smaller second peak in the luteal phase, followed by a rapid drop as the corpus luteum breaks down.' },
+        answer: 1
+      },
+      {
+        type: 'single',
+        difficulty: 'medium',
+        zh: { q: '经前综合征（PMS）最常见于哪个阶段？', options: ['卵泡期，雌激素下降', '排卵期，黄体生成素（LH）激增', '黄体期晚期，孕激素和雌激素同时下降', '月经期，前列腺素升高'], explanation: '黄体期末激素骤降，影响血清素等神经递质，引发情绪波动、腹胀、疲劳等PMS症状。' },
+        en: { q: 'When does PMS (premenstrual syndrome) most commonly occur?', options: ['Follicular phase, as estrogen drops', 'Ovulation, during the LH surge', 'Late luteal phase, as both estrogen and progesterone drop', 'Menstrual phase, due to prostaglandins'], explanation: 'The sharp drop in hormones at the end of the luteal phase disrupts serotonin and other neurotransmitters, causing mood swings, bloating, and fatigue associated with PMS.' },
+        answer: 2
+      },
+      {
+        type: 'single',
+        difficulty: 'medium',
+        zh: { q: '黄体期（前到中期）特别想吃东西，背后的原因是？', options: ['纯粹是心理作用，与激素无关', '孕激素升高，基础代谢提升，能量需求增加', '雌激素下降抑制了饱腹感信号', '这是内分泌失调的信号，需要就医'], explanation: '黄体期基础代谢可升高约100–300大卡/天，食欲增加是正常生理信号。适当增加蛋白质和复合碳水摄入，比强行压制更有帮助。' },
+        en: { q: 'Why do many people feel hungrier during the early-to-mid luteal phase?', options: ['It\'s purely psychological, unrelated to hormones', 'Progesterone raises basal metabolic rate, increasing energy needs', 'Falling estrogen suppresses satiety signals', 'It\'s a sign of hormonal imbalance requiring medical attention'], explanation: 'Basal metabolic rate can rise by 100–300 kcal/day during the luteal phase. Increased appetite is a normal physiological signal — eating more protein and complex carbs is more helpful than suppressing it.' },
+        answer: 1
+      },
+      {
+        type: 'single',
+        difficulty: 'medium',
+        zh: { q: '月经不调一定是激素紊乱吗？', options: ['对，月经不规律必然反映激素问题', '不对，压力、体重骤变、过度运动等非激素因素也可导致', '不对，月经不调只和饮食有关', '对，但只有雌激素紊乱才会导致月经不调'], explanation: '月经周期受下丘脑-垂体-卵巢轴调控，极度节食、高强度训练、慢性压力、体重骤变等都可能干扰这一轴，导致月经推迟或停经，并非都是激素本身出问题。' },
+        en: { q: 'Does irregular menstruation always mean hormonal imbalance?', options: ['Yes — irregular periods always reflect a hormonal problem', 'No — stress, rapid weight change, and overexercising can also cause irregularity', 'No — irregular periods are only related to diet', 'Yes — but only estrogen imbalance causes irregular periods'], explanation: 'The menstrual cycle is regulated by the hypothalamic-pituitary-ovarian axis. Extreme dieting, intense training, chronic stress, and rapid weight changes can all disrupt this system — not all causes are hormonal.' },
+        answer: 1
+      },
+      {
+        type: 'fill',
+        difficulty: 'hard',
+        zh: {
+          q: '当身体承受慢性压力时，___升高会干扰下丘脑分泌GnRH，导致排卵延迟；同样的机制也解释了为什么过度节食或___的人容易月经不规律。',
+          blanks: ['第一空', '第二空'],
+          explanation: '下丘脑对能量状态和压力信号都非常敏感。无论是心理压力还是身体压力（热量不足、过度训练），都会通过皮质醇抑制GnRH脉冲，打乱整条生殖轴。'
+        },
+        en: {
+          q: 'Under chronic stress, elevated ___ disrupts hypothalamic GnRH secretion, delaying ovulation. The same mechanism explains why people who severely restrict food intake or ___ often experience irregular periods.',
+          blanks: ['Blank 1', 'Blank 2'],
+          explanation: 'The hypothalamus is highly sensitive to energy status and stress signals. Whether psychological or physical stress (calorie deficit, overtraining), cortisol suppresses GnRH pulses, disrupting the entire reproductive axis.'
+        },
+        answer: ['皮质醇 / cortisol / 压力激素 / stress hormone', '过度运动 / 运动过度 / overexercise / over-exercise / overtraining / 压力过大 / 慢性压力 / chronic stress / 过度训练']
+      }
+    ]
+  },
+  {
+    id: 'fitness',
+    color: '#2E7D32',
+    zh: { tag: '主题一B', title: '生理周期与健身', subtitle: '7题 · 选择、填空、配对' },
+    en: { tag: 'Topic 1B', title: 'Cycle & Fitness', subtitle: '7 questions' },
+    questions: [
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '经期可以运动吗？', options: ['不行，应该完全休息', '可以，激素低位时适合适度力量训练', '可以，是高强度训练的最佳时机', '不能运动，否则会增加总出血量'], explanation: '经期适度运动甚至能缓解痛经。运动时可能感觉流量变大，那是血液排出速度加快，总出血量不会增加。经期禁止运动是误解。' },
+        en: { q: 'Can you exercise during your period?', options: ['No — you should rest completely', 'Yes — low hormone levels make moderate strength training a good fit', 'Yes — it\'s the best time for intense training', 'No — it will increase total blood loss'], explanation: 'Moderate exercise during your period can actually ease cramps. You may feel like your flow increases — that\'s blood exiting faster, not more total volume. "No exercise during periods" is a myth.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '为什么历史上运动科学研究长期缺乏女性数据？', options: ['女性运动表现不稳定，数据价值低', '激素周期被视为干扰变量，女性受试者常被排除', '女性参与研究的意愿普遍较低', '早期研究认为女性不需要专项指导'], explanation: '大量运动和营养研究以男性为主要受试者，女性长期依赖男性数据制定训练方案。直到近年来，针对女性的运动科学研究才逐渐增多。' },
+        en: { q: 'Why has sports science historically lacked data on women?', options: ['Women\'s performance is too inconsistent to be useful', 'The hormonal cycle was seen as a confounding variable — women were often excluded', 'Women generally didn\'t want to participate in research', 'Early researchers thought women didn\'t need specific guidance'], explanation: 'Most exercise and nutrition research used male subjects, so women have long relied on male-derived data for training guidance. Research specifically on women has only grown significantly in recent years.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '月经周期哪个阶段最适合高强度训练？', options: ['经期', '卵泡期后段（排卵前）', '黄体期早期', '黄体期晚期'], explanation: '卵泡期雌激素持续升高，肌肉合成能力强、恢复快、情绪稳定，是力量训练效果最好的窗口。' },
+        en: { q: 'Which phase is best for high-intensity training?', options: ['Menstrual phase', 'Late follicular phase (before ovulation)', 'Early luteal phase', 'Late luteal phase'], explanation: 'Rising estrogen during the follicular phase boosts muscle synthesis, speeds recovery, and stabilises mood — making it the best window for strength training.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '进入黄体期后，运动体感变差是因为？', options: ['意志力下降，与激素无关', '孕激素升高，体温升高、恢复更慢', '雌激素过低导致肌肉无力', '孕激素升高导致运动更容易受伤'], explanation: '黄体期孕激素主导，体温升高约0.3–0.5°C，心率偏快，主观感受更费劲。这是真实的生理变化，适合调低训练强度，增加恢复性训练。' },
+        en: { q: 'Why does exercise feel harder in the luteal phase?', options: ['It\'s willpower — not hormonal', 'Progesterone raises body temperature and slows recovery', 'Low estrogen weakens muscles', 'Progesterone increases injury risk'], explanation: 'Progesterone dominates the luteal phase, raising core temperature ~0.3–0.5°C and increasing heart rate. This is a real physiological change — lower the intensity and prioritise recovery.' },
+        answer: 1
+      },
+      {
+        type: 'fill', difficulty: 'medium',
+        zh: { q: '经期流失较多的矿物质是___，搭配富含维生素___的食物可促进吸收；补充___有助于缓解肌肉痉挛和经前情绪波动。', blanks: ['矿物质', '维生素', '第三空'], explanation: '铁流失影响运动耐力，镁参与肌肉放松和神经调节，对经前综合征（PMS）症状也有一定改善作用。' },
+        en: { q: 'Menstruation causes significant loss of ___. Pairing iron-rich foods with vitamin ___ helps absorption. Supplementing ___ can ease muscle cramps and premenstrual mood changes.', blanks: ['Mineral', 'Vitamin', 'Third blank'], explanation: 'Iron loss affects endurance. Magnesium supports muscle relaxation and nerve regulation, and has shown some benefit for PMS symptoms.' },
+        answer: ['铁 / iron', 'C / 维生素C', '镁 / magnesium']
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '训练后补充蛋白质，女性和男性有什么不同？', options: ['没有区别，越快越好', '女性应在训练后两小时再补充，男性则越快越好', '女性训练后蛋白质合成窗口更短，推荐在30分钟内补充', '女性不需要额外补充蛋白质，饮食均衡即可'], explanation: '研究显示女性训练后蛋白质合成窗口比男性更短，建议在30分钟内摄入。男性的窗口期相对更长，这是两者训练营养策略的关键差异之一。' },
+        en: { q: 'How does post-workout protein timing differ for women vs men?', options: ['No difference — the sooner the better for everyone', 'Women should wait two hours; men should consume immediately', 'Women have a shorter anabolic window — aim for within 30 minutes', 'Women don\'t need extra protein if they eat a balanced diet'], explanation: 'Research shows women have a shorter post-exercise protein synthesis window than men. Aim to consume protein within 30 minutes. Men have a comparatively longer window — a key difference in training nutrition.' },
+        answer: 2
+      },
+      {
+        type: 'match', difficulty: 'hard',
+        zh: {
+          q: '根据月经周期四个阶段，将训练类型与最适合的阶段配对：',
+          lefts: ['大重量力量训练', '低强度有氧 / 拉伸', '冲个人最佳成绩（PB）', '中等强度 + 注重恢复'],
+          rights: ['排卵日前后', '黄体期早中段', '经期或黄体期晚期', '卵泡期后段'],
+          explanation: '这是周期化训练（Cycle Syncing）的基本框架。个体差异大，核心是学会观察自己身体的信号。'
+        },
+        en: {
+          q: 'Match each training type to the most suitable phase:',
+          lefts: ['Heavy strength training', 'Low-intensity cardio / stretching', 'Go for a personal best (PB)', 'Moderate intensity + recovery focus'],
+          rights: ['Around ovulation', 'Early–mid luteal phase', 'Menstrual or late luteal phase', 'Late follicular phase'],
+          explanation: 'This is the basic framework of Cycle Syncing. Individual variation is significant — the key is learning to read your own body\'s signals.'
+        },
+        answer: [3, 2, 0, 1]
+      }
+    ]
+  },
+  {
+    id: 'contraception',
+    color: '#1565C0',
+    zh: { tag: '主题三', title: '避孕科学', subtitle: '8题 · 选择、填空' },
+    en: { tag: 'Topic 3', title: 'Contraception Science', subtitle: '8 questions' },
+    questions: [
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '紧急避孕药最迟应在无保护性行为后多少小时内服用？', options: ['24小时', '72小时', '120小时', '一周内均有效'], explanation: '常见紧急避孕药（如左炔诺孕酮）需在72小时内服用，越早效果越好。另有含乌利司他的紧急避孕药可延长至120小时，但需医生处方。' },
+        en: { q: 'How soon must emergency contraception be taken after unprotected sex?', options: ['Within 24 hours', 'Within 72 hours', 'Within 120 hours', 'Any time within a week'], explanation: 'Common emergency contraceptives (e.g. levonorgestrel) must be taken within 72 hours — the sooner the better. Ulipristal acetate extends this to 120 hours but requires a prescription.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '短效避孕药和紧急避孕药最主要的区别是？', options: ['成分完全不同', '短效是日常预防，紧急是事后补救，剂量和机制不同', '紧急避孕药比短效更安全，可以长期替代', '两者效果相同，只是服用时间不同'], explanation: '短效避孕药每日服用，通过持续抑制排卵预防怀孕；紧急避孕药是高剂量激素，用于事后补救，不适合作为常规避孕手段，频繁使用会增加副作用风险。' },
+        en: { q: 'What is the key difference between the pill and emergency contraception?', options: ['They have completely different ingredients', 'The pill is daily prevention; emergency contraception is after-the-fact — different dose and mechanism', 'Emergency contraception is safer and can replace the pill long-term', 'They work the same way — just taken at different times'], explanation: 'The combined pill is taken daily to continuously suppress ovulation. Emergency contraception is a high-dose hormone used as a backup — not suitable as routine contraception, as frequent use increases side effect risk.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '以下哪种避孕方式失败率最低？', options: ['避孕套', '短效避孕药', '含激素宫内节育器（IUD）', '安全期避孕法'], explanation: 'IUD放置后持续有效、不依赖每日操作，完美使用失败率约0.1–0.2%，是目前最可靠的可逆避孕方式之一。避孕套实际失败率可达13%，但是唯一同时预防性传播感染（STI）的方式。安全期法失败率高，不属于可靠的科学避孕手段。' },
+        en: { q: 'Which contraceptive method has the lowest failure rate?', options: ['Condom', 'Combined oral contraceptive pill', 'Hormonal IUD', 'Fertility awareness / rhythm method'], explanation: 'The hormonal IUD works continuously without daily action — perfect-use failure rate is ~0.1–0.2%, making it one of the most reliable reversible options. Condoms have a real-world failure rate of up to 13%, but are the only method that also prevents STIs. The rhythm method has a high failure rate and is not considered reliably scientific.' },
+        answer: 2
+      },
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '关于短效避孕药的副作用，以下哪项是误解？', options: ['初期可能有恶心、头痛', '吸烟者血栓风险更高', '情绪变化因人而异', '长期服用会导致不孕'], explanation: '大多数初期副作用3个月内会改善。情绪影响因人而异，有困扰可考虑换配方或换避孕方式。吸烟者及有偏头痛史者需特别注意血栓风险，用药前告知医生。' },
+        en: { q: 'Which of the following is a misconception about the combined pill?', options: ['Initial side effects like nausea and headaches are possible', 'Smokers face a higher blood clot risk', 'Mood changes vary from person to person', 'Long-term use causes infertility'], explanation: 'Most early side effects resolve within 3 months. Mood effects vary — consider switching formulation or method if concerned. Smokers and those with migraine history should be aware of clot risk and inform their doctor.' },
+        answer: 3
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '停服短效避孕药后，排卵功能多久恢复？', options: ['至少一年', '3–6个月', '通常1–3个月，部分人停药当月即恢复', '必须等一次正常月经后才会排卵'], explanation: '避孕药导致不孕是误解。停药后激素很快恢复，备孕一般建议等1–2个正常周期，是为了推算预产期，不是因为生育力未恢复。' },
+        en: { q: 'How quickly does ovulation return after stopping the pill?', options: ['At least a year', '3–6 months', 'Usually within 1–3 months — some ovulate the very first month off', 'You must wait for one normal period before ovulating'], explanation: '"The pill causes infertility" is a myth. Hormones normalise quickly after stopping. Waiting 1–2 cycles before trying to conceive is recommended for dating purposes — not because fertility hasn\'t returned.' },
+        answer: 2
+      },
+      {
+        type: 'fill', difficulty: 'medium',
+        zh: { q: '口服避孕药除避孕外，常见的医疗用途包括：治疗___、缓解___、调节月经周期，以及治疗子宫内膜异位症等妇科疾病。', blanks: ['第一空', '第二空'], explanation: '避孕药通过调节雌孕激素水平，对多种激素相关症状有治疗效果，是妇科临床中用途最广的药物之一。' },
+        en: { q: 'Beyond contraception, the pill is commonly used to treat ___, relieve ___, regulate the menstrual cycle, and manage conditions like endometriosis.', blanks: ['Blank 1', 'Blank 2'], explanation: 'By regulating estrogen and progesterone, the pill has therapeutic effects on many hormone-related conditions — making it one of the most widely used medications in gynaecological practice.' },
+        answer: ['痤疮 / 暗疮 / acne', '痛经 / dysmenorrhea / period pain / cramps']
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '含铜宫内节育器（Copper IUD，不含激素）的避孕原理是？', options: ['抑制排卵', '铜离子对精子有毒性，同时干扰受精卵着床', '阻止卵子成熟', '通过激素加厚宫颈黏液'], explanation: '含铜IUD不含激素，通过铜离子的杀精作用及对子宫环境的影响达到避孕效果，适合不宜使用激素的人群。含激素IUD则主要通过加厚宫颈黏液、抑制子宫内膜来避孕。' },
+        en: { q: 'How does the copper IUD (hormone-free) prevent pregnancy?', options: ['It suppresses ovulation', 'Copper ions are toxic to sperm and also interfere with implantation', 'It prevents egg maturation', 'It uses hormones to thicken cervical mucus'], explanation: 'The copper IUD contains no hormones. Copper ions impair sperm function and alter the uterine environment, making it ideal for those who cannot use hormones. Hormonal IUDs primarily work by thickening cervical mucus and thinning the uterine lining.' },
+        answer: 1
+      },
+      {
+        type: 'fill', difficulty: 'hard',
+        zh: { q: '有先兆偏头痛的女性应避免含雌激素的避孕方式。请列举两种适合她们的替代选项：___和___。', blanks: ['选项一', '选项二'], explanation: '有先兆偏头痛是含雌激素避孕药的禁忌之一，两者叠加会显著升高缺血性卒中风险。这类人群可选择纯孕激素类避孕方式或非激素方式（如含铜IUD）。' },
+        en: { q: 'Women with migraine with aura should avoid estrogen-containing contraception. Name two suitable alternatives: ___ and ___.', blanks: ['Option 1', 'Option 2'], explanation: 'Migraine with aura is a contraindication for estrogen-containing contraceptives — the combination significantly raises ischaemic stroke risk. Suitable alternatives include progestogen-only methods or non-hormonal options like the copper IUD.' },
+        answer: ['迷你丸 / 含激素IUD / 含铜IUD / 避孕套 / mini pill / hormonal IUD / copper IUD / condom / progestogen', '迷你丸 / 含激素IUD / 含铜IUD / 避孕套 / mini pill / hormonal IUD / copper IUD / condom / progestogen']
+      }
+    ]
+  },
+  {
+    id: 'gynecology',
+    color: '#6A1B9A',
+    zh: { tag: '主题四', title: '妇科健康与检查', subtitle: '8题 · 选择、多选、排序' },
+    en: { tag: 'Topic 4', title: 'Gynaecological Health & Screening', subtitle: '8 questions' },
+    questions: [
+      {
+        type: 'finderror', difficulty: 'medium',
+        zh: { q: '下列关于Pap smear（巴氏涂片）的说法，哪一项是错误的？', options: ['医生会使用专门的采样刷，在子宫颈的"转化区"轻轻刮取脱落细胞。', '只要Pap smear结果显示正常，就百分之百代表体内没有感染HPV病毒。', '对于健康的成年女性，通常建议每3年进行一次细胞学筛查。'], explanation: 'Pap smear检查的是"细胞有没有变坏"，而HPV检查的是"有没有病毒"。有时候病毒已经存在，但还没引起细胞病变，此时涂片会显示正常，但病毒其实是阳性的。' },
+        en: { q: 'Which of the following statements about the Pap smear is incorrect?', options: ['A doctor uses a special brush to gently collect cells from the cervical "transformation zone".', 'A normal Pap smear result guarantees there is absolutely no HPV infection in the body.', 'Healthy adult women are generally advised to have cervical screening every 3 years.'], explanation: 'A Pap smear checks whether cells have become abnormal. An HPV test checks whether the virus is present. The virus can exist before causing any cell changes — so a normal smear does not rule out HPV.' },
+        answer: 1
+      },
+      {
+        type: 'order', difficulty: 'easy',
+        zh: { q: '在女性盆腔中，由前（腹侧）向后（背侧）排列：___，___，___。', items: ['A. 直肠', 'B. 阴道', 'C. 尿道'], explanation: '直肠内存有大量大肠杆菌等细菌。从前往后擦可以有效防止粪便中的细菌被带入阴道或尿道，减少炎症风险。' },
+        en: { q: 'In the female pelvis, from front (anterior) to back (posterior): ___, ___, ___.', items: ['A. Rectum', 'B. Vagina', 'C. Urethra'], explanation: 'The rectum contains large amounts of bacteria like E. coli. Wiping front to back prevents faecal bacteria from entering the vagina or urethra, reducing infection risk.' },
+        answer: ['C', 'B', 'A']
+      },
+      {
+        type: 'finderror', difficulty: 'medium',
+        zh: { q: '关于男性与HPV的关系，下列哪项说法是错误的？', options: ['男性不仅是HPV的重要传播者，自身也面临尖锐湿疣、阴茎癌及口咽癌等健康风险。', '男性可以通过常规的尿液化验或抽血轻松筛查出是否感染了高危型HPV。', '虽然避孕套能显著降低男性传播病毒的概率，但其保护并非100%。'], explanation: '目前全球范围内尚无针对男性的大规模标准HPV筛查指南。尿检或抽血无法准确查出皮肤粘膜的HPV感染，男性通常只有在出现肉眼可见的疣体或病变时才会被确诊。' },
+        en: { q: 'Regarding HPV in men, which statement is incorrect?', options: ['Men can transmit HPV and are also at risk of genital warts, penile cancer, and oropharyngeal cancer.', 'Men can be easily screened for high-risk HPV through routine urine tests or blood tests.', 'Condoms significantly reduce the risk of transmission but do not provide 100% protection.'], explanation: 'There are currently no widespread standard HPV screening guidelines for men globally. Urine or blood tests cannot reliably detect HPV on skin and mucous membranes — men are typically only diagnosed when visible lesions appear.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '关于HPV"高危型"和"低危型"的描述，正确的是？', options: ['高危型（如16、18）是导致宫颈癌的主因。', '低危型（如6、11）完全无害，不用管。', '数字越大（如HPV 52）代表病毒毒性越强。'], explanation: '高危型HPV（主要是16、18型）是导致宫颈癌的主要原因；低危型（如6、11型）主要引起尖锐湿疣；HPV编号大小与毒性无关。' },
+        en: { q: 'Which statement about high-risk and low-risk HPV is correct?', options: ['High-risk types (e.g. 16, 18) are the main cause of cervical cancer.', 'Low-risk types (e.g. 6, 11) are completely harmless and can be ignored.', 'Higher HPV numbers (e.g. HPV 52) indicate greater viral toxicity.'], explanation: 'High-risk HPV types (mainly 16 and 18) are the primary cause of cervical cancer. Low-risk types (6, 11) mainly cause genital warts. HPV numbers have no relation to viral toxicity.' },
+        answer: 0
+      },
+      {
+        type: 'multi', difficulty: 'easy',
+        zh: { q: 'Pap smear（巴氏涂片）除了筛查宫颈癌，还可能顺带发现什么？（多选）', options: ['阴道微生物感染（如霉菌、滴虫等）', '激素水平（通过细胞形态大致评估雌激素水平）', '胎儿性别（提前预知是否怀孕及胎儿性别）', '子宫内膜异常（偶尔能发现来自子宫内膜的异常脱落细胞）'], explanation: '显微镜下的视野很广，除了看癌细胞，医生也能看到细菌、寄生虫以及反映激素状态的细胞比例。Pap smear采集的是母体自身的宫颈细胞，与胎儿无关，完全不能检测怀孕或性别。' },
+        en: { q: 'Beyond cervical cancer screening, what else might a Pap smear incidentally detect? (Select all that apply)', options: ['Vaginal infections (e.g. yeast, trichomonas)', 'Hormone levels (roughly assessing estrogen through cell morphology)', 'Foetal sex (detecting pregnancy and baby\'s gender)', 'Endometrial abnormalities (occasionally detects abnormal shed cells from the uterine lining)'], explanation: 'Under a microscope, doctors can see bacteria, parasites, and hormone-related cell patterns in addition to cancerous changes. A Pap smear collects cells from the mother\'s cervix — it has no connection to foetal sex or pregnancy detection.' },
+        answer: [0, 1, 3]
+      },
+      {
+        type: 'finderror', difficulty: 'hard',
+        zh: { q: '关于子宫肌瘤的处理，下列哪项说法是错误的？', options: ['肌瘤是否需要手术，主要看它是否引起了月经过多、贫血或压迫膀胱等症状。', '只要体检B超发现了子宫肌瘤，为了防止它恶变，所有患者都应立即手术切除。', '由于肌瘤的生长依赖雌激素，女性在绝经后，原本的肌瘤通常会停止生长甚至缩小。'], explanation: '子宫肌瘤的恶变概率极低（通常在0.5%以下）。如果肌瘤很小且没有任何不舒服，医生通常建议"与瘤共存"，定期复查即可。"位置"有时比"大小"更重要——长在子宫内壁（粘膜下）的小肌瘤可能导致大出血，而长在子宫外面的大肌瘤可能完全没感觉。' },
+        en: { q: 'Regarding uterine fibroids, which statement is incorrect?', options: ['Whether surgery is needed mainly depends on whether the fibroid causes symptoms like heavy periods, anaemia, or bladder pressure.', 'Any fibroid found on ultrasound should be surgically removed immediately to prevent it becoming cancerous.', 'Since fibroids depend on estrogen to grow, they typically stop growing or shrink after menopause.'], explanation: 'The risk of a fibroid becoming malignant is extremely low (usually under 0.5%). Small asymptomatic fibroids can be monitored without treatment. Location matters more than size — a small submucosal fibroid can cause heavy bleeding, while a large subserosal fibroid may cause no symptoms at all.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'hard',
+        zh: { q: '关于"巧克力囊肿"的临床特征，下列哪项描述最准确？', options: ['它的典型症状是继发性痛经，且痛感往往随年龄增长而逐年减轻。', '它的名字源于患者摄入过多甜食，导致卵巢内形成了棕色粘稠的脂肪团。', '除了导致剧烈痛经，它还可能因为与周围组织粘连而影响输卵管功能，是导致女性不孕的常见原因之一。'], explanation: 'A错误：巧克力囊肿引起的痛经通常是进行性加重（一年比一年痛），而不是减轻。B错误：名字源于囊肿内陈旧积血的颜色和性状像巧克力，与饮食无关。C正确：这是该病症在健康管理中最重要的影响之一。' },
+        en: { q: 'Which description of an "endometrioma" (chocolate cyst) is most accurate?', options: ['The typical symptom is secondary dysmenorrhoea, with pain that tends to lessen with age.', 'The name comes from eating too many sweets, which causes brown fatty deposits to form in the ovary.', 'Beyond causing severe period pain, adhesions can affect fallopian tube function — making it a common cause of infertility.'], explanation: 'A is wrong: pain from endometriomas typically gets progressively worse over time, not better. B is wrong: the name comes from the dark, syrupy appearance of old blood inside the cyst — nothing to do with diet. C is correct: this is one of the most clinically significant impacts of the condition.' },
+        answer: 2
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '小美在体检报告中看到了"子宫内膜息肉"的诊断，下列哪种情况最有可能是它引起的？', options: ['异常出血：非经期的点滴出血，或者性生活后的少量出血。', '腹部肿块：在肚子上能摸到明显的硬块，像个小皮球。', '声音变粗：导致女性声音变沙哑，长出浓密的胡须。'], explanation: '息肉是子宫内膜上的过度增生，最常见的"捣乱"方式就是让月经变得不规律、经期延长或者出现非经期的异常阴道出血。它通常很小，肚子上是摸不到的，也不会影响激素分泌导致长胡须。' },
+        en: { q: 'Xiaomei\'s check-up revealed a "uterine polyp". Which symptom is most likely caused by it?', options: ['Abnormal bleeding: spotting between periods, or light bleeding after sex.', 'Abdominal mass: a noticeable firm lump you can feel through the abdomen.', 'Voice changes: a deepened, hoarse voice and thick facial hair.'], explanation: 'Polyps are overgrowths of the uterine lining. Their most common effect is irregular bleeding — longer periods, spotting, or abnormal discharge between cycles. They are typically small, not palpable through the abdomen, and do not affect hormone levels.' },
+        answer: 0
+      }
+    ]
+  },
+  {
+    id: 'lifestages',
+    color: '#E65100',
+    zh: { tag: '主题五', title: '生育、产后与更年期', subtitle: '8题 · 选择、填空' },
+    en: { tag: 'Topic 5', title: 'Fertility, Postpartum & Menopause', subtitle: '8 questions' },
+    questions: [
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '女性生育力下降最主要的原因是？', options: ['体重增加', '卵子数量和质量随年龄下降', '子宫老化导致无法着床', '激素分泌完全停止'], explanation: '女性出生时卵子数量已固定，随年龄增长不断减少且质量下降，30岁后生育力逐渐降低，35岁后下降明显加速。' },
+        en: { q: 'What is the primary reason for declining fertility in women?', options: ['Weight gain', 'Declining egg quantity and quality with age', 'Uterine ageing preventing implantation', 'Complete cessation of hormone production'], explanation: 'Women are born with a fixed number of eggs. Over time, both quantity and quality decline. Fertility starts to decrease gradually after 30, with a more noticeable drop after 35.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '产后盆底肌功能障碍最常见的症状是？', options: ['腰痛', '漏尿（压力性尿失禁）', '下肢水肿', '性欲下降'], explanation: '盆底肌在分娩过程中承受巨大压力，产后松弛可导致在咳嗽、打喷嚏、运动时漏尿，是产后最常见但被忽视的问题之一。' },
+        en: { q: 'What is the most common symptom of postpartum pelvic floor dysfunction?', options: ['Lower back pain', 'Leaking urine (stress urinary incontinence)', 'Swelling in the legs', 'Reduced libido'], explanation: 'The pelvic floor endures enormous pressure during childbirth. Postpartum laxity can cause urine leakage when coughing, sneezing, or exercising — one of the most common yet overlooked postpartum issues.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '以下关于围绝经期和绝经的说法，哪项正确？', options: ['绝经是指连续6个月无月经', '围绝经期通常从50岁后开始，持续约半年', '围绝经期是绝经前的过渡阶段，可能从40–45岁开始', '出现潮热症状说明已经正式绝经'], explanation: '围绝经期是激素开始波动的阶段，症状可能包括月经不规律、潮热、睡眠问题等，常被误认为还没到更年期而被忽视。绝经的定义是连续12个月无月经。' },
+        en: { q: 'Which statement about perimenopause and menopause is correct?', options: ['Menopause is defined as 6 consecutive months without a period', 'Perimenopause usually begins after 50 and lasts about six months', 'Perimenopause is a transitional phase before menopause that can begin at 40–45', 'Hot flashes mean you have officially reached menopause'], explanation: 'Perimenopause is when hormones begin fluctuating — symptoms include irregular periods, hot flashes, and sleep issues. It\'s often dismissed as "not yet menopause". Menopause is formally defined as 12 consecutive months without a period.' },
+        answer: 2
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '冻卵成功率主要受哪些因素影响？', options: ['年龄和体重', '年龄和冷冻卵子数量', '冷冻时长和卵子数量', '体重和冷冻卵子数量'], explanation: '年龄决定卵子质量，冷冻数量决定可用胚胎数，两者是影响冻卵成功率最关键的因素。建议有冻卵意向者尽早咨询生殖科医生。' },
+        en: { q: 'What most influences the success rate of egg freezing?', options: ['Age and body weight', 'Age and number of eggs frozen', 'Duration of freezing and egg count', 'Body weight and egg count'], explanation: 'Age determines egg quality; the number of eggs frozen determines how many viable embryos are available. These two factors are the most critical. Anyone considering egg freezing should consult a reproductive specialist as early as possible.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '关于自然怀孕和冻卵的"成功率"，以下哪个数据更接近科学事实？', options: ['只要冻了卵，以后100%能生出宝宝', '自然怀孕后，大约有10–20%的概率会发生早期流产', '35岁以上冻卵，每次移植的成功率通常超过80%', '只要身体健康，流产是绝对不会发生的'], explanation: '自然怀孕后流产的概率约为10–20%；35岁以上冻卵后每次移植的活产率约为20–30%。流产比许多人以为的更常见，多数发生在早期且与染色体异常有关。' },
+        en: { q: 'Which figure is closest to the scientific reality about conception and egg freezing?', options: ['Once you freeze your eggs, you are guaranteed a baby', 'Around 10–20% of natural pregnancies end in early miscarriage', 'For women over 35, each frozen egg transfer has over 80% success rate', 'If you\'re healthy, miscarriage simply cannot happen'], explanation: 'Natural pregnancy miscarriage rate is approximately 10–20%. For women over 35, the live birth rate per frozen embryo transfer is roughly 20–30%. Miscarriage is more common than most people realise, and most occur early due to chromosomal abnormalities.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '激素替代疗法（HRT，Hormone Replacement Therapy）主要用于缓解哪些更年期症状？', options: ['潮热、盗汗、睡眠障碍、阴道干涩', '体重增加和骨质疏松（仅此两项）', '情绪波动和记忆力下降（仅此两项）', 'HRT对所有更年期症状均无效'], explanation: 'HRT可有效缓解多种绝经相关症状，并有助于保护骨密度。但有乳腺癌、血栓或心血管病史者需谨慎，应在医生指导下个体化评估风险与获益。' },
+        en: { q: 'HRT (Hormone Replacement Therapy) is primarily used to relieve which menopause symptoms?', options: ['Hot flashes, night sweats, sleep disturbances, vaginal dryness', 'Weight gain and osteoporosis only', 'Mood changes and memory decline only', 'HRT is ineffective for all menopause symptoms'], explanation: 'HRT effectively relieves many menopause-related symptoms and helps protect bone density. However, those with a history of breast cancer, blood clots, or cardiovascular disease should use it with caution — always assess risk vs benefit with a doctor.' },
+        answer: 0
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '产后抑郁（Postpartum Depression，PPD）和Baby Blues有什么区别？', options: ['没有区别，都是激素变化引起的短暂情绪波动', 'Baby Blues通常在产后2周内自行消退，PPD症状更重、持续更长', '产后抑郁只发生在剖腹产后', 'Baby Blues需要药物治疗，产后抑郁可自愈'], explanation: 'Baby Blues影响约70–80%的产妇，通常在产后2周内消退。PPD症状更严重（持续悲伤、无法照料婴儿、有伤害自己的念头等），持续超过2周应及时寻求专业帮助。' },
+        en: { q: 'What is the difference between Postpartum Depression (PPD) and Baby Blues?', options: ['No difference — both are brief hormonal mood shifts', 'Baby Blues typically resolve within 2 weeks; PPD is more severe and lasts longer', 'PPD only occurs after caesarean sections', 'Baby Blues requires medication; PPD resolves on its own'], explanation: 'Baby Blues affects around 70–80% of new mothers and usually resolves within 2 weeks. PPD is more serious — persistent sadness, inability to care for the baby, thoughts of self-harm — and symptoms lasting beyond 2 weeks warrant professional support.' },
+        answer: 1
+      },
+      {
+        type: 'fill', difficulty: 'hard',
+        zh: { q: '凯格尔运动（Kegel Exercise）的正确做法是收缩盆底肌而非腹肌或臀肌，每次持续___秒后放松。以下情况单独做凯格尔可能无效甚至有害：盆底肌___的人群，此时需要的是放松而非收缩。', blanks: ['秒数', '状态'], explanation: '凯格尔运动并非对所有人适用。盆底问题分为"肌肉无力"和"肌肉过紧"两类，后者做凯格尔反而会加重症状。建议产后由专业盆底物理治疗师评估后再制定方案。' },
+        en: { q: 'Kegel exercises involve contracting the pelvic floor (not the abs or glutes) and holding for ___ seconds before releasing. Kegels may be ineffective or harmful for people whose pelvic floor is ___ — they need relaxation, not contraction.', blanks: ['Duration', 'Condition'], explanation: 'Kegel exercises are not suitable for everyone. Pelvic floor problems fall into two categories: weakness and hypertonicity (over-tightness). Kegels worsen the latter. A postpartum pelvic floor physiotherapist assessment is strongly recommended before starting.' },
+        answer: ['3–5 / 3到5 / 3-5', '过度紧张 / 高张 / hypertonic / too tight / overactive']
+      }
+    ]
+  },
+  {
+    id: 'anatomy',
+    color: '#00695C',
+    zh: { tag: '主题六', title: '身体构造与常识辟谣', subtitle: '7题 · 判断、排序、选择' },
+    en: { tag: 'Topic 6', title: 'Body Anatomy & Myths', subtitle: '7 questions' },
+    questions: [
+      {
+        type: 'tf', difficulty: 'easy',
+        zh: { q: '处女膜是一层"完全封住阴道口"的膜。', explanation: '多数人的处女膜是有开口的薄组织边缘，否则经血无法排出。处女膜的形状因人而异，与性经历无关。' },
+        en: { q: 'The hymen is a membrane that completely seals the vaginal opening.', explanation: 'In most people, the hymen is a thin ring of tissue with a natural opening — otherwise menstrual blood couldn\'t flow out. Its shape varies widely between individuals and is unrelated to sexual experience.' },
+        answer: false
+      },
+      {
+        type: 'tf', difficulty: 'easy',
+        zh: { q: '性生活后出现尿路感染（UTI）说明这个人不干净或不检点。', explanation: 'UTI常见原因是细菌进入尿道，与"人品/羞耻"无关；女性尿道更短更容易发生。性行为后排尿是预防UTI的有效方法之一。' },
+        en: { q: 'A UTI after sex means the person is unhygienic or promiscuous.', explanation: 'UTIs are caused by bacteria entering the urethra — nothing to do with morality or hygiene standards. Women\'s shorter urethra makes them more susceptible. Urinating after sex is one effective prevention method.' },
+        answer: false
+      },
+      {
+        type: 'order', difficulty: 'medium',
+        zh: { q: '请按照从上到下的顺序排列：___，___，___，___。', items: ['A. 肛门', 'B. 阴道口', 'C. 阴蒂', 'D. 尿道口'], explanation: '了解正确的解剖位置有助于自我健康管理。从上到下：阴蒂、尿道口、阴道口、肛门。' },
+        en: { q: 'Arrange these structures in order from top to bottom: ___, ___, ___, ___.', items: ['A. Anus', 'B. Vaginal opening', 'C. Clitoris', 'D. Urethral opening'], explanation: 'Understanding correct anatomy is key to self-care. From top to bottom: clitoris, urethral opening, vaginal opening, anus.' },
+        answer: ['C', 'D', 'B', 'A']
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '关于"阴道会因为性生活次数变松"的说法，哪项更贴近医学常识？', options: ['次数越多一定越松', '阴道是有弹性的肌性管道，会随兴奋、分娩、激素变化出现暂时变化，但不由"次数"决定', '只有年轻人才会变松', '只要做凯格尔就能变回"处女状态"'], explanation: '阴道的张力与盆底肌、分娩史、年龄/激素、个体差异更相关，不是"用旧了"。关于"处女状态"的说法本身也是一个需要被纠正的误解。' },
+        en: { q: 'Which statement best reflects medical understanding of vaginal "looseness"?', options: ['More sex always means more looseness', 'The vagina is elastic muscle tissue — it changes temporarily with arousal, childbirth, and hormones, but not based on "frequency"', 'Only young people experience changes', 'Kegel exercises can restore a "virginal state"'], explanation: 'Vaginal tone relates to pelvic floor muscles, childbirth history, age, hormones, and individual variation — not how often someone has sex. The concept of "restoring a virginal state" is itself a myth worth correcting.' },
+        answer: 1
+      },
+      {
+        type: 'tf', difficulty: 'easy',
+        zh: { q: '阴道有轻微气味就代表不卫生。', explanation: '轻微气味是正常体味的一部分；若出现明显腥臭、豆腐渣样分泌物、瘙痒疼痛才需要就医评估。过度清洁反而可能破坏阴道菌群平衡。' },
+        en: { q: 'A mild vaginal odour means poor hygiene.', explanation: 'A mild natural scent is completely normal. It\'s only worth seeking medical attention if there is a strong fishy smell, cottage-cheese-like discharge, or itching and pain. Over-cleaning can actually disrupt the vaginal microbiome.' },
+        answer: false
+      },
+      {
+        type: 'fill', difficulty: 'easy',
+        zh: { q: '阴道的尽头连接的是___（部位），不是一个"通往子宫的敞开大洞"。', blanks: ['部位'], explanation: '宫颈是子宫的入口，平时处于封闭状态。宫颈口非常小，通常只有在分娩时才会充分扩张。' },
+        en: { q: 'The vagina ends at the ___, not an open tunnel straight into the uterus.', blanks: ['Structure'], explanation: 'The cervix is the lower entrance to the uterus and is normally closed. The cervical opening is very small — it only dilates significantly during childbirth.' },
+        answer: ['宫颈 / cervix']
+      },
+      {
+        type: 'fill', difficulty: 'medium',
+        zh: { q: '"阴道冲洗更干净"是误区，因为可能破坏阴道的___平衡，反而更易感染。', blanks: ['平衡类型'], explanation: '阴道有自我清洁能力，健康的阴道菌群（以乳酸杆菌为主）维持酸性环境，过度冲洗会破坏这一平衡。' },
+        en: { q: '"Douching keeps the vagina cleaner" is a myth — it can disrupt the vaginal ___ balance, increasing infection risk.', blanks: ['Balance type'], explanation: 'The vagina is self-cleaning. Healthy vaginal flora (mainly lactobacilli) maintains an acidic environment. Douching disrupts this balance and can lead to bacterial overgrowth or infection.' },
+        answer: ['菌群 / 酸碱 / pH / microbiome / bacterial / flora']
+      }
+    ]
+  },
+  {
+    id: 'sexual',
+    color: '#AD1457',
+    zh: { tag: '其他', title: '心理健康、性健康与常识', subtitle: '8题 · 选择' },
+    en: { tag: 'Extras', title: 'Mental Health, Sexual Health & Myths', subtitle: '8 questions' },
+    questions: [
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '下列关于单纯疱疹病毒（HSV）的说法，哪项是正确的？', options: ['只要皮肤上看不见水疱，就没有传染性', '这种病毒可以被彻底根治，以后再也不会复发', '病毒会长期潜伏在神经节中，在免疫力下降时可能再次诱发', '只有身体虚弱的人才会感染疱疹'], explanation: '疱疹病毒具有潜伏性，虽然可以通过药物控制和缓解症状，但目前尚无法完全从体内清除。在劳累、压力大或免疫力下降时，它可能会"卷土重来"。' },
+        en: { q: 'Which statement about herpes simplex virus (HSV) is correct?', options: ['If there are no visible blisters, the virus cannot be transmitted', 'HSV can be completely cured and will never recur', 'The virus lies dormant in nerve ganglia and can reactivate when immunity is low', 'Only physically weak people can contract herpes'], explanation: 'HSV is a latent virus. While medication can manage and reduce symptoms, it cannot be fully cleared from the body. Fatigue, stress, or lowered immunity can trigger a recurrence.' },
+        answer: 2
+      },
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '衣原体感染常被称为"沉默的感染"，主要原因是什么？', options: ['感染后会导致患者无法发声说话', '大多数感染者（尤其是女性）在早期几乎没有任何明显症状', '它只通过空气传播，不需要身体接触', '只要多喝水，这种感染就会自行消失'], explanation: '衣原体感染的隐蔽性很强。由于早期症状不明显，很多女性是在体检或出现盆腔炎等并发症时才发现。因此，定期的性健康筛查非常重要。' },
+        en: { q: 'Why is chlamydia often called a "silent infection"?', options: ['It causes the infected person to lose their voice', 'Most infected people (especially women) have no obvious symptoms early on', 'It spreads through air, not physical contact', 'It resolves on its own if you drink enough water'], explanation: 'Chlamydia is highly stealthy. Because early symptoms are so mild or absent, many women only discover the infection during routine check-ups or when complications like pelvic inflammatory disease arise. Regular sexual health screening is important.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '梅毒在早期（一期）最典型的特征是什么？', options: ['全身大面积出现奇痒无比的红疹', '生殖器部位出现不痛不痒的硬性溃疡（医学称"硬下疳"）', '出现像感冒一样的持续高烧和咳嗽', '皮肤表面出现像橘子皮一样的皱褶'], explanation: '梅毒一期的溃疡通常是无痛的，所以很容易被忽视。如果发现身体出现不明原因的无痛溃疡，应及时就医。' },
+        en: { q: 'What is the most characteristic sign of primary (stage 1) syphilis?', options: ['A widespread, intensely itchy red rash all over the body', 'A painless, hard ulcer (chancre) on the genitals', 'Persistent fever and cough resembling a cold', 'Orange-peel texture on the skin surface'], explanation: 'The ulcer of primary syphilis is typically painless — which is why it\'s easily missed. Any unexplained painless ulcer should prompt a medical visit.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '性爱过程中如果感到明显的疼痛，以下哪种做法是最不推荐的？', options: ['尝试使用润滑剂，看是否能缓解干涩', '停下来与伴侣沟通，调整姿势或节奏', '告诉自己"忍一忍就过去了"，继续完成性爱', '如果长期疼痛，前往妇产科检查是否存在炎症或阴道痉挛'], explanation: '疼痛是身体发出的警报信号。强行忍痛不仅会破坏心理上的愉悦感，还可能导致物理损伤或形成心理防御，让疼痛问题进一步加剧。' },
+        en: { q: 'If you experience significant pain during sex, which approach is least recommended?', options: ['Try lubricant to see if dryness is the cause', 'Pause and communicate with your partner — adjust position or pace', 'Tell yourself "just push through it" and continue', 'See a gynaecologist if pain is recurring, to check for inflammation or vaginismus'], explanation: 'Pain is the body\'s alarm signal. Pushing through it damages psychological pleasure, can cause physical injury, and may reinforce avoidance patterns — making the problem worse over time.' },
+        answer: 2
+      },
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '关于女性获得性高潮的途径，以下哪项描述符合医学事实？', options: ['只有通过单纯的阴道性交，才能获得"真正的"高潮', '大多数女性需要通过刺激阴蒂（Clitoris）才能获得高潮', '如果没有获得高潮，说明身体一定有某种疾病', '只要性爱时间足够长，女性就一定能获得高潮'], explanation: '研究显示，约70–80%的女性无法仅通过单纯的阴道性交达到高潮，阴蒂的刺激对大多数女性来说至关重要。' },
+        en: { q: 'Which statement about female orgasm is supported by medical evidence?', options: ['A "real" orgasm can only be achieved through vaginal penetration alone', 'Most women require clitoral stimulation to orgasm', 'If you don\'t orgasm, something must be physically wrong', 'Given enough time, all women will inevitably orgasm'], explanation: 'Research shows approximately 70–80% of women cannot reach orgasm through penetration alone. Clitoral stimulation is essential for most women.' },
+        answer: 1
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '性爱时出现阴道干涩，以下哪个因素可能是原因？', options: ['处于哺乳期或绝经期，导致雌激素水平下降', '避孕药或其他特定药物的副作用', '前戏时间不足或心理压力过大', '以上都有可能'], explanation: '湿润度受激素（如产后、更年期）、药物、压力以及前戏充分程度的多重影响。使用水基润滑剂是简单有效的辅助手段。' },
+        en: { q: 'Vaginal dryness during sex can be caused by which of the following?', options: ['Being in the breastfeeding or menopausal phase, causing lower estrogen', 'Side effects of the pill or other medications', 'Insufficient foreplay or psychological stress', 'All of the above'], explanation: 'Lubrication is influenced by hormones (postpartum, menopause), medications, psychological state, and how much time is spent on foreplay. Water-based lubricant is a simple and effective aid.' },
+        answer: 3
+      },
+      {
+        type: 'single', difficulty: 'medium',
+        zh: { q: '关于"潮吹"（女性射精）和性反应，以下说法正确的是：', options: ['这是所有女性在达到高潮时都必须出现的生理现象', '这代表该女性的性功能比普通人更强', '这是一种正常的生理反应，但在女性群体中并非普遍发生，且不应作为评价性爱质量的标准', '只有在电影里才会出现，现实中并不存在'], explanation: '每个人的身体反应都是独特的。性爱的质量取决于双方的愉悦感和亲密感，而非是否出现了某种特定的生理指标或动作。' },
+        en: { q: 'Which statement about female ejaculation and sexual response is correct?', options: ['It is a physiological response that must occur for all women during orgasm', 'It means that woman has stronger sexual function than average', 'It is a normal physiological response, but not universal — and should not be used to measure sexual quality', 'It only happens in films and doesn\'t exist in reality'], explanation: 'Everyone\'s body responds differently. Sexual quality depends on mutual pleasure and intimacy — not whether any specific physiological event occurs.' },
+        answer: 2
+      },
+      {
+        type: 'single', difficulty: 'easy',
+        zh: { q: '在性爱中，关于"同意（Consent）"的理解，哪项是正确的？', options: ['对方是我的长期伴侣，所以默认每次都同意', '对方没有明确说"不"，就代表同意', '同意必须是自愿的、清醒的，并且在任何时候都可以撤回', '只要穿得比较性感，就意味着已经默认同意了'], explanation: '尊重是性爱的基础。无论是初次还是长期伴侣，沟通和双向的自愿是最高原则。同意可以在任何时候撤回，且必须是在清醒状态下自愿给出的。' },
+        en: { q: 'Which statement about consent is correct?', options: ['They\'re my long-term partner, so consent is automatically given every time', 'If they don\'t explicitly say no, that counts as consent', 'Consent must be freely given, sober, and can be withdrawn at any time', 'Dressing a certain way implies automatic consent'], explanation: 'Respect is the foundation of intimacy. Whether with a new or long-term partner, communication and mutual willingness are paramount. Consent can be withdrawn at any point and must be given consciously and freely.' },
+        answer: 2
+      }
+    ]
+  }
+];
+
+// ══ STATE ══
+let lang = localStorage.getItem('lang') || 'zh';
+let currentSection = null;
+let currentQ = 0;
+let score = 0;
+let selectedOptions = [];
+let orderSlots = [];
+let matchState = { chips: [], slots: [], selectedChip: null };
+let answered = false;
+let recognition = null;
+let listeningIndex = -1;
+
+// ══ LANG ══
+function setLang(l) {
+  lang = l;
+  localStorage.setItem('lang', l);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase().includes(l === 'zh' ? '中' : 'en')));
+  renderHome();
+}
+
+// ══ HOME ══
+function renderHome() {
+  const zh = lang === 'zh';
+
+  // ── Main home ──
+  const el = id => document.getElementById(id);
+  if (el('home-eyebrow')) el('home-eyebrow').textContent = zh ? '女性健康 · 知识与资源' : 'Women\'s Health · Knowledge & Resources';
+  if (el('home-title'))   el('home-title').textContent   = zh ? '了解你的身体' : 'Know Your Body';
+  if (el('card-quiz-title')) el('card-quiz-title').textContent = zh ? '知识问答' : 'Quiz';
+  if (el('card-quiz-sub'))   el('card-quiz-sub').textContent   = zh ? '7个主题' : '7 topics';
+  if (el('card-handbook-title')) el('card-handbook-title').textContent = zh ? '身体说明书' : 'Body Guide';
+  if (el('card-handbook-sub'))   el('card-handbook-sub').textContent   = zh ? '1个健康指南' : '1 guide';
+
+  // ── Quiz home ──
+  if (el('quiz-home-title')) el('quiz-home-title').textContent = zh ? '知识问答' : 'Quiz';
+  if (el('quiz-disclaimer')) el('quiz-disclaimer').textContent = zh
+    ? '📌 内容仅供健康科普，不构成医疗建议，如有任何疑虑请咨询专业医生。'
+    : '📌 For educational purposes only. Not medical advice. Consult a professional if you have any concerns.';
+
+  // ── Handbook ──
+  if (el('handbook-title')) el('handbook-title').textContent = zh ? '身体说明书' : 'Body Guide';
+  if (el('handbook-disclaimer')) el('handbook-disclaimer').textContent = zh
+    ? '📌 内容仅供健康科普，不构成医疗建议，如有任何疑虑请咨询专业医生。'
+    : '📌 For educational purposes only. Not medical advice. Consult a professional if you have any concerns.';
+
+  // ── Back buttons ──
+  document.querySelectorAll('.back-btn').forEach(btn => {
+    btn.textContent = zh ? '←' : '←';
+  });
+
+  // ── Nav drawer ──
+  if (el('nav-drawer-title')) el('nav-drawer-title').textContent = zh ? '了解你的身体' : 'Know Your Body';
+  if (el('nav-col-home'))     el('nav-col-home').textContent     = zh ? '主页' : 'Home';
+  if (el('nav-col-quiz-title')) el('nav-col-quiz-title').textContent = zh ? '知识问答' : 'Quiz';
+  if (el('nav-col-handbook-title')) el('nav-col-handbook-title').textContent = zh ? '身体说明书' : 'Body Guide';
+  if (el('nav-col-cycle-fitness')) el('nav-col-cycle-fitness').textContent = zh ? '生理周期与健身' : 'Cycle & Fitness';
+  const quizSubIds = ['nav-sub-1','nav-sub-2','nav-sub-3','nav-sub-4','nav-sub-5','nav-sub-6','nav-sub-7'];
+  const quizSubsZh = ['生理周期与激素','生理周期与健身','避孕科学','妇科健康与检查','生育、产后与更年期','身体构造与常识辟谣','心理健康、性健康与常识'];
+  const quizSubsEn = ['Cycle & Hormones','Cycle & Fitness','Contraception','Gynaecological Health','Fertility, Postpartum & Menopause','Body Anatomy & Myths','Mental & Sexual Health'];
+  quizSubIds.forEach((id, i) => { if (el(id)) el(id).textContent = zh ? quizSubsZh[i] : quizSubsEn[i]; });
+  if (el('nav-lang-label')) el('nav-lang-label').textContent = zh ? '语言' : 'Language';
+
+  // ── Quiz topic list ──
+  const list = el('section-list');
+  if (list) list.innerHTML = SECTIONS.map((s, i) => `
+    <button class="section-card" onclick="startSection(${i})">
+      <div class="section-card-inner">
+        <div class="section-title">${s[lang].title}</div>
+        <div class="section-meta">${s[lang].subtitle}</div>
+      </div>
+      <span class="section-arrow">→</span>
+    </button>
+  `).join('');
+
+
+  // Footer: home
+  const _fnhome = el('footer-nav-links-home');
+  if (_fnhome) _fnhome.innerHTML = [
+    {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
+    {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
+    {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
+    {label: zh ? '题目小抄' : 'Cheatsheet', action: "window.location.href='cheatsheet.html'"},
+  ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
+  if (el('footer-nav-label-home')) el('footer-nav-label-home').textContent = zh ? '导航' : 'Navigation';
+  if (el('footer-ig-home')) el('footer-ig-home').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
+  // Footer: qh
+  const _fnqh = el('footer-nav-links-qh');
+  if (_fnqh) _fnqh.innerHTML = [
+    {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
+    {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
+    {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
+    {label: zh ? '题目小抄' : 'Cheatsheet', action: "window.location.href='cheatsheet.html'"},
+  ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
+  if (el('footer-nav-label-qh')) el('footer-nav-label-qh').textContent = zh ? '导航' : 'Navigation';
+  if (el('footer-ig-qh')) el('footer-ig-qh').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
+  // Footer: hb
+  const _fnhb = el('footer-nav-links-hb');
+  if (_fnhb) _fnhb.innerHTML = [
+    {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
+    {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
+    {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
+    {label: zh ? '题目小抄' : 'Cheatsheet', action: "window.location.href='cheatsheet.html'"},
+  ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
+  if (el('footer-nav-label-hb')) el('footer-nav-label-hb').textContent = zh ? '导航' : 'Navigation';
+  if (el('footer-ig-hb')) el('footer-ig-hb').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
+
+  // ── Handbook list ──
+  const handbookItems = [
+    { zh: { title: '生理周期与健身', sub: '激素变化、运动与饮食指南' }, en: { title: 'Cycle & Fitness', sub: 'Hormones, training & nutrition' }, url: 'cycle-fitness.html' },
+  ];
+  const handbook = el('handbook-list');
+  if (handbook) handbook.innerHTML = handbookItems.map(item => `
+    <button class="section-card" onclick="window.location.href='${item.url}'">
+      <div class="section-card-inner">
+        <div class="section-title">${item[lang].title}</div>
+        <div class="section-meta">${item[lang].sub}</div>
+      </div>
+      <span class="section-arrow">→</span>
+    </button>
+  `).join('');
+}
+
+// ══ START ══
+function startSection(idx) {
+  currentSection = SECTIONS[idx];
+  currentQ = 0;
+  score = 0;
+  showScreen('quiz');
+  document.getElementById('section-label').textContent = currentSection[lang].title;
+
+  renderQuestion();
+}
+
+
+// ══ QUESTION RENDER ══
+function renderQuestion() {
+  answered = false;
+  selectedOptions = [];
+  orderSlots = [];
+  matchState = { chips: [], slots: [], selectedChip: null };
+
+  const q = currentSection.questions[currentQ];
+  const total = currentSection.questions.length;
+
+  document.getElementById('progress-fill').style.width = ((currentQ / total) * 100) + '%';
+  document.getElementById('progress-text').textContent = '';
+  const inlineEl = document.getElementById('progress-inline');
+  if (inlineEl) {
+    if (lang === 'zh') {
+      inlineEl.innerHTML = `<span class="progress-inline-current">第 ${currentQ + 1} 题</span><span class="progress-inline-total">，共 ${total} 题</span>`;
+    } else {
+      inlineEl.innerHTML = `<span class="progress-inline-current">${currentQ + 1}</span><span class="progress-inline-total"> / ${total}</span>`;
+    }
+  }
+
+  hideFeedback();
+  hideConfirm();
+
+  const wrap = document.getElementById('question-wrap');
+  wrap.innerHTML = '';
+  wrap.classList.remove('fade-in');
+  void wrap.offsetWidth;
+  wrap.classList.add('fade-in');
+
+  const qd = q[lang];
+  const diffMap = { easy: { zh: '简单', en: 'Easy', cls: 'diff-easy' }, medium: { zh: '中等', en: 'Medium', cls: 'diff-medium' }, hard: { zh: '困难', en: 'Hard', cls: 'diff-hard' } };
+  const d = diffMap[q.difficulty];
+  const typeMap = { single: { zh: '选择题', en: 'Single choice' }, multi: { zh: '多选题', en: 'Multiple choice' }, tf: { zh: '判断题', en: 'True / False' }, order: { zh: '排序题', en: 'Ordering' }, match: { zh: '配对题', en: 'Matching' }, fill: { zh: '填空题', en: 'Fill in' }, finderror: { zh: '找错误项', en: 'Find the error' } };
+  const tm = typeMap[q.type] || typeMap.single;
+
+  let html = ``;
+
+  // Question text (skip for 'order' — it renders its own q-text with inline blanks)
+  if (q.type !== 'order') {
+    let qtext = qd.q;
+    if (q.type === 'finderror') {
+      if (lang === 'zh') { qtext = qtext.replace('错误', `<span class="highlight-error">错误</span>`); }
+      else { qtext = qtext.replace(/\berror\b/i, m => `<span class="highlight-error">${m}</span>`); }
+    }
+    html += `<div class="q-text">${qtext}</div>`;
+  }
+
+  // Body by type
+  if (q.type === 'single' || q.type === 'finderror') {
+    html += `<div class="options">` + qd.options.map((opt, i) => `
+      <button class="option" onclick="selectSingle(${i})">
+        <span class="option-letter">${String.fromCharCode(65+i)}</span>
+        <span class="option-text">${opt}</span>
+      </button>`).join('') + `</div>`;
+
+  } else if (q.type === 'multi') {
+    html += `<div class="options" id="multi-options">` + qd.options.map((opt, i) => `
+      <button class="option" onclick="toggleMulti(${i})">
+        <span class="option-letter">${String.fromCharCode(65+i)}</span>
+        <span class="option-text">${opt}</span>
+      </button>`).join('') + `</div>`;
+
+  } else if (q.type === 'tf') {
+    html += `<div class="tf-options">
+      <button class="tf-btn" onclick="selectTF(true)">${lang === 'zh' ? '✓ 对' : '✓ True'}</button>
+      <button class="tf-btn" onclick="selectTF(false)">${lang === 'zh' ? '✗ 错' : '✗ False'}</button>
+    </div>`;
+
+  } else if (q.type === 'order') {
+    // Build question text with inline blanks replacing ___ tokens
+    const emptyLabel = lang === 'zh' ? '点击填入' : 'tap to fill';
+    let blankIdx2 = 0;
+    const qtextOrder = qd.q.replace(/___/g, () => {
+      const idx = blankIdx2++;
+      return `<span class="inline-blank empty" id="blank-${idx}" onclick="unselectSlot(${idx})">${emptyLabel}</span>`;
+    });
+    // Inject dynamic q-text with inline blanks (skip static q-text rendering for order type)
+    html += `<div class="q-text" style="line-height:1.9;font-size:20px">${qtextOrder}</div>`;
+    html += `<div class="order-items">` + qd.items.map((item, i) => `
+      <button class="order-item" id="order-item-${i}" onclick="selectOrder('${item.charAt(0)}', ${i}, '${item.slice(3).replace(/'/g,"\\'")}')">
+        <span class="order-badge">${item.charAt(0)}</span>
+        <span style="font-size:15px">${item.slice(3)}</span>
+      </button>`).join('') + `</div>`;
+    html += `<button class="submit-btn" id="order-submit" disabled onclick="submitOrder()">${lang === 'zh' ? '提交答案' : 'Submit'}</button>`;
+
+  } else if (q.type === 'match') {
+    // Shuffle chips
+    const chips = q[lang].rights.map((r, i) => ({ text: r, origIdx: i }));
+    for (let i = chips.length - 1; i > 0; i--) {
+      const j = (i * 7 + 3) % (i + 1);
+      [chips[i], chips[j]] = [chips[j], chips[i]];
+    }
+    matchState.chips = chips;
+    matchState.slots = new Array(q[lang].lefts.length).fill(null); // slot[i] = origIdx of chip placed, or null
+    matchState.selectedChip = null;
+    // Rows: left label + empty right slot
+    html += `<div class="match-rows" id="match-rows">`;
+    q[lang].lefts.forEach((left, i) => {
+      html += `<div class="match-row" id="match-row-${i}" ondragover="matchDragOver(event,${i})" ondrop="matchDrop(event,${i})" ondragleave="matchDragLeave(event,${i})">
+        <div class="match-left-label">${left}</div>
+        <div class="match-right-slot" id="mslot-${i}" onclick="matchSlotClick(${i})">${lang === 'zh' ? '点击填入…' : 'tap to fill…'}</div>
+      </div>`;
+    });
+    html += `</div>`;
+    // Chips at bottom
+    html += `<div class="match-chips" id="match-chips">`;
+    chips.forEach((chip, ci) => {
+      html += `<div class="match-chip" id="mchip-${ci}" draggable="true"
+        onclick="matchChipClick(${ci})"
+        ondragstart="matchDragStart(event,${ci})"
+        ondragend="matchDragEnd(event)">${chip.text}</div>`;
+    });
+    html += `</div>`;
+    html += `<button class="submit-btn" id="match-submit" disabled onclick="submitMatch()">${lang === 'zh' ? '提交答案' : 'Submit'}</button>`;
+
+  } else if (q.type === 'fill') {
+    // Build inline blanks in question text
+    let fillBlankIdx = 0;
+    const qtextFill = qd.q.replace(/___/g, () => {
+      const idx = fillBlankIdx++;
+      return `<span class="fill-inline-blank" id="fill-blank-${idx}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+    });
+    html = html.replace(`<div class="q-text">${qd.q}</div>`, `<div class="q-text" style="line-height:1.9">${qtextFill}</div>`);
+    html += `<div class="fill-inputs" id="fill-inputs">` + qd.blanks.map((label, i) => `
+      <div class="fill-input-wrap" id="fill-wrap-${i}">
+        <span class="fill-input-label">${label}</span>
+        <input class="fill-input" id="fill-input-${i}" type="text" placeholder="${lang === 'zh' ? '输入答案…' : 'Type your answer…'}" oninput="onFillInput(${i})">
+        <button class="mic-btn" id="mic-btn-${i}" onclick="toggleMic(${i})" title="${lang === 'zh' ? '语音输入' : 'Voice input'}">🎤</button>
+      </div>`).join('') + `</div>`;
+    html += `<button class="submit-btn" id="fill-submit" disabled onclick="submitFill()">${lang === 'zh' ? '提交答案' : 'Submit'}</button>`;
+  }
+
+  wrap.innerHTML = html;
+
+  // Show confirm bar for multi
+  if (q.type === 'multi') showConfirm();
+}
+
+// ══ INTERACTIONS ══
+function selectSingle(i) {
+  if (answered) return;
+  answered = true;
+  const q = currentSection.questions[currentQ];
+  const correct = i === q.answer;
+  if (correct) score++;
+  const opts = document.querySelectorAll('.option');
+  opts.forEach((o, idx) => {
+    o.classList.add('disabled');
+    if (idx === q.answer) o.classList.add('correct');
+    else if (idx === i && !correct) o.classList.add('wrong');
+    else o.classList.add('dimmed');
+  });
+  const correctAns = correct ? null : q[lang].options[q.answer];
+  showFeedback(correct, q[lang].explanation, correctAns);
+}
+
+function selectTF(val) {
+  if (answered) return;
+  answered = true;
+  const q = currentSection.questions[currentQ];
+  const correct = val === q.answer;
+  if (correct) score++;
+  const btns = document.querySelectorAll('.tf-btn');
+  btns.forEach(b => {
+    b.classList.add('disabled');
+    const isTrue = b.textContent.includes('✓');
+    if (isTrue === q.answer) b.classList.add('correct');
+    else if (isTrue === val && !correct) b.classList.add('wrong');
+    else b.classList.add('dimmed');
+  });
+  const correctAns = correct ? null : (q.answer ? (lang === 'zh' ? '对' : 'True') : (lang === 'zh' ? '错' : 'False'));
+  showFeedback(correct, q[lang].explanation, correctAns);
+}
+
+function toggleMulti(i) {
+  if (answered) return;
+  const opts = document.querySelectorAll('.option');
+  const idx = selectedOptions.indexOf(i);
+  if (idx > -1) { selectedOptions.splice(idx, 1); opts[i].classList.remove('selected'); }
+  else { selectedOptions.push(i); opts[i].classList.add('selected'); }
+  document.getElementById('confirm-btn').disabled = selectedOptions.length === 0;
+}
+
+function submitMulti() {
+  if (answered) return;
+  answered = true;
+  hideConfirm();
+  const q = currentSection.questions[currentQ];
+  const correctSet = new Set(q.answer);
+  const selectedSet = new Set(selectedOptions);
+  const allCorrect = correctSet.size === selectedSet.size && [...correctSet].every(x => selectedSet.has(x));
+  if (allCorrect) score++;
+  const opts = document.querySelectorAll('.option');
+  opts.forEach((o, i) => {
+    o.classList.add('disabled');
+    if (correctSet.has(i)) o.classList.add('correct');
+    else if (selectedSet.has(i)) o.classList.add('wrong');
+    else o.classList.add('dimmed');
+  });
+  const correctAns = allCorrect ? null : q[lang].options.filter((_,i) => correctSet.has(i)).join(' / ');
+  showFeedback(allCorrect, q[lang].explanation, correctAns);
+}
+
+function selectOrder(letter, itemIdx, label) {
+  if (answered) return;
+  const nextSlot = orderSlots.length;
+  const totalBlanks = currentSection.questions[currentQ][lang].q.split('___').length - 1;
+  if (nextSlot >= totalBlanks) return;
+  orderSlots.push(letter);
+  const blank = document.getElementById(`blank-${nextSlot}`);
+  blank.textContent = label || letter;
+  blank.classList.remove('empty');
+  blank.classList.add('filled');
+  document.getElementById(`order-item-${itemIdx}`).classList.add('used');
+  if (orderSlots.length === totalBlanks) document.getElementById('order-submit').disabled = false;
+}
+
+function unselectSlot(slotIdx) {
+  if (answered || orderSlots.length <= slotIdx) return;
+  const removed = orderSlots[slotIdx];
+  const removedItems = orderSlots.splice(slotIdx);
+  // re-enable all items from slotIdx onward
+  const q = currentSection.questions[currentQ];
+  const totalBlanks = q[lang].q.split('___').length - 1;
+  // Re-enable items whose letters are in removedItems
+  document.querySelectorAll('.order-item').forEach((el) => {
+    const letter = el.querySelector('.order-badge').textContent;
+    if (removedItems.includes(letter)) el.classList.remove('used');
+  });
+  // Reset blanks from slotIdx onward
+  const emptyLabel = lang === 'zh' ? '点击填入' : 'tap to fill';
+  for (let i = slotIdx; i < totalBlanks; i++) {
+    const blank = document.getElementById(`blank-${i}`);
+    if (blank) {
+      blank.textContent = emptyLabel;
+      blank.classList.remove('filled');
+      blank.classList.add('empty');
+    }
+  }
+  document.getElementById('order-submit').disabled = true;
+}
+
+function submitOrder() {
+  if (answered) return;
+  answered = true;
+  const q = currentSection.questions[currentQ];
+  const correct = JSON.stringify(orderSlots) === JSON.stringify(q.answer);
+  if (correct) score++;
+  const totalBlanks = q[lang].q.split('___').length - 1;
+  orderSlots.forEach((letter, i) => {
+    const blank = document.getElementById(`blank-${i}`);
+    if (blank) {
+      blank.classList.remove('filled', 'empty');
+      blank.classList.add(letter === q.answer[i] ? 'correct-blank' : 'wrong-blank');
+    }
+  });
+  document.querySelectorAll('.order-item').forEach(el => {
+    const letter = el.querySelector('.order-badge').textContent;
+    el.classList.add(q.answer.includes(letter) ? 'correct-item' : 'wrong-item');
+  });
+  document.getElementById('order-submit').disabled = true;
+  showFeedback(correct, q[lang].explanation);
+}
+
+function onFillInput(idx) {
+  // Mirror value into inline blank
+  const input = document.getElementById(`fill-input-${idx}`);
+  const blank = document.getElementById(`fill-blank-${idx}`);
+  if (blank) {
+    const val = input.value;
+    blank.textContent = val || '        ';
+    blank.classList.toggle('has-value', val.length > 0);
+  }
+  checkFillReady();
+}
+
+function checkFillReady() {
+  const q = currentSection.questions[currentQ];
+  const allFilled = q[lang].blanks.every((_, i) => document.getElementById(`fill-input-${i}`)?.value.trim().length > 0);
+  const btn = document.getElementById('fill-submit');
+  if (btn) btn.disabled = !allFilled;
+}
+
+function submitFill() {
+  if (answered) return;
+  answered = true;
+  const q = currentSection.questions[currentQ];
+  let allCorrect = true;
+  const correctAnswerDisplay = [];
+  q.answer.forEach((ans, i) => {
+    const userVal = document.getElementById(`fill-input-${i}`)?.value.trim().toLowerCase() || '';
+    // Keyword matching: split by / and also strip spaces for comparison
+    const keywords = ans.toLowerCase().split('/').map(k => k.trim().replace(/\s/g,''));
+    const isCorrect = keywords.some(kw => kw.length > 0 && userVal.replace(/\s/g,'').includes(kw));
+    const wrap = document.getElementById(`fill-wrap-${i}`);
+    const input = document.getElementById(`fill-input-${i}`);
+    const blank = document.getElementById(`fill-blank-${i}`);
+    input.disabled = true;
+    stopMic();
+    if (isCorrect) {
+      wrap.classList.add('correct-fill');
+      if (blank) { blank.classList.remove('has-value'); blank.classList.add('correct-fill-inline'); }
+    } else {
+      wrap.classList.add('wrong-fill');
+      if (blank) { blank.classList.remove('has-value'); blank.classList.add('wrong-fill-inline'); }
+      allCorrect = false;
+      // Show first keyword as the display answer (skip English alternates after /)
+      const displayAns = ans.split('/')[0].trim();
+      correctAnswerDisplay.push(displayAns);
+    }
+  });
+  if (allCorrect) score++;
+  document.getElementById('fill-submit').disabled = true;
+  const correctAnswerStr = correctAnswerDisplay.length > 0 ? correctAnswerDisplay.join('  /  ') : null;
+  showFeedback(allCorrect, q[lang].explanation, correctAnswerStr);
+}
+
+// ── MATCH ──
+let matchDraggingChip = null;
+
+function matchPlaceChip(slotIdx, chipIdx) {
+  // Remove chip from any existing slot
+  const existingSlot = matchState.slots.indexOf(matchState.chips[chipIdx].origIdx);
+  // Remove whatever is in target slot — return it to chips
+  if (matchState.slots[slotIdx] !== null) {
+    const displaced = matchState.slots[slotIdx];
+    const displacedChipIdx = matchState.chips.findIndex(c => c.origIdx === displaced);
+    if (displacedChipIdx !== -1) document.getElementById(`mchip-${displacedChipIdx}`).classList.remove('used');
+  }
+  // Remove chip from previous slot if any
+  matchState.slots.forEach((s, si) => {
+    if (s === matchState.chips[chipIdx].origIdx) matchState.slots[si] = null;
+  });
+  matchState.slots[slotIdx] = matchState.chips[chipIdx].origIdx;
+  // Update slot UI
+  const slot = document.getElementById(`mslot-${slotIdx}`);
+  slot.textContent = matchState.chips[chipIdx].text;
+  slot.classList.add('filled');
+  // Mark chip used
+  document.getElementById(`mchip-${chipIdx}`).classList.add('used');
+  matchState.selectedChip = null;
+  // Deselect all chips
+  document.querySelectorAll('.match-chip').forEach(c => c.style.outline = '');
+  checkMatchReady();
+}
+
+function matchChipClick(chipIdx) {
+  if (answered) return;
+  if (matchState.chips[chipIdx] && document.getElementById(`mchip-${chipIdx}`).classList.contains('used')) return;
+  // Deselect if same chip
+  if (matchState.selectedChip === chipIdx) {
+    matchState.selectedChip = null;
+    document.getElementById(`mchip-${chipIdx}`).style.outline = '';
+    return;
+  }
+  // Deselect previous
+  if (matchState.selectedChip !== null) document.getElementById(`mchip-${matchState.selectedChip}`).style.outline = '';
+  matchState.selectedChip = chipIdx;
+  document.getElementById(`mchip-${chipIdx}`).style.outline = `2px solid var(--accent)`;
+}
+
+function matchSlotClick(slotIdx) {
+  if (answered) return;
+  if (matchState.selectedChip !== null) {
+    matchPlaceChip(slotIdx, matchState.selectedChip);
+  } else if (matchState.slots[slotIdx] !== null) {
+    // Click filled slot to remove
+    const origIdx = matchState.slots[slotIdx];
+    const chipIdx = matchState.chips.findIndex(c => c.origIdx === origIdx);
+    matchState.slots[slotIdx] = null;
+    const slot = document.getElementById(`mslot-${slotIdx}`);
+    slot.textContent = lang === 'zh' ? '点击填入…' : 'tap to fill…';
+    slot.classList.remove('filled');
+    if (chipIdx !== -1) document.getElementById(`mchip-${chipIdx}`).classList.remove('used');
+    checkMatchReady();
+  }
+}
+
+// Drag support
+function matchDragStart(event, chipIdx) {
+  matchDraggingChip = chipIdx;
+  event.dataTransfer.effectAllowed = 'move';
+  document.getElementById(`mchip-${chipIdx}`).classList.add('dragging');
+}
+function matchDragEnd(event) {
+  if (matchDraggingChip !== null) document.getElementById(`mchip-${matchDraggingChip}`)?.classList.remove('dragging');
+  matchDraggingChip = null;
+  document.querySelectorAll('.match-row').forEach(r => r.classList.remove('drag-over'));
+}
+function matchDragOver(event, slotIdx) {
+  event.preventDefault();
+  document.getElementById(`match-row-${slotIdx}`).classList.add('drag-over');
+}
+function matchDragLeave(event, slotIdx) {
+  document.getElementById(`match-row-${slotIdx}`).classList.remove('drag-over');
+}
+function matchDrop(event, slotIdx) {
+  event.preventDefault();
+  document.getElementById(`match-row-${slotIdx}`).classList.remove('drag-over');
+  if (matchDraggingChip !== null) matchPlaceChip(slotIdx, matchDraggingChip);
+  matchDraggingChip = null;
+}
+
+function checkMatchReady() {
+  const allPaired = matchState.slots.every(s => s !== null);
+  const btn = document.getElementById('match-submit');
+  if (btn) btn.disabled = !allPaired;
+}
+
+function submitMatch() {
+  if (answered) return;
+  answered = true;
+  const q = currentSection.questions[currentQ];
+  let allCorrect = true;
+  matchState.slots.forEach((origIdx, slotIdx) => {
+    const isCorrect = origIdx === q.answer[slotIdx];
+    const slot = document.getElementById(`mslot-${slotIdx}`);
+    slot.classList.remove('filled');
+    slot.classList.add(isCorrect ? 'correct-slot' : 'wrong-slot');
+    if (!isCorrect) allCorrect = false;
+  });
+  if (allCorrect) score++;
+  document.getElementById('match-submit').disabled = true;
+  const correctAns = allCorrect ? null : q[lang].lefts.map((l, i) => `${l} → ${q[lang].rights[q.answer[i]]}`).join(' / ');
+  showFeedback(allCorrect, q[lang].explanation, correctAns);
+}
+
+// ── VOICE INPUT ──
+function toggleMic(idx) {
+  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+    alert(lang === 'zh' ? '您的浏览器不支持语音输入，请手动输入。' : 'Your browser does not support speech recognition.');
+    return;
+  }
+  if (listeningIndex === idx) { stopMic(); return; }
+  stopMic();
+  listeningIndex = idx;
+  document.getElementById(`mic-btn-${idx}`).classList.add('listening');
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SpeechRecognition();
+  recognition.lang = lang === 'zh' ? 'zh-CN' : 'en-US';
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.onresult = (e) => {
+    document.getElementById(`fill-input-${idx}`).value = e.results[0][0].transcript;
+    checkFillReady();
+    stopMic();
+  };
+  recognition.onerror = () => stopMic();
+  recognition.onend = () => stopMic();
+  recognition.start();
+}
+
+function stopMic() {
+  if (recognition) { try { recognition.stop(); } catch(e){} recognition = null; }
+  if (listeningIndex >= 0) {
+    const btn = document.getElementById(`mic-btn-${listeningIndex}`);
+    if (btn) btn.classList.remove('listening');
+    listeningIndex = -1;
+  }
+}
+
+// ── FEEDBACK ──
+function showFeedback(correct, explanation, correctAnswer) {
+  const bar = document.getElementById('feedback-bar');
+  bar.className = 'feedback-bar ' + (correct ? 'correct-bar' : 'wrong-bar');
+  document.getElementById('feedback-icon').textContent = correct ? '✓' : '✗';
+  document.getElementById('feedback-label').className = 'feedback-label ' + (correct ? 'correct-label' : 'wrong-label');
+  document.getElementById('feedback-label').textContent = correct
+    ? (lang === 'zh' ? '答对了！' : 'Correct!')
+    : (lang === 'zh' ? '答错了' : 'Not quite');
+  // Show correct answer if wrong and provided
+  const correctEl = document.getElementById('feedback-correct');
+  if (!correct && correctAnswer) {
+    correctEl.textContent = (lang === 'zh' ? '正确答案：' : 'Correct answer: ') + correctAnswer;
+    correctEl.style.display = 'block';
+  } else {
+    correctEl.style.display = 'none';
+  }
+  document.getElementById('feedback-explanation').textContent = explanation;
+  // Self-mark button for fill questions
+  const selfBtn = document.getElementById('self-mark-btn');
+  const q = currentSection.questions[currentQ];
+  if (!correct && q.type === 'fill') {
+    selfBtn.textContent = lang === 'zh' ? '✓ 我的答案也正确' : '✓ My answer was correct';
+    selfBtn.style.display = 'block';
+  } else {
+    selfBtn.style.display = 'none';
+  }
+  const isLast = currentQ === currentSection.questions.length - 1;
+  document.getElementById('next-btn').textContent = isLast
+    ? (lang === 'zh' ? '查看结果 →' : 'See results →')
+    : (lang === 'zh' ? '下一题 →' : 'Next →');
+  setTimeout(() => bar.classList.add('visible'), 50);
+}
+
+function selfMark() {
+  score++;
+  document.getElementById('self-mark-btn').style.display = 'none';
+  document.getElementById('feedback-bar').className = 'feedback-bar correct-bar';
+  document.getElementById('feedback-icon').textContent = '✓';
+  document.getElementById('feedback-label').className = 'feedback-label correct-label';
+  document.getElementById('feedback-label').textContent = lang === 'zh' ? '答对了！' : 'Correct!';
+  document.getElementById('feedback-correct').style.display = 'none';
+}
+
+function hideFeedback() {
+  const bar = document.getElementById('feedback-bar');
+  bar.classList.remove('visible');
+}
+
+function showConfirm() {
+  const bar = document.getElementById('confirm-bar');
+  const btn = document.getElementById('confirm-btn');
+  btn.textContent = lang === 'zh' ? '确认答案' : 'Confirm answer';
+  setTimeout(() => bar.classList.add('visible'), 50);
+}
+
+function hideConfirm() {
+  document.getElementById('confirm-bar').classList.remove('visible');
+}
+
+// ── NEXT ──
+function nextQuestion() {
+  hideFeedback();
+  currentQ++;
+  if (currentQ >= currentSection.questions.length) {
+    showResults();
+  } else {
+    setTimeout(renderQuestion, 300);
+  }
+}
+
+// ── RESULTS ──
+function showResults() {
+  showScreen('results');
+  const total = currentSection.questions.length;
+  const pct = Math.round((score / total) * 100);
+  const icons = pct >= 80 ? '🌸' : pct >= 50 ? '💪' : '📚';
+  document.getElementById('results-icon').textContent = icons;
+  document.getElementById('results-title').textContent = lang === 'zh'
+    ? (pct >= 80 ? '太厉害了！' : pct >= 50 ? '答得不错！' : '继续加油！')
+    : (pct >= 80 ? 'Brilliant!' : pct >= 50 ? 'Well done!' : 'Keep learning!');
+  document.getElementById('results-subtitle').textContent = lang === 'zh'
+    ? currentSection.zh.title
+    : currentSection.en.title;
+  document.getElementById('score-display').textContent = score + '/' + total;
+  document.getElementById('score-label').textContent = lang === 'zh'
+    ? `答对 ${score} 题，正确率 ${pct}%`
+    : `${score} correct · ${pct}% accuracy`;
+  document.getElementById('retry-btn').textContent = lang === 'zh' ? '再来一次' : 'Try again';
+  document.getElementById('home-btn').textContent = lang === 'zh' ? '换个主题试试' : 'Try another topic';
+
+}
+
+function retrySection() {
+  const idx = SECTIONS.indexOf(currentSection);
+  startSection(idx);
+}
+
+function goHome() {
+  showScreen('quiz-home');
+}
+
+// ── SCREENS ──
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ── INIT ──
+window.location.href='index.html';
+renderHome();
+
+function openNav() {
+  document.getElementById('nav-drawer').classList.add('open');
+  document.getElementById('nav-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeNav() {
+  document.getElementById('nav-drawer').classList.remove('open');
+  document.getElementById('nav-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function navTo(screen) {
+  closeNav();
+  showScreen(screen);
+}
+function updateNavLang() {
+  document.getElementById('nav-lang-zh').classList.toggle('active', lang === 'zh');
+  document.getElementById('nav-lang-en').classList.toggle('active', lang === 'en');
+}
+</script>
+</body>
+</html>
