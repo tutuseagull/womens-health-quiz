@@ -3,7 +3,7 @@
    ═══════════════════════════════ */
 
 /* ── FONTS ── */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Instrument+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap');
 
 /* ── TOKENS ── */
 :root {
@@ -36,7 +36,7 @@ button:focus { outline: none; }
 a { text-decoration: none; color: inherit; }
 
 body {
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: 'Manrope', 'Noto Sans SC', sans-serif;
   background: var(--bg);
   color: var(--text);
   font-size: 16px;
@@ -97,7 +97,7 @@ body {
   padding: 16px 20px;
   border-bottom: 1px solid var(--border);
 }
-.nav-drawer-title { font-family: 'IBM Plex Serif', serif; font-size: 16px; color: var(--text); }
+.nav-drawer-title { font-family: 'Manrope', 'Noto Sans SC', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); }
 .nav-close {
   background: none; border: none; font-size: 20px; cursor: pointer;
   color: var(--text-muted); padding: 4px 8px; border-radius: 6px;
@@ -116,7 +116,7 @@ body {
   padding: 8px 10px;
   border: none; background: none;
   text-align: left; cursor: pointer; width: 100%;
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: 'Manrope', 'Noto Sans SC', sans-serif;
   border-radius: var(--radius-xs);
   transition: background 0.15s;
 }
@@ -127,7 +127,7 @@ body {
   display: block; padding: 8px 10px; border-radius: var(--radius-xs);
   font-size: 14px; color: var(--text); text-decoration: none;
   background: none; border: none; text-align: left; cursor: pointer; width: 100%;
-  font-family: 'Instrument Sans', sans-serif; transition: background 0.15s;
+  font-family: 'Manrope', 'Noto Sans SC', sans-serif; transition: background 0.15s;
 }
 .nav-item:hover { background: var(--card-hover); }
 .nav-item.sub { font-size: 13px; color: var(--text-muted); padding-left: 18px; }
@@ -137,7 +137,7 @@ body {
 .nav-lang-row { display: flex; align-items: center; gap: 10px; }
 .nav-lang-btn {
   background: none; border: 1.5px solid var(--border); border-radius: 6px;
-  padding: 4px 12px; font-size: 13px; font-family: 'Instrument Sans', sans-serif;
+  padding: 4px 12px; font-size: 13px; font-family: 'Manrope', 'Noto Sans SC', sans-serif;
   cursor: pointer; color: var(--text-muted); transition: all 0.15s;
 }
 .nav-lang-btn.active { background: var(--btn-primary); border-color: var(--btn-primary); color: white; }
@@ -153,8 +153,10 @@ body {
   flex-shrink: 0;
   transition: background 0.18s;
   padding: 0;
+  color: var(--accent);
 }
 .back-btn svg { display: block; }
+.back-btn svg path { stroke: currentColor; }
 .back-btn:hover  { background: var(--card-hover); }
 .back-btn:active { background: var(--card-active); transform: scale(0.95); }
 
@@ -178,7 +180,7 @@ body {
 .section-card:active { background: var(--card-active); transform: scale(0.985); }
 
 .section-card-inner {}
-.section-title { font-family: 'IBM Plex Serif', serif; font-size: 18px; color: var(--text); margin-bottom: 4px; }
+.section-title { font-family: 'Manrope', 'Noto Sans SC', sans-serif; font-weight: 700; font-size: 18px; color: var(--text); margin-bottom: 4px; }
 .section-meta  { font-size: 13px; color: var(--text-muted); transition: color 0.18s; }
 .section-arrow {
   position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
@@ -191,7 +193,7 @@ body {
   background: var(--btn-primary); color: #fff;
   border: none; outline: none;
   border-radius: var(--radius-sm);
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: 'Manrope', 'Noto Sans SC', sans-serif;
   font-size: 15px; font-weight: 500;
   cursor: pointer; transition: opacity 0.15s;
 }
@@ -203,7 +205,7 @@ body {
   background: var(--btn-secondary); color: var(--text);
   border: none; outline: none;
   border-radius: var(--radius-sm);
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: 'Manrope', 'Noto Sans SC', sans-serif;
   font-size: 15px; font-weight: 500;
   cursor: pointer; transition: background 0.15s;
 }
@@ -242,7 +244,7 @@ body {
 .footer-nav-link {
   font-size: 13px; color: var(--text-muted); text-decoration: none;
   background: none; border: none; cursor: pointer; text-align: left;
-  padding: 0; font-family: 'Instrument Sans', sans-serif; transition: color 0.15s;
+  padding: 0; font-family: 'Manrope', 'Noto Sans SC', sans-serif; transition: color 0.15s;
 }
 .footer-nav-link:hover { color: var(--text); }
 .footer-credits { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
@@ -272,7 +274,7 @@ body {
   color: var(--accent); margin-bottom: 6px;
 }
 .page-title {
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: 'Manrope', 'Noto Sans SC', sans-serif;
   font-size: 38px; font-weight: 600;
   line-height: 1.15; color: var(--text); margin-bottom: 16px;
 }
