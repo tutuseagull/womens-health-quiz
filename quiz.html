@@ -6,6 +6,26 @@
 <title>知识问答 · Women's Health Quiz</title>
 <link rel="stylesheet" href="shared.css">
 <style>
+:root {
+  --card-bg: rgba(42,56,40,0.08);
+  --card-hover: rgba(255,255,255,0.7);
+  --card-active: rgba(255,255,255,0.9);
+  --correct: #5a8040;
+  --correct-light: #c8e0a0;
+  --wrong: #d09060;
+  --wrong-light: #f5e0c8;
+  --accent: #F36589;
+  --accent-light: rgba(243,101,137,0.12);
+  --surface: #fff;
+  --bg: #E2EFC2;
+  --text: #262C37;
+  --text-muted: #5a6040;
+  --border: rgba(42,56,40,0.15);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --btn-primary: #F36589;
+  --neutral-fill: rgba(42,56,40,0.08);
+}
 
   
 
@@ -230,8 +250,8 @@
   /* ── TRUE/FALSE ── */
   .tf-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .tf-btn {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
+    background: var(--card-bg);
+    border: none;
     border-radius: var(--radius);
     padding: 24px 12px;
     cursor: pointer;
@@ -250,8 +270,8 @@
   /* ── ORDERING ── */
   .order-items { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
   .order-item {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
+    background: var(--card-bg);
+    border: none;
     border-radius: var(--radius-sm);
     padding: 14px 16px;
     cursor: pointer;
@@ -328,7 +348,7 @@
     align-items: stretch;
   }
   .match-left-label {
-    background: var(--neutral-fill);
+    background: var(--card-bg);
     border: 1.5px solid var(--border);
     border-radius: var(--radius-sm);
     padding: 12px 14px;
@@ -361,8 +381,8 @@
 
   .match-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
   .match-chip {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
+    background: var(--card-bg);
+    border: none;
     border-radius: 20px;
     padding: 8px 16px;
     font-size: 13px;
@@ -398,7 +418,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    background: var(--surface);
+    background: var(--card-bg);
     border: 1.5px solid var(--border);
     border-radius: var(--radius-sm);
     padding: 12px 14px;
@@ -437,7 +457,7 @@
     position: fixed;
     left: 50%;
     bottom: 0;
-    background: var(--surface);
+    background: rgba(255,255,255,0.7);
     border-top: 1.5px solid var(--border);
     padding: 16px 20px 24px;
     max-width: 680px;
@@ -496,9 +516,8 @@
     width: 100%;
     max-width: 680px;
     padding: 16px 20px 24px;
-    background: var(--surface);
+    background: rgba(255,255,255,0.7);
     border-top: 1.5px solid var(--border);
-    z-index: 99;
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .confirm-bar.visible { transform: translateX(-50%) translateY(0); }
@@ -642,7 +661,17 @@ button { outline: none; }
   #quiz-home .site-footer {
     margin-top: auto;
   }
+  .screen#quiz.active ~ .site-footer,
+  .screen#results.active ~ .site-footer { display: none !important; }
 </style>
+<script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="ci init Pi Ci ft Oi Fi ki capture calculateEventProperties Ui register register_once register_for_session unregister unregister_for_session Bi getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty ji Di createPersonProfile setInternalOrTestUser zi Ti Hi opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ai debug bt Ni getPageViewId captureTraceFeedback captureTraceMetric Ei".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('phc_cLEblleHETF6TEHaRLay1CWYFhWf2i3ykhrZlnJaztW', {
+    api_host: 'https://us.i.posthog.com',
+    defaults: '2026-01-30',
+    person_profiles: 'identified_only',
+  });
+</script>
 </head>
 <body>
 <!-- ── GLOBAL NAV ── -->
@@ -1325,7 +1354,12 @@ function startSection(idx) {
   score = 0;
   showScreen('quiz');
   document.getElementById('section-label').textContent = currentSection[lang].title;
-
+  // PostHog: track topic selected
+  if (window.posthog) posthog.capture('quiz_topic_started', {
+    topic: currentSection[lang].title,
+    topic_id: currentSection.id,
+    language: lang,
+  });
   renderQuestion();
 }
 
@@ -1794,6 +1828,15 @@ function stopMic() {
 
 // ── FEEDBACK ──
 function showFeedback(correct, explanation, correctAnswer) {
+  // PostHog: track question answered
+  if (window.posthog) posthog.capture('quiz_question_answered', {
+    topic: currentSection[lang].title,
+    topic_id: currentSection.id,
+    question_number: currentQ + 1,
+    total_questions: currentSection.questions.length,
+    correct: correct,
+    language: lang,
+  });
   const bar = document.getElementById('feedback-bar');
   bar.className = 'feedback-bar ' + (correct ? 'correct-bar' : 'wrong-bar');
   document.getElementById('feedback-icon').textContent = correct ? '✓' : '✗';
@@ -1829,11 +1872,32 @@ function showFeedback(correct, explanation, correctAnswer) {
 function selfMark() {
   score++;
   document.getElementById('self-mark-btn').style.display = 'none';
-  document.getElementById('feedback-bar').className = 'feedback-bar correct-bar';
+  document.getElementById('feedback-bar').className = 'feedback-bar correct-bar visible';
   document.getElementById('feedback-icon').textContent = '✓';
   document.getElementById('feedback-label').className = 'feedback-label correct-label';
   document.getElementById('feedback-label').textContent = lang === 'zh' ? '答对了！' : 'Correct!';
   document.getElementById('feedback-correct').style.display = 'none';
+
+  // Enable next button
+  const nextBtn = document.getElementById('next-btn');
+  if (nextBtn) {
+    nextBtn.disabled = false;
+    nextBtn.textContent = lang === 'zh' ? '下一题 →' : 'Next →';
+  }
+
+  // PostHog: track user self-marked as correct
+  if (window.posthog) {
+    const q = currentSection.questions[currentQ];
+    const userAnswer = Array.from(document.querySelectorAll('.fill-input')).map(i => i.value).join(' / ');
+    posthog.capture('quiz_self_marked_correct', {
+      topic: currentSection[lang].title,
+      topic_id: currentSection.id,
+      question_number: currentQ + 1,
+      user_answer: userAnswer,
+      expected_answer: q[lang].blanks ? q[lang].blanks.join(' / ') : '',
+      language: lang,
+    });
+  }
 }
 
 function hideFeedback() {
@@ -1865,6 +1929,15 @@ function nextQuestion() {
 
 // ── RESULTS ──
 function showResults() {
+  // PostHog: track quiz completed
+  if (window.posthog) posthog.capture('quiz_completed', {
+    topic: currentSection[lang].title,
+    topic_id: currentSection.id,
+    score: score,
+    total: currentSection.questions.length,
+    pct: Math.round((score / currentSection.questions.length) * 100),
+    language: lang,
+  });
   showScreen('results');
   const total = currentSection.questions.length;
   const pct = Math.round((score / total) * 100);
@@ -1891,6 +1964,16 @@ function retrySection() {
 }
 
 function goHome() {
+  // PostHog: track quiz abandoned (only if mid-quiz)
+  if (window.posthog && currentSection && currentQ > 0) {
+    posthog.capture('quiz_abandoned', {
+      topic: currentSection[lang].title,
+      topic_id: currentSection.id,
+      abandoned_at_question: currentQ + 1,
+      total_questions: currentSection.questions.length,
+      language: lang,
+    });
+  }
   showScreen('quiz-home');
 }
 
