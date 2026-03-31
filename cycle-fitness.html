@@ -113,6 +113,7 @@ body { font-family: 'Manrope', 'Noto Sans SC', sans-serif; background: #E2EFC2; 
 
 
 </style>
+
 <script>
   !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="ci init Pi Ci ft Oi Fi ki capture calculateEventProperties Ui register register_once register_for_session unregister unregister_for_session Bi getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty ji Di createPersonProfile setInternalOrTestUser zi Ti Hi opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ai debug bt Ni getPageViewId captureTraceFeedback captureTraceMetric Ei".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
   posthog.init('phc_cLEblleHETF6TEHaRLay1CWYFhWf2i3ykhrZlnJaztW', {
@@ -336,6 +337,11 @@ function render() {
   set('note1', t.note1);
   set('note2', t.note2);
   set('chart-title', t.chartTitle);
+  // Update chart x-axis labels for language
+  if (window._hormoneChart) {
+    window._hormoneChart.options.scales.x.ticks.callback = v => v % 7 === 0 ? (lang === 'zh' ? `第${v}天` : `Day ${v}`) : null;
+    window._hormoneChart.update();
+  }
   set('legend-e', t.legendE);
   set('legend-p', t.legendP);
   set('legend-lh', t.legendLH);
@@ -421,7 +427,7 @@ const phasePlugin={id:'phasesBg',beforeDraw(chart){
   chartPhaseColors.forEach(p=>{const x0=left+(p.from/28)*W,x1=left+(p.to/28)*W;ctx.fillStyle=p.color;ctx.fillRect(x0,top,x1-x0,bottom-top);});
 }};
 
-new Chart(document.getElementById('hormoneChart'),{
+window._hormoneChart = new Chart(document.getElementById('hormoneChart'),{
   type:'line', plugins:[phasePlugin],
   data:{labels:days,datasets:[
     {label:'E',data:estrogen,borderColor:'#D4537E',backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0.4},
@@ -471,8 +477,7 @@ function updateNavLang() {
     if (el) el.classList.toggle('active', id.endsWith(lang));
   });
 }
-updateNavLang();
-render();
+setTimeout(() => { updateNavLang(); render(); }, 0);
 </script>
 
 <footer class="site-footer">
@@ -499,6 +504,7 @@ render();
   </div>
 </div>
 </footer>
+
 
 </body>
 </html>

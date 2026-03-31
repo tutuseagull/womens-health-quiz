@@ -2113,9 +2113,7 @@ function showScreen(id) {
 }
 
 // ── INIT ──
-showScreen('quiz-home');
-updateNavLang();
-renderHome();
+setTimeout(() => { showScreen('quiz-home'); updateNavLang(); renderHome(); }, 0);
 
 function openNav() {
   document.getElementById('nav-drawer').classList.add('open');
@@ -2135,8 +2133,9 @@ function updateNavLang() {
   document.getElementById('nav-lang-zh').classList.toggle('active', lang === 'zh');
   document.getElementById('nav-lang-en').classList.toggle('active', lang === 'en');
 }
-</script>
 
+setTimeout(() => { showScreen('quiz-home'); updateNavLang(); renderHome(); }, 0);
+</script>
 
 <footer class="site-footer">
 <div class="site-footer-inner">
@@ -2162,5 +2161,7 @@ function updateNavLang() {
   </div>
 </div>
 </footer>
+
+
 </body>
 </html>
