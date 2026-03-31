@@ -886,10 +886,10 @@ button { outline: none; }
   <div class="flag-overlay" id="flag-overlay" onclick="closeFlagMenu()"></div>
   <div class="flag-menu" id="flag-menu">
     <div class="flag-menu-title" id="flag-menu-title">反馈这道题</div>
-    <button class="flag-option" onclick="submitFlag('我的答案也正确')">我的答案也正确</button>
-    <button class="flag-option" onclick="submitFlag('题目表述不清楚')">题目表述不清楚</button>
-    <button class="flag-option" onclick="submitFlag('本题内容爹味太重')">本题内容爹味太重</button>
-    <button class="flag-option" onclick="submitFlag('其他问题')">其他问题</button>
+    <button class="flag-option" id="flag-opt-1" onclick="submitFlag(document.getElementById('flag-opt-1').textContent)">我的答案也正确</button>
+    <button class="flag-option" id="flag-opt-2" onclick="submitFlag(document.getElementById('flag-opt-2').textContent)">题目表述不清楚</button>
+    <button class="flag-option" id="flag-opt-3" onclick="submitFlag(document.getElementById('flag-opt-3').textContent)">本题内容爹味太重</button>
+    <button class="flag-option" id="flag-opt-4" onclick="submitFlag(document.getElementById('flag-opt-4').textContent)">其他问题</button>
     <button class="flag-cancel" id="flag-cancel" onclick="closeFlagMenu()">取消</button>
   </div>
 
@@ -1405,6 +1405,21 @@ function renderHome() {
 
   // ── Nav drawer ──
   if (el('nav-drawer-title')) el('nav-drawer-title').textContent = zh ? '了解你的身体' : 'Know Your Body';
+  if (el('nav-col-home')) el('nav-col-home').textContent = zh ? '主页' : 'Home';
+  if (el('nav-col-quiz-title')) el('nav-col-quiz-title').textContent = zh ? '知识问答' : 'Quiz';
+  if (el('nav-col-handbook-title')) el('nav-col-handbook-title').textContent = zh ? '身体说明书' : 'Body Guide';
+  if (el('nav-col-cycle-fitness')) el('nav-col-cycle-fitness').textContent = zh ? '生理周期与健身' : 'Cycle & Fitness';
+  if (el('nav-lang-label')) el('nav-lang-label').textContent = zh ? '语言' : 'Language';
+  const zhSubs = ['生理周期与激素','生理周期与健身','避孕科学','妇科检查与疫苗','乳腺健康','生育、产后与更年期','身体构造与常识辟谣','心理健康、性健康与常识'];
+  const enSubs = ['Cycle & Hormones','Cycle & Fitness','Contraception','Gynaecological Screening','Breast Health','Fertility & Menopause','Body Anatomy & Myths','Mental & Sexual Health'];
+  ['nav-sub-1','nav-sub-2','nav-sub-3','nav-sub-4','nav-sub-5','nav-sub-6','nav-sub-7','nav-sub-8'].forEach((id,i) => {
+    const e2 = el(id); if (e2) e2.textContent = zh ? zhSubs[i] : enSubs[i];
+  });
+  if (el('footer-nav-label')) el('footer-nav-label').textContent = zh ? '导航' : 'Navigation';
+  if (el('footer-link-home')) el('footer-link-home').textContent = zh ? '主页' : 'Home';
+  if (el('footer-link-quiz')) el('footer-link-quiz').textContent = zh ? '知识问答' : 'Quiz';
+  if (el('footer-link-handbook')) el('footer-link-handbook').textContent = zh ? '身体说明书' : 'Body Guide';
+  if (el('footer-ig-text')) el('footer-ig-text').textContent = zh ? '关注湾区女权脱口秀' : 'Follow Wannv Standup';
   if (el('nav-col-home'))     el('nav-col-home').textContent     = zh ? '主页' : 'Home';
   if (el('nav-col-quiz-title')) el('nav-col-quiz-title').textContent = zh ? '知识问答' : 'Quiz';
   if (el('nav-col-handbook-title')) el('nav-col-handbook-title').textContent = zh ? '身体说明书' : 'Body Guide';
@@ -1435,26 +1450,12 @@ function renderHome() {
     {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
     {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
   ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
-  if (el('footer-nav-label-home')) el('footer-nav-label-home').textContent = zh ? '导航' : 'Navigation';
-  if (el('footer-ig-home')) el('footer-ig-home').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
-  // Footer: qh
-  const _fnqh = el('footer-nav-links-qh');
-  if (_fnqh) _fnqh.innerHTML = [
-    {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
-    {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
-    {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
-  ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
-  if (el('footer-nav-label-qh')) el('footer-nav-label-qh').textContent = zh ? '导航' : 'Navigation';
-  if (el('footer-ig-qh')) el('footer-ig-qh').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
-  // Footer: hb
-  const _fnhb = el('footer-nav-links-hb');
-  if (_fnhb) _fnhb.innerHTML = [
-    {label: zh ? '主页' : 'Home', action: "window.location.href='index.html'"},
-    {label: zh ? '知识问答' : 'Quiz', action: "showScreen('quiz-home')"},
-    {label: zh ? '身体说明书' : 'Body Guide', action: "showScreen('handbook')"},
-  ].map(i => `<button class="footer-nav-link" onclick="${i.action}">${i.label}</button>`).join('');
-  if (el('footer-nav-label-hb')) el('footer-nav-label-hb').textContent = zh ? '导航' : 'Navigation';
-  if (el('footer-ig-hb')) el('footer-ig-hb').textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
+    // Footer translation
+  if (el('footer-nav-label')) el('footer-nav-label').textContent = zh ? '导航' : 'Navigation';
+  if (el('footer-link-home')) el('footer-link-home').textContent = zh ? '主页' : 'Home';
+  if (el('footer-link-quiz')) el('footer-link-quiz').textContent = zh ? '知识问答' : 'Quiz';
+  if (el('footer-link-handbook')) el('footer-link-handbook').textContent = zh ? '身体说明书' : 'Body Guide';
+  if (el('footer-ig-text')) el('footer-ig-text').textContent = zh ? '关注湾区女权脱口秀' : 'Follow Wannv Standup';
 
   // ── Handbook list ──
   const handbookItems = [
@@ -2113,6 +2114,7 @@ function showScreen(id) {
 
 // ── INIT ──
 showScreen('quiz-home');
+updateNavLang();
 renderHome();
 
 function openNav() {

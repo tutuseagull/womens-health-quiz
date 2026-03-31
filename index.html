@@ -116,7 +116,7 @@ let lang = localStorage.getItem('lang') || 'zh';
 function setLang(l) {
   lang = l; localStorage.setItem('lang', l);
   ['nav-lang-zh','nav-lang-en'].forEach(id => { const el = document.getElementById(id); if (el) el.classList.toggle('active', id.endsWith(l)); });
-  renderHome();
+  updateNavLang();
 }
 function renderHome() {
   const zh = lang === 'zh';
@@ -128,10 +128,10 @@ function renderHome() {
   set('card-handbook-title', zh ? '身体说明书' : 'Body Guide');
   set('card-handbook-sub', zh ? '1个健康指南' : '1 guide');
   set('nav-drawer-title', zh ? '了解你的身体' : 'Know Your Body');
-  set('nav-home', zh ? '主页' : 'Home');
-  set('nav-quiz', zh ? '知识问答' : 'Quiz');
-  set('nav-handbook', zh ? '身体说明书' : 'Body Guide');
-  set('nav-cycle', zh ? '生理周期与健身' : 'Cycle & Fitness');
+  set('nav-col-home', zh ? '主页' : 'Home');
+  set('nav-col-quiz-title', zh ? '知识问答' : 'Quiz');
+  set('nav-col-handbook-title', zh ? '身体说明书' : 'Body Guide');
+  set('nav-col-cycle-title', zh ? '生理周期与健身' : 'Cycle & Fitness');
   set('nav-lang-label', zh ? '语言' : 'Language');
   ['nav-sub-1','nav-sub-2','nav-sub-3','nav-sub-4','nav-sub-5','nav-sub-6','nav-sub-7','nav-sub-8'].forEach((id, i) => {
     const el = document.getElementById(id); if (!el) return;
@@ -139,6 +139,21 @@ function renderHome() {
     const el2 = ['Cycle & Hormones','Cycle & Fitness','Contraception','Gynaecological Screening','Breast Health','Fertility & Menopause','Body Anatomy & Myths','Mental & Sexual Health'];
     el.textContent = zh ? zl[i] : el2[i];
   });
+  // Footer
+
+  // Nav quiz subtopics
+  const zhSubs = ['生理周期与激素','生理周期与健身','避孕科学','妇科检查与疫苗','乳腺健康','生育、产后与更年期','身体构造与常识辟谣','心理健康、性健康与常识'];
+  const enSubs = ['Cycle & Hormones','Cycle & Fitness','Contraception','Gynaecological Screening','Breast Health','Fertility & Menopause','Body Anatomy & Myths','Mental & Sexual Health'];
+  ['nav-sub-1','nav-sub-2','nav-sub-3','nav-sub-4','nav-sub-5','nav-sub-6','nav-sub-7','nav-sub-8'].forEach((id,i) => {
+    const el = document.getElementById(id); if (el) el.textContent = zh ? zhSubs[i] : enSubs[i];
+  });
+  const cycleEl = document.getElementById('nav-col-cycle-fitness');
+  if (cycleEl) cycleEl.textContent = zh ? '生理周期与健身' : 'Cycle & Fitness';
+  set('footer-nav-label', zh ? '导航' : 'Navigation');
+  set('footer-link-home', zh ? '主页' : 'Home');
+  set('footer-link-quiz', zh ? '知识问答' : 'Quiz');
+  set('footer-link-handbook', zh ? '身体说明书' : 'Body Guide');
+  set('footer-ig-text', zh ? '关注湾区女权脱口秀' : 'Follow Wannv Standup');
 }
 function openNav() { document.getElementById('nav-drawer').classList.add('open'); document.getElementById('nav-overlay').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeNav() { document.getElementById('nav-drawer').classList.remove('open'); document.getElementById('nav-overlay').classList.remove('open'); document.body.style.overflow=''; }
