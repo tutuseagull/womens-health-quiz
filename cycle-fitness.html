@@ -109,13 +109,13 @@ body { font-family: 'Manrope', 'Noto Sans SC', sans-serif; background: #E2EFC2; 
       <div>
         <button class="nav-col-title-btn" onclick="window.location.href='quiz.html'" id="nav-quiz">知识问答</button>
         <div class="nav-col-items">
-          <a class="nav-item sub" href="index.html">生理周期与激素</a>
-          <a class="nav-item sub" href="index.html">生理周期与健身</a>
-          <a class="nav-item sub" href="index.html">避孕科学</a>
-          <a class="nav-item sub" href="index.html">妇科检查与疫苗</a>
-          <a class="nav-item sub" href="index.html">生育、产后与更年期</a>
-          <a class="nav-item sub" href="index.html">身体构造与常识辟谣</a>
-          <a class="nav-item sub" href="index.html">心理健康、性健康与常识</a>
+          <a class="nav-item sub" href="quiz.html" id="nav-sub-1">生理周期与激素</a>
+          <a class="nav-item sub" href="quiz.html" id="nav-sub-2">生理周期与健身</a>
+          <a class="nav-item sub" href="quiz.html" id="nav-sub-3">避孕科学</a>
+          <a class="nav-item sub" href="quiz.html" id="nav-sub-4">妇科检查与疫苗</a>
+          <a class="nav-item sub" href="quiz.html" id="nav-sub-5">生育、产后与更年期</a>
+          <a class="nav-item sub" href="quiz.html" id="nav-sub-6">身体构造与常识辟谣</a>
+          <a class="nav-item sub" href="quiz.html" id="nav-sub-7">心理健康、性健康与常识</a>
         </div>
       </div>
       <div>
@@ -280,10 +280,11 @@ const CARD_COLORS = [
   { bg: '#EDF7F5', text: '#1D5C52', chipBg: 'rgba(133,196,184,0.3)' },
 ];
 
-let lang = 'zh';
+let lang = localStorage.getItem('lang') || 'zh';
 
 function setLang(l) {
   lang = l;
+  localStorage.setItem('lang', l);
   ['nav-lang-zh','nav-lang-en'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('active', id.endsWith(l));
@@ -311,18 +312,19 @@ function render() {
   set('nav-cycle', t.navCycle);
   set('nav-lang-label', t.navLang);
 
-  // Footer nav
+  // Footer
   const zh = lang === 'zh';
-  const fnl = document.getElementById('footer-nav-links');
-  if (fnl) fnl.innerHTML = [
-    { label: zh ? '主页' : 'Home', href: 'index.html' },
-    { label: zh ? '知识问答' : 'Quiz', href: 'quiz.html' },
-    { label: zh ? '身体说明书' : 'Body Guide', href: 'handbook.html' },
-  ].map(i => `<a class="footer-nav-link" href="${i.href}">${i.label}</a>`).join('');
-  const fnLabel = document.getElementById('footer-nav-label');
-  if (fnLabel) fnLabel.textContent = zh ? '导航' : 'Navigation';
-  const figText = document.getElementById('footer-ig-text');
-  if (figText) figText.textContent = zh ? '关注湾区女权脱口秀' : 'Follow @wannvstandup';
+  const _fset = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
+  _fset('footer-nav-label', zh ? '导航' : 'Navigation');
+  _fset('footer-link-home', zh ? '主页' : 'Home');
+  _fset('footer-link-quiz', zh ? '知识问答' : 'Quiz');
+  _fset('footer-link-handbook', zh ? '身体说明书' : 'Body Guide');
+  _fset('footer-ig-text', zh ? '关注湾区女权脱口秀' : 'Follow Wannv Standup');
+  const zhSubs = ['生理周期与激素','生理周期与健身','避孕科学','妇科检查与疫苗','乳腺健康','生育、产后与更年期','身体构造与常识辟谣','心理健康、性健康与常识'];
+  const enSubs = ['Cycle & Hormones','Cycle & Fitness','Contraception','Gynaecological Screening','Breast Health','Fertility & Menopause','Body Anatomy & Myths','Mental & Sexual Health'];
+  ['nav-sub-1','nav-sub-2','nav-sub-3','nav-sub-4','nav-sub-5','nav-sub-6','nav-sub-7'].forEach((id,i) => {
+    const e = document.getElementById(id); if (e) e.textContent = zh ? zhSubs[i] : enSubs[i];
+  });
 
   // Render phase cards
   const container = document.getElementById('phases');
@@ -383,6 +385,13 @@ function openNav(){document.getElementById('nav-drawer').classList.add('open');d
 function closeNav(){document.getElementById('nav-drawer').classList.remove('open');document.getElementById('nav-overlay').classList.remove('open');document.body.style.overflow='';}
 
 // ── INIT ──
+function updateNavLang() {
+  ['nav-lang-zh','nav-lang-en'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', id.endsWith(lang));
+  });
+}
+updateNavLang();
 render();
 </script>
 
